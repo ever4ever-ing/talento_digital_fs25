@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: antiquewhite;
+}
+
+h1 {
+    color: rgb(32, 178, 170);
+    font-size: 80px;
+    text-align: center;
+}
+
+p {
+    text-align: center;
+    color: brown;
+}
+
+header {
+    background-color: rgba(32, 178, 171, 0.748);
+    height: 50px;
+    text-align: center;
+}
+
+main {
+    background-color: rgb(214, 214, 171);
+    height: 100vh;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.852);
+    height: 50px;
+    text-align: center;
+    color: White;
+}
