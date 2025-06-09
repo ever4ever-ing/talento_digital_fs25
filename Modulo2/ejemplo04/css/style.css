@@ -2,46 +2,56 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
 }
+
 /*Selector de etiqueta*/
 body {
     background-color: antiquewhite;
+    font-family: "Edu VIC WA NT Hand", cursive;
 }
 
 h1 {
     color: rgb(32, 178, 170);
-    font-size: 80px;
+    font-size: 40px;
 }
 
-.titulo2{
+.titulo2 {
     color: black;
 }
 
-#ej2{
+#ej2 {
     color: brown;
+    text-decoration: underline;
+    /* Subrayado */
+    font-style: italic;
+    /* Cursiva */
+
 }
 
 p {
     text-align: center;
     color: brown;
-    margin: 20px;
 }
 
 header {
     background-color: rgba(32, 178, 171, 0.748);
-    height: 50px;
+    height: max-content;
     font-size: 2em;
+    font-weight: bold;
+    /* Negrita */
 }
 
 main {
     background-color: rgb(214, 214, 171);
-    height: 100vh;
+    height: max-content;
 }
 
 footer {
     background-color: rgba(0, 0, 0, 0.852);
     height: 50px;
 }
+
 /*Selector de clase*/
 .is-centered {
     text-align: center;
@@ -49,7 +59,7 @@ footer {
 
 
 
-.is-white{
+.is-white {
     color: white;
 }
 
@@ -62,14 +72,37 @@ footer {
     border: 5px solid rgba(32, 178, 171, 0.748);
 }
 
-
 /* Selector descendente */
-.is-centered p {
+main p {
     color: darkslategrey;
     font-style: italic;
 }
 
 /* Selector descendente directo */
-main > img {
+main>img {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
+
+input[type="button"]{
+    width: 100px;
+    height: 40px;
+    border: 2px solid rebeccapurple;
+    border-radius: 4px;
+    padding: 40px;
+    background-color: rgb(185, 238, 238);
+    text-align: auto;
+}
+
+
+#bienvenido{
+    padding: 20px;
+    border: 5px solid salmon;
+}
+
+button{
+    padding: 20px;
+    width: 140px;
+    margin: 0 150px 0 150px; /* 0px arriba, 100px derecha, 0px abajo, 100px izquierda */
+    /* margin-left: 100px; */
+    /* margin-right: 100px; */
 }

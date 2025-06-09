@@ -1,0 +1,40 @@
+#container p.blanquito {
+    font-size: 16px;
+    background-color: #333;
+    color: #fcfcfc; /* Blanco */
+}
+p.blanquito {
+    font-size: 16px;
+    background-color: #333;
+    color: #fcfcfc; /* Blanco */
+}
+/*
+En CSS, el punto (.) se
+utiliza para seleccionar elementos que tienen una clase específica.
+*/
+#container p.highlight {
+    font-weight: bold;
+    color: #ff0000; /* Rojo */
+}
+
+#container p {
+    font-weight: bold;
+    color: #0800ff; /* Blanco */
+}
+
+
+input[type="text"] {
+    border: none;
+    border-bottom: 4px dotted orangered;
+}
+
+input[type="submit"] {
+    color: rgb(255, 170, 0);
+    background-color: rebeccapurple;
+    border-radius: 4px;
+    border-top: 4px dotted orangered;
+    border-right: 4px dotted orangered;
+    border-bottom: 4px dotted orangered;
+    border-left: 4px dotted orangered;
+    height: 40px;
+}
