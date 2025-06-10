@@ -1,0 +1,75 @@
+/* Selector comodín*/
+* {
+    margin: 0;
+    padding: 0;
+}
+/*Selector de etiqueta*/
+body {
+    background-color: antiquewhite;
+}
+
+h1 {
+    color: rgb(32, 178, 170);
+    font-size: 80px;
+}
+
+.titulo2{
+    color: black;
+}
+
+#ej2{
+    color: brown;
+}
+
+p {
+    text-align: center;
+    color: brown;
+    margin: 20px;
+}
+
+header {
+    background-color: rgba(32, 178, 171, 0.748);
+    height: 50px;
+    font-size: 2em;
+}
+
+main {
+    background-color: rgb(214, 214, 171);
+    height: 100vh;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, 0.852);
+    height: 50px;
+}
+/*Selector de clase*/
+.is-centered {
+    text-align: center;
+}
+
+
+
+.is-white{
+    color: white;
+}
+
+#avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-top: 20px;
+    margin-left: 0px;
+    border: 5px solid rgba(32, 178, 171, 0.748);
+}
+
+
+/* Selector descendente */
+.is-centered p {
+    color: darkslategrey;
+    font-style: italic;
+}
+
+/* Selector descendente directo */
+main > img {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
+}
