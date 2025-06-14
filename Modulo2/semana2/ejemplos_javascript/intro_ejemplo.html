@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Efectos con Logo de JavaScript</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .logo-container {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            margin-bottom: 30px;
+        }
+        
+        #js-logo {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: all 0.5s ease;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        button {
+            padding: 10px 15px;
+            background-color: #f0db4f;
+            color: #323330;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #e6d048;
+        }
+        
+        h1 {
+            color: #323330;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>JavaScript</h1>
+    
+    <div class="logo-container">
+        <img id="js-logo" src="https://upload.wikimedia.org/wikipedia/commons/9/99/Unofficial_JavaScript_logo_2.svg" alt="Logo de JavaScript">
+    </div>
+    
+    <div class="controls">
+        <button onclick="rotateLogo()">Rotar</button>
+        <button onclick="pulseLogo()">Pulso</button>
+        <button onclick="shakeLogo()">Agitar</button>
+        <button onclick="changeColor()">Cambiar Color</button>
+        <button onclick="zoomInOut()">Zoom In/Out</button>
+        <button onclick="flipLogo()">Voltear</button>
+        <button onclick="resetLogo()">Reiniciar</button>
+    </div>
+    
+    <script>
+        const logo = document.getElementById('js-logo');
+        
+        // Efecto de rotación
+        function rotateLogo() {
+            logo.style.transform = 'rotate(360deg)';
+            setTimeout(() => {
+                logo.style.transform = 'rotate(0deg)';
+            }, 1000);
+        }
+        
+        // Efecto de pulso
+        function pulseLogo() {
+            logo.style.transform = 'scale(1.2)';
+            setTimeout(() => {
+                logo.style.transform = 'scale(1)';
+            }, 500);
+        }
+        
+        // Efecto de agitación
+        function shakeLogo() {
+            logo.style.animation = 'shake 0.5s';
+            setTimeout(() => {
+                logo.style.animation = '';
+            }, 500);
+        }
+        
+        // Añadir la animación de shake al estilo dinámicamente
+        const style = document.createElement('style');
+        style.innerHTML = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-10px); }
+                20%, 40%, 60%, 80% { transform: translateX(10px); }
+            }
+        `;
+        document.head.appendChild(style);
+        
+        // Cambiar color (filtro)
+        let isYellow = true;
+        function changeColor() {
+            if(isYellow) {
+                logo.style.filter = 'hue-rotate(90deg)';
+            } else {
+                logo.style.filter = 'hue-rotate(0deg)';
+            }
+            isYellow = !isYellow;
+        }
+        
+        // Efecto de zoom in/out
+        let isZoomed = false;
+        function zoomInOut() {
+            if(isZoomed) {
+                logo.style.transform = 'scale(1)';
+            } else {
+                logo.style.transform = 'scale(1.5)';
+            }
+            isZoomed = !isZoomed;
+        }
+        
+        // Voltear el logo
+        let isFlipped = false;
+        function flipLogo() {
+            if(isFlipped) {
+                logo.style.transform = 'scaleX(1)';
+            } else {
+                logo.style.transform = 'scaleX(-1)';
+            }
+            isFlipped = !isFlipped;
+        }
+        
+        // Reiniciar todos los efectos
+        function resetLogo() {
+            logo.style.transform = '';
+            logo.style.filter = '';
+            logo.style.animation = '';
+            isYellow = true;
+            isZoomed = false;
+            isFlipped = false;
+        }
+    </script>
+</body>
+</html>

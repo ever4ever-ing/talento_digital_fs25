@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplos de Condicionales y Bucles</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .ejemplo {
+            background-color: #f5f5f5;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 8px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #resultados {
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            min-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ejemplos de Condicionales y Bucles en JavaScript</h1>
+
+    <!-- Ejemplo 1: Condicional if-else -->
+    <div class="ejemplo">
+        <h2>1. Condicional if-else (Verificar edad)</h2>
+        <p>Ingresa tu edad para verificar si puedes entrar al sitio:</p>
+        <input type="number" id="edadInput" placeholder="Ingresa tu edad">
+        <button onclick="verificarEdad()">Verificar</button>
+        <div id="resultadoEdad"></div>
+    </div>
+
+    <!-- Ejemplo 2: Switch case -->
+    <div class="ejemplo">
+        <h2>2. Switch case (Días de la semana)</h2>
+        <p>Ingresa un número del 1 al 7 para ver el día de la semana:</p>
+        <input type="number" id="diaInput" min="1" max="7" placeholder="Número del 1 al 7">
+        <button onclick="mostrarDia()">Mostrar día</button>
+        <div id="resultadoDia"></div>
+    </div>
+
+    <!-- Ejemplo 3: Bucle for -->
+    <div class="ejemplo">
+        <h2>3. Bucle for (Tabla de multiplicar)</h2>
+        <p>Genera la tabla de multiplicar del número que ingreses:</p>
+        <input type="number" id="numeroTabla" placeholder="Ingresa un número">
+        <button onclick="generarTabla()">Generar tabla</button>
+        <div id="resultadoTabla"></div>
+    </div>
+
+    <!-- Ejemplo 4: Bucle while -->
+    <div class="ejemplo">
+        <h2>4. Bucle while (Contador regresivo)</h2>
+        <p>Ingresa un número para el contador regresivo:</p>
+        <input type="number" id="numeroContador" placeholder="Ingresa un número">
+        <button onclick="iniciarContador()">Iniciar contador</button>
+        <div id="resultadoContador"></div>
+    </div>
+
+    <!-- Ejemplo 5: Bucle for...of -->
+    <div class="ejemplo">
+        <h2>5. Bucle for...of (Lista de compras)</h2>
+        <p>Lista de productos disponibles:</p>
+        <button onclick="mostrarProductos()">Mostrar productos</button>
+        <div id="resultadoProductos"></div>
+    </div>
+
+    <script>
+        // Ejemplo 1: Condicional if-else
+        function verificarEdad() {
+            const edad = parseInt(document.getElementById('edadInput').value);
+            const resultado = document.getElementById('resultadoEdad');
+            
+            if (isNaN(edad)) {
+                resultado.innerHTML = "Por favor ingresa un número válido";
+                resultado.style.color = "red";
+            } else if (edad < 0) {
+                resultado.innerHTML = "La edad no puede ser negativa";
+                resultado.style.color = "red";
+            } else if (edad < 18) {
+                resultado.innerHTML = "Eres menor de edad. No puedes entrar.";
+                resultado.style.color = "red";
+            } else {
+                resultado.innerHTML = "¡Bienvenido! Eres mayor de edad.";
+                resultado.style.color = "green";
+            }
+        }
+
+        // Ejemplo 2: Switch case
+        function mostrarDia() {
+            const numeroDia = parseInt(document.getElementById('diaInput').value);
+            const resultado = document.getElementById('resultadoDia');
+            let diaSemana;
+            
+            switch(numeroDia) {
+                case 1:
+                    diaSemana = "Lunes";
+                    break;
+                case 2:
+                    diaSemana = "Martes";
+                    break;
+                case 3:
+                    diaSemana = "Miércoles";
+                    break;
+                case 4:
+                    diaSemana = "Jueves";
+                    break;
+                case 5:
+                    diaSemana = "Viernes";
+                    break;
+                case 6:
+                    diaSemana = "Sábado";
+                    break;
+                case 7:
+                    diaSemana = "Domingo";
+                    break;
+                default:
+                    diaSemana = "Número inválido. Ingresa un valor del 1 al 7.";
+            }
+            
+            resultado.innerHTML = `Día ${numeroDia}: ${diaSemana}`;
+        }
+
+        // Ejemplo 3: Bucle for
+        function generarTabla() {
+            const numero = parseInt(document.getElementById('numeroTabla').value);
+            const resultado = document.getElementById('resultadoTabla');
+            
+            if (isNaN(numero)) {
+                resultado.innerHTML = "Por favor ingresa un número válido";
+                return;
+            }
+            
+            let tablaHTML = `<h3>Tabla del ${numero}</h3><ul>`;
+            
+            for (let i = 1; i <= 10; i++) {
+                tablaHTML += `<li>${numero} x ${i} = ${numero * i}</li>`;
+            }
+            
+            tablaHTML += "</ul>";
+            resultado.innerHTML = tablaHTML;
+        }
+
+        // Ejemplo 4: Bucle while
+        function iniciarContador() {
+            const numero = parseInt(document.getElementById('numeroContador').value);
+            const resultado = document.getElementById('resultadoContador');
+            
+            if (isNaN(numero) || numero <= 0) {
+                resultado.innerHTML = "Por favor ingresa un número positivo válido";
+                return;
+            }
+            
+            let contador = numero;
+            resultado.innerHTML = "";
+            
+            while (contador >= 0) {
+                resultado.innerHTML += `Contador: ${contador}<br>`;
+                contador--;
+            }
+            
+            resultado.innerHTML += "¡Despegue!";
+        }
+
+        // Ejemplo 5: Bucle for...of
+        function mostrarProductos() {
+            const productos = ["Manzanas", "Pan", "Leche", "Huevos", "Arroz", "Pollo"];
+            const resultado = document.getElementById('resultadoProductos');
+            
+            resultado.innerHTML = "<h3>Productos disponibles:</h3><ul>";
+            
+            for (const producto of productos) {
+                resultado.innerHTML += `<li>${producto}</li>`;
+            }
+            
+            resultado.innerHTML += "</ul>";
+        }
+    </script>
+</body>
+</html>
