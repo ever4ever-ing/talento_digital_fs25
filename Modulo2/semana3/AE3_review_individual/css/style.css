@@ -1,0 +1,129 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: max-content;
+    background-color: black;
+    color: aliceblue;
+    padding: 20px;
+}
+
+header span {
+    font-size: 2rem;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin-right: 8px;
+}
+
+nav a:hover {
+    color: rgb(70, 189, 229);
+    scale: 1.1;
+}
+
+nav button {
+    background-color: RGB(0, 187, 211);
+    color: white;
+    padding: 8px;
+    border-radius: 8px;
+    margin-left: 8px;
+}
+
+nav button:hover {
+    background-color: rgb(228, 35, 35);
+}
+
+.container {
+    display: flex;
+}
+
+.column {
+    padding: 20px;
+    margin: 10px;
+    background-color: rgb(246, 247, 248);
+    height: max-content;
+    gap: 10px;
+}
+
+.col-1 {
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    padding: 20px;
+
+}
+
+.col-2 {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+
+
+#profile-img {
+    height: 80px;
+    border-radius: 50%;
+    position: relative;
+    top: 40px;
+    left: 40px;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: rgb(255, 255, 255);
+    padding: 0px;
+}
+
+.div1 {
+    height: 80px;
+    width: 100%;
+    background-color: rgb(70, 189, 229);
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.education-card {
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+}
+
+.solicitudes {
+    height: 200px;
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+
+}
+
+.conexiones {
+    height: 200px;
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+}
