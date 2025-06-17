@@ -28,5 +28,11 @@ gato.maullar();
 gato.botarTaza();
 
 
+gato.maullar();
+gato.maullar();
+gato.maullar();
+gato.maullar();
+gato.maullar();
+
 
 
