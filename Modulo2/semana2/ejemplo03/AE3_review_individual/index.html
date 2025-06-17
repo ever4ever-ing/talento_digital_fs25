@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Página de perfil </title>
     <link rel="stylesheet" href="css/style.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <script src="js/script.js" defer></script>
+</head>
 </head>
 
 <body>
@@ -50,12 +54,26 @@
             </div>
             <div class="column col-2">
                 <section class="solicitudes">
-                    <h2>Solicitudes de conexión</h2>
-                    
+                    <h2>Solicitudes de conexión <span id="contador-solicitudes">2 </span></h2>
+                    <br>
+                    <div>
+                        <span>Usuario Uno</span>
+                        <i class="fa-regular fa-circle-check aceptar"></i>
+                        <i class="fa-regular fa-circle-xmark rechazar"></i>
+                    </div>
+                    <div>
+                        <span>Usuario Dos</span>
+                        <i class="fa-regular fa-circle-check aceptar" ></i>
+                        <i class="fa-regular fa-circle-xmark rechazar" ></i>
+                    </div>
+
                 </section>
                 <section class="conexiones">
-                    <h2>Tus Conexiones</h2>
-
+                    <br>
+                    <h2>Tus Conexiones <span id="contador-conexiones">1</span></h2>
+                    <div class="item-conexion">
+                        <span>Usuario Tres</span>
+                    </div>
                 </section>
             </div>
         </div>

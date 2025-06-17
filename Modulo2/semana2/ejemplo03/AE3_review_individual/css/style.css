@@ -107,6 +107,7 @@ nav button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 20px;
 }
 
 .education-card {
@@ -117,12 +118,12 @@ nav button:hover {
 .solicitudes {
     height: 200px;
     background-color: rgb(255, 255, 255);
-    padding: 10px;
+    padding: 20px;
 
 }
 
 .conexiones {
     height: 200px;
     background-color: rgb(255, 255, 255);
-    padding: 10px;
+    padding: 20px;
 }
