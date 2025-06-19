@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LibroLibre</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+    #buscador {
+        width: 100%;
+        margin: 30px;
+        border-radius: 4px;
+    }
+
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 30px;
+    }
+
+    .libros {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        padding: 30px;
+        background-color: antiquewhite;
+        border-radius: 4px;
+    }
+
+    .libro {
+        background-color: rgb(255, 255, 255);
+        padding: 20px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        border-radius: 4px;
+        width: 250px;
+    }
+
+    span {
+        font-weight: bold;
+    }
+</style>
+
+<body>
+    <h1>Catalogo Libros JQuery</h1>
+    <div class="container">
+        <input type="text" id="buscador" placeholder="  Busca tu libro">
+    </div>
+
+    <div class="libros" id="lista-libros">
+        <div class="libro">
+            <div class="titulo"><span>Titulo: </span>Cien años de soledad</div>
+            <div class="autor"><span>Autor: </span>Gabriel García Márquez</div>
+            <div class="genero"> <span>Genero: </span> Realismo mágico</div>
+            <br>
+            <div class="trama">La historia de la familia Buendía en el pueblo ficticio de Macondo.</div>
+        </div>
+        <div class="libro">
+            <div class="titulo"><span>Titulo: </span>1984</div>
+            <div class="autor"><span>Autor: </span>George Orwell</div>
+            <div class="genero"><span>Genero: </span>Distopía</div>
+            <br>
+            <div class="trama">Un futuro totalitario donde el Gran Hermano vigila a todos.</div>
+        </div>
+        <div class="libro">
+            <div class="titulo"><span>Titulo: </span>Orgullo y prejuicio</div>
+            <div class="autor"><span>Autor: </span>Jane Austen</div>
+            <div class="genero"><span>Genero: </span>Romance</div>
+            <br>
+            <div class="trama">La vida y relaciones de la familia Bennet en la Inglaterra del siglo XIX.</div>
+        </div>
+    </div>
+
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#buscador').on('input', function() {
+                var texto = $(this).val().toLowerCase();
+                $('.libro').each(function() {
+                    var contenido = $(this).text().toLowerCase();
+                    $(this).toggle(contenido.includes(texto));
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo de Selectores jQuery</title>
+</head>
+
+<body>
+    <div id="header">Este es el header</div>
+    <div class="producto">Producto 1</div>
+    <div class="producto">Producto 2</div>
+
+    <button id="element1">Este elemento se ocultará</button>
+    <button id="element2">Este elemento también se ocultará</button>
+    <button id="element3">Este elemento también se ocultará</button>
+
+    <div style="display: flex; justify-content:center;">
+            <img src="img1.png" alt="Sonic1" id="sonic" height="320px">
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <script>
+        // Seleccionar todos los elementos con la clase 'producto'
+        $(".producto").hover(
+            function () {
+                $(this).hide();
+            }
+        );
+        // Seleccionar un solo elemento con el id 'header'
+        $("#header").hover(
+            function () {
+                $(this).css("background-color", "blue");
+                $(this).css("color", "white");
+            }
+        );
+
+        $("#element1").click(function () {
+            $(this).hide();
+        });
+
+        $("#element2").click(function () {
+            $(this).hide();
+        });
+
+        $("#element3").click(function () {
+            $(this).hide();
+        });
+
+        $("#sonic").click(function () {
+            $(this).attr("src", "img2.png"); // Alterna entre aparecer y desaparecer con efecto slide
+        });
+
+    </script>
+</body>
+
+</html>
