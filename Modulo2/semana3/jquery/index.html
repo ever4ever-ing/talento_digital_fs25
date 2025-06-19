@@ -5,6 +5,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ejemplo de Selectores jQuery</title>
+
+    <style>
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: #ffffff;
+            text-align: center;
+            line-height: 200px;
+            font-size: 20px;
+        }
+
+        .hovered {
+            background-color: #ea6060;
+            color: white;
+        }
+    </style>
 </head>
 
 <body>
@@ -17,8 +33,10 @@
     <button id="element3">Este elemento también se ocultará</button>
 
     <div style="display: flex; justify-content:center;">
-            <img src="img1.png" alt="Sonic1" id="sonic" height="320px">
+        <img src="img1.png" alt="Sonic1" id="sonic" height="320px">
     </div>
+
+    <div class="box"> Caja </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
     <script>
@@ -51,6 +69,18 @@
         $("#sonic").click(function () {
             $(this).attr("src", "img2.png"); // Alterna entre aparecer y desaparecer con efecto slide
         });
+
+
+        //AGREGAR CLASES CSS
+
+        $(".box").hover(
+            function () {
+                $(this).addClass("hovered"); // ADDCLASS
+            },
+            function () {
+                $(this).removeClass("hovered");
+            }
+        );
 
     </script>
 </body>
