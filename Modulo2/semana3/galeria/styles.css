@@ -22,10 +22,12 @@ h1 {
 .thumb {
     width: 200px;
     height: 200px;
-    object-fit: cover; /* Ensures images cover the thumbnail area */
+    object-fit: cover;
+    /* Ensures images cover the thumbnail area */
     border-radius: 8px;
-    cursor: pointer; /* Pointer cursor for clickable thumbnails */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    cursor: pointer;
+    /* Pointer cursor for clickable thumbnails */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s;
 }
 
@@ -41,7 +43,7 @@ h1 {
     top: 0;
     width: 100vw;
     height: 100vh;
-    background: rgba(0,0,0,0.7);
+    background: rgba(0, 0, 0, 0.7);
     justify-content: center;
     align-items: center;
     transition: background 0.3s;
@@ -52,7 +54,7 @@ h1 {
     background: #fff;
     padding: 20px 40px 30px 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -66,7 +68,7 @@ h1 {
     max-height: 60vh;
     margin: 20px 0;
     border-radius: 8px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .close {
@@ -80,11 +82,13 @@ h1 {
     z-index: 10;
     transition: color 0.2s;
 }
+
 .close:hover {
     color: #e74c3c;
 }
 
-.prev, .next {
+.prev,
+.next {
     background: #0b0b0b;
     color: #fff;
     border: none;
@@ -95,14 +99,34 @@ h1 {
     cursor: pointer;
     transition: background 0.2s;
 }
-.prev:hover, .next:hover {
+
+.prev:hover,
+.next:hover {
     background: #217dbb;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    /* Centra los hijos horizontalmente */
+    align-items: center;
+    /* Centra los hijos verticalmente */
+    gap: 20px;
+    /* Espacio entre los hijos */
+    padding: 20px;
+}
+
+.item {
+    flex: 1 1 30%;
+    /* Ocupa el 30% del contenedor, crece y se reduce */
+    max-width: 30%;
 }
 
 @media (max-width: 600px) {
     .modal-content {
         padding: 10px 5px 20px 5px;
     }
+
     #modal-img {
         max-width: 90vw;
         max-height: 40vh;
