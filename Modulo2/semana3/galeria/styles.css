@@ -61,6 +61,7 @@ h1 {
     align-items: center;
     max-width: 90vw;
     max-height: 90vh;
+    margin: 30px;
 }
 
 #modal-img {
