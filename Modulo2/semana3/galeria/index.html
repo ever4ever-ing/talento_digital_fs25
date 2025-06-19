@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de Imágenes jQuery</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <h1>Galería de Imágenes</h1>
+    <div class="gallery">
+        <img src="https://cdn.pixabay.com/photo/2020/04/20/18/14/chile-pine-5069323_1280.jpg" id="img1" class="thumb" alt="Imagen 1">
+        <img src="https://cdn.pixabay.com/photo/2015/10/26/13/23/tree-1007125_1280.jpg" id="img2" class="thumb" alt="Imagen 2">
+        <img src="https://cdn.pixabay.com/photo/2019/08/14/03/48/the-tree-is-cold-4404641_1280.jpg" id="img3" class="thumb" alt="Imagen 3">
+        <img src="https://cdn.pixabay.com/photo/2013/03/07/16/54/araucana-91294_1280.jpg" id="img4" class="thumb" alt="Imagen 4">
+        <img src="https://cdn.pixabay.com/photo/2016/08/11/10/35/araucaria-araucana-1585360_640.jpg" id="img5" class="thumb" alt="Imagen 5">
+        <img src="https://cdn.pixabay.com/photo/2015/04/07/06/12/conguillio-national-park-710571_640.jpg" id="img6" class="thumb" alt="Imagen 6">
+        
+    </div>
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <button class="prev">Anterior</button>
+            <img id="modal-img" src="" alt="Imagen grande">
+            <button class="next">Siguiente </button>
+        </div>
+    </div>
+</body>
+</html>

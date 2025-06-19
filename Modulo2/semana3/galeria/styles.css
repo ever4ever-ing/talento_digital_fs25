@@ -1,0 +1,110 @@
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 10px;
+}
+
+.thumb {
+    width: 200px;
+    height: 200px;
+    object-fit: cover; /* Ensures images cover the thumbnail area */
+    border-radius: 8px;
+    cursor: pointer; /* Pointer cursor for clickable thumbnails */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.thumb:hover {
+    transform: scale(1.05);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s;
+}
+
+.modal-content {
+    position: relative;
+    background: #fff;
+    padding: 20px 40px 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    max-width: 90vw;
+    max-height: 90vh;
+}
+
+#modal-img {
+    max-width: 70vw;
+    max-height: 60vh;
+    margin: 20px 0;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    color: #333;
+    cursor: pointer;
+    font-weight: bold;
+    z-index: 10;
+    transition: color 0.2s;
+}
+.close:hover {
+    color: #e74c3c;
+}
+
+.prev, .next {
+    background: #0b0b0b;
+    color: #fff;
+    border: none;
+    padding: 10px 18px;
+    margin: 0 10px;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.prev:hover, .next:hover {
+    background: #217dbb;
+}
+
+@media (max-width: 600px) {
+    .modal-content {
+        padding: 10px 5px 20px 5px;
+    }
+    #modal-img {
+        max-width: 90vw;
+        max-height: 40vh;
+    }
+}
