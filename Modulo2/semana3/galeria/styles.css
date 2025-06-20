@@ -36,7 +36,7 @@ h1 {
 }
 
 .modal {
-    display: none;
+    display: none;/* Oculta el modal por defecto */
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -129,7 +129,7 @@ h1 {
     }
 
     #modal-img {
-        max-width: 90vw;
+        max-width: 30vw;
         max-height: 40vh;
     }
 }
