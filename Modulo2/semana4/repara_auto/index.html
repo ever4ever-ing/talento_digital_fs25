@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoFix - Reparación de Vehículos a Domicilio</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .service-card {
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 2rem;
+            height: 100%;
+            text-align: center;
+        }
+        .service-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+        .price {
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .btn-success {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container my-3">
+        <!-- Header -->
+        <div class="text-center mb-3">
+            <h1 class="display-4 fw-bold">AutoFix - Reparación de Vehículos a Domicilio</h1>
+        </div>        <!-- Carrusel de Imágenes -->
+        <div class="row justify-content-center mb-4">
+            <div class="col-lg-8 col-md-10">
+                <div id="autoFixCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner" style="height: 250px; border-radius: 8px; overflow: hidden;">
+                        <div class="carousel-item active">
+                            <img src="img1.jpg" class="d-block w-100 h-100" style="object-fit: cover;" alt="Servicio a Domicilio">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img2.jpg" class="d-block w-100 h-100" style="object-fit: cover;" alt="Mecánicos Profesionales">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="img3.jpg" class="d-block w-100 h-100" style="object-fit: cover;" alt="Reparaciones Garantizadas">
+                        </div>                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#autoFixCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Anterior</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#autoFixCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Siguiente</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Servicios y Precios -->
+        <div class="mb-5">
+            <h2 class="h3 mb-4">Servicios y Precios</h2>
+            <div class="row g-4">
+                <!-- Cambio de aceite -->
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-droplet-fill"></i>
+                        </div>                        <h5 class="mb-2">Cambio de aceite</h5>
+                        <p class="price mb-0">Precio: $35.000 CLP</p>
+                    </div>
+                </div>
+
+                <!-- Revisión de frenos -->
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-gear-fill"></i>
+                        </div>                        <h5 class="mb-2">Revisión de frenos</h5>
+                        <p class="price mb-0">Precio: $25.000 CLP</p>
+                    </div>
+                </div>
+
+                <!-- Diagnóstico eléctrico -->
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="bi bi-lightning-fill"></i>
+                        </div>                        <h5 class="mb-2">Diagnóstico eléctrico</h5>
+                        <p class="price mb-0">Precio: $38.000 CLP</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulario de Solicitud -->
+        <div class="row d-flex justify-content-center">
+            <div class="col-lg-8">
+                <h2 class="h3 mb-4">Solicitar Reparación</h2>
+                <form>
+                    <!-- Nombre del Cliente -->
+                    <div class="mb-3">
+                        <label for="nombreCliente" class="form-label">Nombre del Cliente</label>
+                        <input type="text" class="form-control" id="nombreCliente" required>
+                    </div>
+
+                    <!-- Tipo de Reparación -->
+                    <div class="mb-3">
+                        <label for="tipoReparacion" class="form-label">Tipo de Reparación</label>
+                        <select class="form-select" id="tipoReparacion" required>
+                            <option value="">Selecciona un servicio</option>
+                            <option value="cambio-aceite">Cambio de aceite - $35000 CLP</option>
+                            <option value="revision-frenos">Revisión de frenos - $25000 CLP</option>
+                            <option value="diagnostico-electrico">Diagnóstico eléctrico - $38000 CLP</option>
+                        </select>
+                    </div>
+
+                    <!-- Descripción -->
+                    <div class="mb-3">
+                        <label for="descripcion" class="form-label">Descripción</label>
+                        <textarea class="form-control" id="descripcion" rows="4" placeholder="Describe el problema o servicio requerido"></textarea>
+                    </div>
+
+                    <!-- Agendar Cita -->
+                    <div class="mb-3">
+                        <label for="fecha" class="form-label">Agendar Cita</label>
+                        <input type="date" class="form-control" id="fecha" required>
+                    </div>
+
+                    <!-- Información de Pago -->
+                    <h4 class="h5 mb-3">Información de Pago (simulado)</h4>
+                    
+                    <!-- Número de tarjeta -->
+                    <div class="mb-3">
+                        <label for="numeroTarjeta" class="form-label">Número de tarjeta</label>
+                        <input type="text" class="form-control" id="numeroTarjeta" placeholder="**** **** **** 1234" maxlength="19">
+                    </div>
+
+                    <!-- Nombre del titular -->
+                    <div class="mb-3">
+                        <label for="nombreTitular" class="form-label">Nombre del titular</label>
+                        <input type="text" class="form-control" id="nombreTitular">
+                    </div>
+
+                    <!-- CVV -->
+                    <div class="mb-4">
+                        <label for="cvv" class="form-label">CVV</label>
+                        <input type="text" class="form-control" id="cvv" maxlength="3" style="max-width: 100px;">
+                    </div>
+
+                    <!-- Botón de envío -->
+                    <button type="submit" class="btn btn-success btn-lg">Confirmar Solicitud</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Formatear número de tarjeta
+        document.getElementById('numeroTarjeta').addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formattedValue = value.replace(/(.{4})/g, '$1 ').trim();
+            if (formattedValue.length > 19) {
+                formattedValue = formattedValue.substring(0, 19);
+            }
+            e.target.value = formattedValue;
+        });
+
+        // Validar solo números en CVV
+        document.getElementById('cvv').addEventListener('input', function(e) {
+            e.target.value = e.target.value.replace(/\D/g, '');
+        });
+
+        // Manejar envío del formulario
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('¡Solicitud enviada correctamente! Nos pondremos en contacto contigo pronto.');
+        });
+    </script>
+</body>
+</html>
