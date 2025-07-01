@@ -53,7 +53,7 @@ print(f"Limpio con strip(): '{usuario_input.strip()}'")
 
 # Verificar si una subcadena está presente en otra cadena.
 texto = "Python es genial"
-condicion = "es" in texto
+condicion = "es" in texto #True
 if(condicion):
     print(type(condicion))
     print(condicion)
@@ -62,7 +62,7 @@ if(condicion):
 print("Java" not in texto)
 
 # Ejemplo: Buscar si un correo es gmail o no
-email = "usuario@gmail.com"
+email = "usuario@hotmail.com"
 es_gmail = "@gmail.com" in email
 print(f"¿El email es de Gmail?: {es_gmail}")
 
@@ -71,3 +71,28 @@ print(f"¿El email es de Gmail?: {es_gmail}")
 # Devuelve -1 si no la encuentra.
 indice_arroba = email.find("@")
 print(f"El @ está en el indice: {indice_arroba}")
+
+# METODO Len
+# len() para obtener la longitud de la cadena
+password = "abcxyxcx"
+print(len(password))
+if len(password) < 6:
+    print(f"La contraseña '{password}' es muy corta.")
+else:
+    print("Contraseña con longitud válida.")
+
+
+
+texto_alpha = "CompanyX"
+texto_numeric = "12345"
+texto_mixto = "Company123"
+
+print(texto_alpha.isalpha())
+print(texto_numeric.isalpha())
+print(texto_mixto.isalnum())
+
+
+
+print("a" == "A")    # False (case-sensitive)
+print("abraham" < "diego") # True ("a" viene antes que "d")
+print("hola" > "adiós") # True ('h' > 'a' en ASCII)
