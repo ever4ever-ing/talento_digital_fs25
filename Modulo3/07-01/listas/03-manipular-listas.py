@@ -2,14 +2,14 @@ cajonera = ["pantalones", "camisetas", "calcetines"]
 camisetas = cajonera[1]
 cajonera[1] = "sueters" #Cambiamos el valor del cajón con índice 1
 print(cajonera) #Imprime: ['pantalones', 'sueters', 'calcetines']
-cajonera.append(camisetas)
+cajonera.append(camisetas) # Agrega al final de la lista un elemento
 print(cajonera)
 cajonera.insert(1,"vestidos")
 cajonera.insert(4,"vestidos") # Inserta en una posicion un elemento
 print(cajonera)
 cajonera.remove("vestidos") #Elimina la primera ocurrencia
 print(cajonera)
-cajonera.pop(3)
+cajonera.pop(3)#Sacamos un elemento de una posicion
 print(cajonera)
 lista_compras = ['botas', 'bufanda', 'guantes']
 cajonera.append(lista_compras)
