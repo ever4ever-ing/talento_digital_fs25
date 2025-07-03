@@ -59,17 +59,14 @@ print(f"Coordenadas: x= {x}, y= {y} , z= {z}")
 #Es muy útil para funciones que reciben argumentos variables
 numeros = (1, 2, 3, 4, 5)
 primero, *resto = numeros
-print(f"Primero: {primero}")    # 1
-print(f"Resto: {resto}")        # [2, 3, 4, 5]
-
+print(f"Primero: {primero}")# 1
+print(f"Resto: {resto}")# [2, 3, 4, 5]
 
 a, b, *medio, z = numeros
-print(f"a: {a}")  
+print(f"a: {a}")
 print(f"b: {b}")
-print(f"medio: {medio}")     
-print(f"z: {z}")   
-
-
+print(f"medio: {medio}")
+print(f"z: {z}")
 
 # Intercambio de variables (muy pythónico)
 a = "gato"
