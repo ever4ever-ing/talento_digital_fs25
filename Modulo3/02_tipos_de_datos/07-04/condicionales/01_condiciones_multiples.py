@@ -5,21 +5,27 @@ AND, OR, NOT
 #1. AND: (ambas condiciones deben ser verdaderas)
 print("-"*30)
 print("AND: (ambas condiciones deben ser verdaderas)")
+
 fruta = "manzana"
 color = "rojo"
 dulce = True
+
 if fruta == "manzana" and color == "rojo" and dulce:
     print("Es una manzana dulce de color rojo ")
 else:
     print("No es un manzana dulce de color rojo ")
+
+
 #2. OR  (al menos una condición debe ser verdadera)
 print("-"*30)
+
 print("OR  (al menos una condición debe ser verdadera)")
 fruta = "kiwi"
 if fruta == "kiwi" or fruta == "mandarina" or fruta=="guayaba":
     print("Esta fruta tiene mucha vitamina C")
 else:
     print("No tiene tanta vitamina C.")
+
 
 #3. Usando not (invierte el valor de la condición)
 print("-"*30)
@@ -29,6 +35,8 @@ if not fruta == "manzana":
     print("No es una manzana, es una", fruta)
 else:
     print("Es una manzana.")
+
+    
 #4. Combinando and, or y not
 #Actividad: Combinar operadores logicos en un condicional if
 print("-"*30)
