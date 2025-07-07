@@ -12,8 +12,8 @@ Eres un analista en una tienda deportiva y debes crear un programa en Python que
 
 La calidad se clasificará en:
 
-* ✅ **Alta calidad** (Cumple con los mejores estándares)
-* 🔄 **Calidad media** (Aceptable, pero con algunas limitaciones)
+* ✅ **Alta calidad** (Cumple con los 3 criterios)
+* 🔄 **Calidad media** (Calidad media (al menos 2 criterios)
 * ❌ **Baja calidad** (No cumple con los requisitos mínimos)
 
 ## Tabla de Criterios de Evaluación
