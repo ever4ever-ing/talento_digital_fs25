@@ -11,7 +11,7 @@ print(area)
 
 # Ejemplo 2: Encontrar la hipotenusa de un triángulo rectángulo
 """
-Problema: Un árbitro corre 30 metros hacia el norte y 40 metros hacia el este. ¿Cuál es la distancia directa desde el punto inicial?
+Problema: Un árbitro corre 30 metros hacia el norte y 40 metros hacia el este. ¿Cuál es la distancia directa desde el punto donde comenzo?
 """
 distancia_norte= 30 
 distancia_este= 40

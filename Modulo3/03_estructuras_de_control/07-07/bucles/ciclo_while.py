@@ -20,6 +20,7 @@ while contador < 5:
 #CICLOS INFINITOS
 print("-"*10)
 print("Este es un while infinito:")
+print("Ejecutando programa:")
 while True:
     entrada = input("Escribe un numero: ('x' para terminar:) ")
     if entrada.lower() == "x":

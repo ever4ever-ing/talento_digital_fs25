@@ -15,6 +15,16 @@ notificaciones_activadas = True
 if(notificaciones_activadas):
     print("Notificaciones  activadas 🔔")
 
+
+
+
+
+
+
+
+
+
+
 es_fin_de_semana = False
 #El if espera siempre un valor True
 if(es_fin_de_semana):
