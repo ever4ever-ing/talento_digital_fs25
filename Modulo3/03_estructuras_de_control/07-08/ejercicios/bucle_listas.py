@@ -12,8 +12,6 @@ for ciudad in ciudades_principales:
 for indice, ciudad in enumerate(ciudades_principales):
     print(f"Ciudad en el índice {indice}: {ciudad}")
 
-
-
 #4. COMBINAR LISTAS:
 print("-"*20)
 poblaciones = [5614, 296, 216, 334, 221, 175, 150, 123]
@@ -25,5 +23,4 @@ poblaciones_en_millones = [poblacion / 1000 for poblacion in poblaciones]
 
 print("Población de ciudades chilenas:")
 for i, ciudad in enumerate(ciudades):
-    print(f"{ciudad}: {poblaciones[i]:,} habitantes ({poblaciones_en_millones[i]:.2f} millones)".replace(
-        ",", "."))
+    print(f"{ciudad}: {poblaciones[i]:,} habitantes ({poblaciones_en_millones[i]:.2f} millones)".replace(",", "."))
