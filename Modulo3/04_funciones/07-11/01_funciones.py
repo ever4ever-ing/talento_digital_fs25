@@ -17,23 +17,9 @@ def hacer_taco(tortilla, guiso, salsa, complementos):
 
 taco=hacer_taco("maíz", "carne molida", "salsa de ají", ["cebolla", "cilantro", "limón"])
 taco_piero =  hacer_taco("hallulla", "carne", "ketchup", ["queso amarillo"])
-print("Taco piero",taco_piero)
+print("Taco piero",type(taco_piero))
 
 #Hacer una funcion que prepare un completo u otra comida
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 def hacer_completo(salchicha,pan, palta,tomate):
     print("-"*30)
@@ -47,6 +33,5 @@ def hacer_completo(salchicha,pan, palta,tomate):
         "palta": palta,
         "tomate": tomate
     }
-    
 
 hacer_completo("salchicha de pavo", "pan de completo", "palta molida", "tomate picado")
