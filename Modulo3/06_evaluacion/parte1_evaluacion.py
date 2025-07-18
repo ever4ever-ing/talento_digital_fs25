@@ -23,16 +23,12 @@ def main():
         opcion = input("Elige una opción: ")
         if opcion == '1':
             agregar_tarea(tareas)
-            pass
         elif opcion == '2':
             ver_tareas(tareas)
-            pass
         elif opcion == '3':
             marcar_completada(tareas)
-            pass
         elif opcion == '4':
             eliminar_tarea(tareas)
-            pass
         elif opcion == '5':
             print("¡Gracias por usar el Gestor de Tareas! Adiós.")
             break
