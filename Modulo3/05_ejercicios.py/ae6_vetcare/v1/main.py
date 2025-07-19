@@ -1,4 +1,4 @@
-from funciones import registrar_cita, mostrar_historial #Paso 4: Modularización 
+from v1.funciones import registrar_cita, mostrar_historial #Paso 4: Modularización 
 
 # Paso 1:Definición de variables
 citas = []
