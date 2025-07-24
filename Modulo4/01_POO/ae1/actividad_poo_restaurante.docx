@@ -1,0 +1,127 @@
+Modelado de un Sistema de Restaurante con Programación Orientada a Objetos (POO)
+
+1. ¿Qué es la Orientación a Objetos y por qué es importante?
+La Orientación a Objetos (OO) es un paradigma de programación que organiza el software en torno a "objetos", que representan entidades del mundo real. Permite estructurar el código de manera más clara, reutilizable y mantenible, facilitando la gestión de sistemas complejos como el de un restaurante.
+
+Ejemplo:
+- En un restaurante, puedes tener objetos como Mesa, Cliente, Pedido y Plato, cada uno con sus propios datos y comportamientos.
+
+2. ¿Cómo puedes aplicar los conceptos de la Orientación a Objetos al sistema de un restaurante?
+- Clases: Plantillas para crear objetos. Ejemplo: Mesa, Pedido, Plato.
+- Objetos: Instancias de las clases. Ejemplo: una mesa específica (mesa1).
+- Atributos: Características de cada clase. Ejemplo: numero y capacidad en Mesa.
+- Métodos: Acciones que pueden realizar los objetos. Ejemplo: ocupar() en Mesa.
+
+Código ejemplo:
+class Mesa:
+    def __init__(self, numero, capacidad):
+        self.numero = numero
+        self.capacidad = capacidad
+        self.ocupada = False
+    def ocupar(self):
+        self.ocupada = True
+    def liberar(self):
+        self.ocupada = False
+
+3. Definición de una Clase: Ejemplo de Cliente
+class Cliente:
+    def __init__(self, nombre, telefono):
+        self.nombre = nombre
+        self.telefono = telefono
+    def hacer_reserva(self, mesa):
+        # Lógica para reservar una mesa
+        pass
+
+4. Diferencia entre Clase, Instancia y Objeto
+- Clase: Es el molde (ej: Mesa).
+- Instancia/Objeto: Es el resultado de usar el molde (ej: mesa1 = Mesa(1, 4)).
+
+5. ¿Qué son los Atributos de una Clase y cómo los usarías en un restaurante? Ejemplo en Pedido
+class Pedido:
+    def __init__(self, numero, mesa, cliente):
+        self.numero = numero
+        self.mesa = mesa
+        self.cliente = cliente
+        self.platos = []
+        self.estado = 'pendiente'
+Atributos relevantes: número, mesa, cliente, lista de platos, estado.
+
+6. ¿Qué es el Estado de un Objeto y cómo lo afecta? Ejemplo en Mesa
+El estado de una mesa puede ser "libre" u "ocupada". Cambiar el estado afecta la disponibilidad en el sistema.
+
+mesa1 = Mesa(1, 4)
+mesa1.ocupar()  # Estado cambia a ocupada
+mesa1.liberar() # Estado cambia a libre
+
+7. Diferencia entre Atributo y Estado
+- Atributo: Característica fija (ej: capacidad).
+- Estado: Valor actual de un atributo (ej: ocupada = True).
+
+8. Métodos de una Clase: Ejemplo en Reserva
+class Reserva:
+    def realizar_reserva(self, cliente, mesa):
+        # Lógica para reservar la mesa
+        pass
+
+9. Comportamiento de un Objeto: Ejemplo en Pedido
+El comportamiento de un objeto está definido por sus métodos. Por ejemplo, un Pedido puede agregar platos y calcular el total.
+
+pedido1 = Pedido(1, mesa1, cliente1)
+pedido1.agregar_plato(Plato("Hamburguesa", 8.5))
+pedido1.calcular_total()
+
+10. Diferencia entre Método y Comportamiento
+- Método: Es una función definida en la clase (ej: agregar_plato).
+- Comportamiento: Es el efecto de ejecutar uno o varios métodos (ej: el pedido suma platos y actualiza su total).
+
+11. Principios Básicos de la OO
+Abstracción
+Permite simplificar el sistema mostrando solo los detalles relevantes. Por ejemplo, la clase Pedido abstrae la lógica de gestión de platos y cálculo de total.
+
+Encapsulamiento
+Consiste en proteger los datos internos de los objetos. Por ejemplo, los atributos de Pedido pueden ser privados y modificados solo mediante métodos:
+
+class Pedido:
+    def __init__(self, numero):
+        self.__numero = numero  # atributo privado
+    def get_numero(self):
+        return self.__numero
+
+---
+
+Ejemplo completo en Python
+class Mesa:
+    def __init__(self, numero, capacidad):
+        self.numero = numero
+        self.capacidad = capacidad
+        self.ocupada = False
+    def ocupar(self):
+        self.ocupada = True
+    def liberar(self):
+        self.ocupada = False
+
+class Plato:
+    def __init__(self, nombre, precio):
+        self.nombre = nombre
+        self.precio = precio
+
+class Pedido:
+    def __init__(self, mesa):
+        self.mesa = mesa
+        self.platos = []
+    def agregar_plato(self, plato):
+        self.platos.append(plato)
+    def calcular_total(self):
+        return sum(plato.precio for plato in self.platos)
+
+# Uso
+mesa1 = Mesa(1, 4)
+plato1 = Plato("Hamburguesa", 8.5)
+plato2 = Plato("Ensalada", 5.0)
+mesa1.ocupar()
+pedido1 = Pedido(mesa1)
+pedido1.agregar_plato(plato1)
+pedido1.agregar_plato(plato2)
+total = pedido1.calcular_total()
+print(f"Total a pagar: ${total}")
+mesa1.liberar()
