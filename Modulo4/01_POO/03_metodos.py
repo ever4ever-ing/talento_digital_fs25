@@ -1,18 +1,18 @@
 class Usuario:
-    def __init__(self, nombre, apellido, email):
+    def __init__(self, nombre, apellido, email, limite=300000):
         self.nombre = nombre
         self.apellido = apellido
         self.email = email
-        self.limite_credito = 30000
+        self.limite_credito = limite
         self.saldo_pagar = 0
     def hacer_compra(self, monto):  # recibe como argumento el monto de la compra
         self.saldo_pagar += monto
         return self # permite el encadenamiento de métodos, devuelve todo el objeto Usuario
     def mostrar_saldo(self):
         print(f"Saldo a pagar de {self.nombre}: {self.saldo_pagar}")
-        return self # devuelve el saldo a pagar del usuario
+        return self.saldo_pagar # devuelve el saldo a pagar del usuario
 
-miyagi = Usuario("Nariyoshi", "Miyagi", "miyagi@codingdojo.la")
+miyagi = Usuario("Nariyoshi", "Miyagi", "miyagi@codingdojo.la", 500000)
 
 daniel = Usuario("Daniel", "Larusso", "daniel@codingdojo.la")
 lista = list()
