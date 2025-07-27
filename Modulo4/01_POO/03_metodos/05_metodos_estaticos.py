@@ -41,8 +41,7 @@ class TarjetaCredito:
         else:
             return True
    
-   
-  
+
 tarjeta_de_miyagi = TarjetaCredito()
 tarjeta_de_daniel = TarjetaCredito()
 tarjeta_de_miyagi.banco = "Banco Nacional de Python"
