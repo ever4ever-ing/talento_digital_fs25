@@ -16,14 +16,14 @@ class Perro(Animal):
         self.tamaño = tamaño
         self.vacunas = vacunas
         self.pedigree = pedigree
-        
-    def hacer_truco(self):
-        self.buscar_pelota()
-        
+    
     def buscar_pelota(self):
         velocidad = 30 #km/h
         super().desplazarse(velocidad)
         print(f'{self.nombre} encontró la pelota')
+        
+    def hacer_truco(self):
+        self.buscar_pelota()
         
 class Gato(Animal):
     def __init__(self, nombre, edad, color, tipo_pelaje):
