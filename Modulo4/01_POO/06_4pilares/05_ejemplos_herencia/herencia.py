@@ -5,7 +5,7 @@ class Animal:
         self.color = color
         self.velocidad = 0
     def hacer_truco(self):
-        print(f"{self.nombre} realiza un truco")
+        print(f"{self.nombre} realiza un truco porque es un animal entrenado.")
     def desplazarse(self, velocidad):
         self.velocidad = velocidad
         print(f"Animal desplazandose a {self.velocidad} Km/h") 
@@ -24,7 +24,6 @@ class Perro(Animal):
         
     def hacer_truco(self):
         self.buscar_pelota()
-        
 class Gato(Animal):
     def __init__(self, nombre, edad, color, tipo_pelaje):
         # Llama al constructor de la clase base Animal
@@ -35,18 +34,17 @@ class Gato(Animal):
         print(f'{self.nombre} está rascando el sofá de su casa')
 
     def hacer_truco(self):
-        print(f"{self.nombre} te ignora un momento")
-        print(f"{self.nombre} se estira, se lame, rompe una taza")
-        #print(f"{self.nombre} realiza un truco")
-        super().hacer_truco()
+        print(f"{self.nombre} te ignora un momento porque es un gato")
+        print(f"{self.nombre} se estira, se lame, rompe una taza porque es un gato")
+        super().hacer_truco()#llama al método de la clase padre
 
-gato1 = Gato("Michi", 3, "Gris", "Corto")
-gato1.hacer_truco()
-gato1.rascar_sofa()
-print(isinstance(gato1, Animal))
-print(isinstance(gato1, Gato))
+gato1 = Gato("Michi", 3, "Gris", "Corto")#Instanciando objeto de la clase Gato
+gato1.hacer_truco()#Llamando al método hacer_truco de la clase Gato
+#gato1.rascar_sofa()
+#print(isinstance(gato1, Animal))
+#print(isinstance(gato1, Gato))
 
 
-perro1 = Perro("Firulais", 5, "Marrón", "Labrador", "Grande", True, True)
-perro1.hacer_truco()
-perro1.buscar_pelota()
+#perro1 = Perro("Firulais", 5, "Marrón", "Labrador", "Grande", True, True)
+#perro1.hacer_truco()
+#perro1.buscar_pelota()
