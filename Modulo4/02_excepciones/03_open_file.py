@@ -8,7 +8,6 @@ while True:
         print("El archivo no se encuentra.")
     else:
         print("El archivo se leyó correctamente.")
-        input("Presiona Enter para continuar...")
     finally:
         print("Cerrando el archivo...")
         if f is not None:
