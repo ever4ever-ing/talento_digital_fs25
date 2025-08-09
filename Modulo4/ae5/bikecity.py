@@ -7,7 +7,7 @@ from datetime import datetime, timedelta
 
 # ============== EXCEPCION PERSONALIZADA ==============
 
-class ReservaError(Exception):
+class SystemError(Exception):
     """Excepcion personalizada para errores especificos del sistema de reservas"""
     def __init__(self, mensaje, codigo_error=None):
         self.codigo_error = codigo_error
@@ -68,12 +68,12 @@ class SistemaBikeCity:
                 raise TypeError("Debe ser una instancia de Cliente")
             
             if cliente.id in self.clientes:
-                raise ReservaError(f"Cliente {cliente.id} ya existe", "DUPLICADO")
+                raise SystemError(f"Cliente {cliente.id} ya existe", "DUPLICADO")
                 
             self.clientes[cliente.id] = cliente
             print(f"Cliente {cliente.id} - {cliente.nombre} agregado exitosamente")
             
-        except (TypeError, ReservaError) as e:
+        except (TypeError, SystemError) as e:
             print(f"Error: {e}")
             raise
         finally:
@@ -86,12 +86,12 @@ class SistemaBikeCity:
                 raise TypeError("Debe ser una instancia de Bicicleta")
             
             if bicicleta.id in self.bicicletas:
-                raise ReservaError(f"Bicicleta {bicicleta.id} ya existe", "DUPLICADA")
+                raise SystemError(f"Bicicleta {bicicleta.id} ya existe", "DUPLICADA")
                 
             self.bicicletas[bicicleta.id] = bicicleta
             print(f"Bicicleta {bicicleta.id} agregada exitosamente")
             
-        except (TypeError, ReservaError) as e:
+        except (TypeError, SystemError) as e:
             print(f"Error: {e}")
             raise
         finally:
@@ -119,7 +119,7 @@ class SistemaBikeCity:
             # Verificar reservas duplicadas - caso especifico de negocio
             if cliente_id in self.reservas_activas:
                 reserva_previa = self.reservas[self.reservas_activas[cliente_id]]
-                raise ReservaError(
+                raise SystemError(
                     f"Cliente {cliente_id} ya tiene reserva activa (ID: {reserva_previa.id})", 
                     "RESERVA_DUPLICADA"
                 )
@@ -127,7 +127,7 @@ class SistemaBikeCity:
             # Verificar disponibilidad
             bicicleta = self.bicicletas[bicicleta_id]
             if not bicicleta.disponible:
-                raise ReservaError(
+                raise SystemError(
                     f"Bicicleta {bicicleta_id} no disponible ({bicicleta.estado})", 
                     "NO_DISPONIBLE"
                 )
@@ -153,7 +153,7 @@ class SistemaBikeCity:
         except KeyError as e:
             print(f"Error de datos: {e}")
             raise
-        except ReservaError as e:
+        except SystemError as e:
             print(f"Error de negocio: {e}")
             if e.codigo_error == "RESERVA_DUPLICADA":
                 print("Sugerencia: Complete o cancele la reserva actual primero")
@@ -179,11 +179,11 @@ class SistemaBikeCity:
             reserva = self.reservas[reserva_id]
             
             if reserva.estado != "Pendiente":
-                raise ReservaError(f"Reserva en estado {reserva.estado}, no se puede pagar", "ESTADO_INVALIDO")
+                raise SystemError(f"Reserva en estado {reserva.estado}, no se puede pagar", "ESTADO_INVALIDO")
             
             # Validar monto exacto para evitar errores de calculo
             if monto_pagado != reserva.monto:
-                raise ReservaError(
+                raise SystemError(
                     f"Monto incorrecto: esperado ${reserva.monto}, recibido ${monto_pagado}", 
                     "MONTO_INCORRECTO"
                 )
@@ -191,7 +191,7 @@ class SistemaBikeCity:
             reserva.estado = "Activa"
             print(f"Pago procesado - Reserva {reserva_id} activada")
             
-        except (KeyError, ReservaError) as e:
+        except (KeyError, SystemError) as e:
             print(f"Error en pago: {e}")
             raise
         finally:
@@ -203,7 +203,7 @@ class SistemaBikeCity:
             reserva = self.reservas[reserva_id]
             
             if reserva.estado != "Activa":
-                raise ReservaError(f"Reserva debe estar activa, esta: {reserva.estado}", "ESTADO_INVALIDO")
+                raise SystemError(f"Reserva debe estar activa, esta: {reserva.estado}", "ESTADO_INVALIDO")
             
             # Liberar bicicleta
             self.bicicletas[reserva.bicicleta_id].disponible = True
@@ -213,8 +213,8 @@ class SistemaBikeCity:
             print(f"Reserva {reserva_id} completada - Bicicleta liberada")
             
         except KeyError:
-            raise ReservaError(f"Reserva {reserva_id} no encontrada", "NO_EXISTE")
-        except ReservaError as e:
+            raise SystemError(f"Reserva {reserva_id} no encontrada", "NO_EXISTE")
+        except SystemError as e:
             print(f"Error: {e}")
             raise
         finally:
