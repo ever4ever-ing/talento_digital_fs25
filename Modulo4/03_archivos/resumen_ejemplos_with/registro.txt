@@ -1,0 +1,3 @@
+Uvas: 10
+Manzanas: 5
+Peras: 3
