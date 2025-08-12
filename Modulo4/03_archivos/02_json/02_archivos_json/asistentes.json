@@ -1,0 +1,36 @@
+{
+    "evento": "Robotic Fest 2025",
+    "fecha": "2025-09-15",
+    "asistentes": [
+        {
+            "nombre": "Ana",
+            "edad": 20,
+            "email": "ana@example.com",
+            "rol": "estudiante"
+        },
+        {
+            "nombre": "Luis",
+            "edad": 32,
+            "email": "luis@example.com",
+            "rol": "mentor"
+        },
+        {
+            "nombre": "Carla",
+            "edad": 27,
+            "email": "carla@example.com",
+            "rol": "speaker"
+        },
+        {
+            "nombre": "Diego",
+            "edad": 19,
+            "email": "diego@example.com",
+            "rol": "estudiante"
+        },
+        {
+            "nombre": "Sofía",
+            "edad": 24,
+            "email": "sofia@example.com",
+            "rol": "voluntario"
+        }
+    ]
+}

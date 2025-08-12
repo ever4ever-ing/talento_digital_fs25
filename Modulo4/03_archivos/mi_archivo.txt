@@ -1,1 +1,1 @@
-Añadiendo otra línea al final.Añadiendo otra línea al final.
+Pug\r\nJack Russell Terrier\r\nEnglish Springer Spaniel\r\nGerman Shepherd\r\nStaffordshire Bull Terrier\r\nCavalier King Charles Spaniel\r\nGolden Retriever\r\nWest Highland White Terrier\r\nBoxer\r\nBorder Terrier\r\n

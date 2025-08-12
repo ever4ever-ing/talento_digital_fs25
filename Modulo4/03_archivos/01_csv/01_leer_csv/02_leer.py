@@ -1,7 +1,7 @@
 import csv
 
 try:
-    with open('bicicletas_nuevo.csv', 'r', encoding='utf-8') as archivo:
+    with open('bicicletas.csv', 'r', encoding='utf-8') as archivo:
         lector = csv.reader(archivo)
         encabezados = next(lector)
         print(f"Encabezados: {encabezados}")

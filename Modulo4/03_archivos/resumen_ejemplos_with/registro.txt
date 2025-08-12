@@ -1,3 +1,5 @@
-Uvas: 10
-Manzanas: 5
-Peras: 3
+Uva: 6
+Uva: 6
+Uva: 6
+Mango: 6
+Mango: 6

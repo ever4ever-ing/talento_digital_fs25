@@ -1,2 +1,10 @@
-Hola, mundo
-Esta es la linea 2
+Pug
+Jack Russell Terrier
+English Springer Spaniel
+German Shepherd
+Staffordshire Bull Terrier
+Cavalier King Charles Spaniel
+Golden Retriever
+West Highland White Terrier
+Boxer
+Border Terrier
