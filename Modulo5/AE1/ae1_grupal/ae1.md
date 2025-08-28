@@ -75,7 +75,7 @@ INSERT INTO Vehiculos (id_vehiculo, marca, modelo, año, precio_dia) VALUES
 ```sql
 -- Insertar datos de ejemplo en Alquileres
 INSERT INTO Alquileres (id_alquiler, id_cliente, id_vehiculo, fecha_inicio, fecha_fin) VALUES
-(1, 2, 2, '2025-03-10', '2025-03-15'),
+(1, 1, 2, '2025-03-10', '2025-03-15'),
 (2, 2, 1, '2025-03-12', '2025-03-16'),
 (3, 3, 3, '2025-03-20', '2025-03-22');
 ```
@@ -152,7 +152,7 @@ WHERE YEAR(a.fecha_inicio) = 2025 AND MONTH(a.fecha_inicio) = 3;
 
 ```sql
 -- Calcular precio total considerando días de alquiler y precio por día (MySQL)
-SELECT c.nombre, 
+SELECT c.nombre,
        SUM(v.precio_dia * (DATEDIFF(a.fecha_fin, a.fecha_inicio) + 1)) AS precio_total
 FROM Clientes c
 INNER JOIN Alquileres a ON c.id_cliente = a.id_cliente
@@ -161,6 +161,20 @@ GROUP BY c.id_cliente, c.nombre;
 
 -- Nota: En MySQL, DATEDIFF() calcula la diferencia en días
 -- Se suma 1 para incluir ambas fechas (inicio y fin)
+```
+OPCION B:
+```
+SELECT 
+    c.nombre,
+    a.fecha_inicio,
+    a.fecha_fin,
+    v.precio_dia,
+    (datediff(a.fecha_fin,a.fecha_inicio)+1) as dias,
+    (datediff(a.fecha_fin,a.fecha_inicio)+1) * v.precio_dia AS pagar
+    
+FROM clientes c
+JOIN alquileres a ON c.id_cliente = a.id_cliente
+JOIN vehiculos v ON a.id_vehiculo = v.id_vehiculo;
 ```
 
 ### Consulta 4: Clientes sin pagos
