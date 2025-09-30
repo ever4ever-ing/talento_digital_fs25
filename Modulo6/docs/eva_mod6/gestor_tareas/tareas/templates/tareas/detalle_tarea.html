@@ -1,0 +1,35 @@
+{% extends 'tareas/base.html' %}
+
+{% block title %}{{ tarea.titulo }} - Gestor de Tareas{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-header">
+                <h2>{{ tarea.titulo }}</h2>
+            </div>
+            <div class="card-body">
+                <h5>Descripción:</h5>
+                {% if tarea.descripcion %}
+                    <p class="card-text">{{ tarea.descripcion|linebreaks }}</p>
+                {% else %}
+                    <p class="text-muted"><em>Sin descripción</em></p>
+                {% endif %}
+            </div>
+            <div class="card-footer">
+                <div class="d-flex gap-2">
+                    <a href="{% url 'tareas:lista_tareas' %}" class="btn btn-secondary">
+                        Volver a la Lista
+                    </a>
+                    <a href="{% url 'tareas:eliminar_tarea' tarea.id %}" 
+                       class="btn btn-danger"
+                       onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')">
+                        Eliminar Tarea
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

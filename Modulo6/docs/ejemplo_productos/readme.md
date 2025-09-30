@@ -34,7 +34,7 @@ source venv/bin/activate
 ```bash
 pip install django
 ```
-
+pip install django-widget-tweaks
 ### 3. Crear el Proyecto Django
 ```bash
 django-admin startproject mi_tienda .
