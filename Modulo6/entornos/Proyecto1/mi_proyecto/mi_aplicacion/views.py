@@ -6,7 +6,14 @@ def inicio(request):
      contexto = {'mensaje': '¡Hola desde Django!'}
      return render(request, 'mi_aplicacion/inicio.html', contexto)
 
-def recibir_dato(request, valor):
-    contexto = {'valor': valor}
-    return render(request, 'mi_aplicacion/inicio.html', contexto)
+
+
+
+
+
+
+
+# def recibir_dato(request, valor):
+#     contexto = {'valor': valor}
+#     return render(request, 'mi_aplicacion/inicio.html', contexto)
 
