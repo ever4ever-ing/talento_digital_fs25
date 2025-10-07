@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio</title>
+    {% load static %}
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="{% static 'css/estilos.css' %}" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container">
+            <a class="navbar-brand mx-auto" href="#">Mi Sitio</a>
+            <button
+                class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+            >
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="#">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Servicios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Contacto</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 d-flex flex-column align-items-center justify-content-center text-center">
+      <div class="p-5 mb-4 bg-light rounded-3">
+        <div class="container-fluid py-5 d-flex flex-column align-items-center justify-content-center text-center"></div>
+          <h1 class="display-5 fw-bold">Bienvenido a Mi Sitio</h1>
+          <p class="fs-4">
+            Este es un sitio web construido con Django y Bootstrap.
+          </p>
+          <h1>Cuevana4ever</h1>
+          <p>Bienvenido a cuevana el cine que nunca te puede faltar.</p>
+          {{mensaje}}
+          <br>
+          <a class="btn btn-primary btn-lg" href="#" role="button">Más información</a>
+        </div>
+      </div>
+    </div>
+    <footer class="bg-dark text-white text-center py-3">
+    <p>&copy; 2025 Mi Sitio. Todos los derechos reservados.</p>
+    </footer>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
