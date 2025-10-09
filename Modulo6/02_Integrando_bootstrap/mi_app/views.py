@@ -8,7 +8,6 @@ def inicio(request):
 def home(request):
     return render(request, 'home.html')
 
-
 def perfil(request):
     usuario = {"nombre": "Everardo", "edad": 28}
     return render(request, 'perfil.html', usuario)
