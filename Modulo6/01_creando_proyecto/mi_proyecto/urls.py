@@ -19,5 +19,7 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('web.urls')),  # enruta la raíz a la app 'web'
+    path('web/', include('web.urls')),# enruta la raíz a la app 'web'
+    path('clientes/', include('clientes.urls')),
+    path('recetas/', include('recetas.urls')), # enruta la raíz a la app 'recetas'
 ]

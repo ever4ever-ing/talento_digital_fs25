@@ -3,6 +3,11 @@
     ```bash
     python -m venv .venv
     ```
+    ```bash
+    virtualenv venv
+    ```
+
+
 
 2. **Activar entorno virtual (PowerShell)**  
     ```bash
