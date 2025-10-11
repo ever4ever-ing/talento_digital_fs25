@@ -14,6 +14,8 @@ def recetas(request):
             {'nombre': 'Spaghetti Carbonara', 'ingredientes': ['spaghetti', 'huevos', 'queso pecorino', 'panceta']}
         ]
     }
+    receta = Receta(nombre="Paella", descripcion="Deliciosa paella valenciana", ingredientes="Arroz, mariscos, pollo, verduras")
+    recetas['recetas'].append(receta)
     return render(request, 'recetas/inicio.html', recetas)
 
 
