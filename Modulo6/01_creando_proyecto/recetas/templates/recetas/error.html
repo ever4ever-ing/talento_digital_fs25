@@ -1,0 +1,11 @@
+{% extends 'recetas/base.html' %}
+
+{% block title %}Error{% endblock %}
+
+{% block content %}
+<div class="alert alert-danger" role="alert">
+    <h1>¡Algo salió mal!</h1>
+    <p>{{ mensaje_error }}</p>
+    <a href="{% url 'recetas:recetas' %}" class="btn btn-primary">Volver a la página principal</a>
+</div>
+{% endblock %}

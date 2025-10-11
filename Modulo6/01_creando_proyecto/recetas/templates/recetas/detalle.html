@@ -1,0 +1,21 @@
+{% extends 'recetas/base.html' %}
+
+{% block title %}Detalle de Receta{% endblock %}
+
+{% block content %}
+<h1>Detalle de Receta</h1>
+
+{% if receta %}
+    <h2>{{ receta.nombre }}</h2>
+    <p>Ingredientes:</p>
+    <ul>
+        {% for ingrediente in receta.ingredientes %}
+            <li>{{ ingrediente }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>La receta no existe o no está disponible.</p>
+{% endif %}
+
+<a href="{% url 'recetas:recetas' %}">Volver a la lista de recetas</a>
+{% endblock %}
