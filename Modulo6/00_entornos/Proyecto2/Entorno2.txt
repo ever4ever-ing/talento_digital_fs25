@@ -1,0 +1,5 @@
+Entorno2: 
+1) virtualenv entorno2
+2) .\entorno2\Scripts\activate
+3) pip install matplotlib pandas
+4) pip list

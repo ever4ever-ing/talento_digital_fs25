@@ -1,0 +1,19 @@
+Entorno1:
+
+1) virtualenv entorno1 
+2) .\entorno1\Scripts\activate
+3) pip install django mysqlclient
+4) pip list
+5) pip freeze > requirements.txt
+
+Django
+
+1)  django-admin startproject mi_proyecto
+
+2) cd .\mi_proyecto\ 
+
+3) python manage.py runserver  
+
+Ctrl + C para detener servidor
+
+4) python manage.py startapp mi_aplicacion
