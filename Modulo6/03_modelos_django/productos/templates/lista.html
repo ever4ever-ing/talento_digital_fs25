@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Productos</title>
+</head>
+<body>
+    <h1>Productos Disponibles</h1>
+    <ul>
+        {% for producto in productos %}
+            <li>
+                <strong>{{ producto.nombre }}</strong> - ${{ producto.precio }}
+                {% if producto.disponible %}
+                    <span>(Disponible)</span>
+                {% else %}
+                    <span>(No disponible)</span>
+                {% endif %}
+            </li>
+        {% empty %}
+            <p>No hay productos disponibles.</p>
+        {% endfor %}
+    </ul>
+</body>
+</html>
