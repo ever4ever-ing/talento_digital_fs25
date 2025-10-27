@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ventas</title>
+    <style>
+        body{
+            background-color: cornflowerblue;
+        }
+    </style>
+</head>
+<body>
+    <h1>Venta de automoviles</h1>
+    {{mensaje}}
+
+    {% if automoviles %}
+    <ul>
+        {% for auto in automoviles %}
+        <li>
+            {{ auto.marca }} {{ auto.modelo }} (año: {{ auto.anio }}) - ${{ auto.precio }}
+            {% if auto.disponible %}<strong>Disponible</strong>{% else %}<em>No disponible</em>{% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No hay automóviles registrados.</p>
+    {% endif %}
+</body>
+</html>
