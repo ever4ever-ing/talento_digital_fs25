@@ -1,0 +1,7 @@
+<!-- templates/404.html -->
+{% extends "base.html" %}
+{% block content %}
+  <h1>Página no encontrada (404)</h1>
+  <p>Lo sentimos, la página que buscas no existe.</p>
+  <p><a href="{% url 'events:list' %}">Volver a eventos</a></p>
+{% endblock %}

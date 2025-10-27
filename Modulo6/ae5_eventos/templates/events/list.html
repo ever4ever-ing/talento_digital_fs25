@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+  <h2>Eventos</h2>
+  <a href="{% url 'events:create' %}">Crear evento</a>
+  <ul>
+    {% for event in object_list %}
+      <li>
+        {{ event.title }} {% if event.is_private %}(Privado){% endif %} - {{ event.date }}
+        <a href="{% url 'events:edit' event.pk %}">editar</a>
+        <a href="{% url 'events:delete' event.pk %}">eliminar</a>
+      </li>
+    {% empty %}
+      <li>No hay eventos</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

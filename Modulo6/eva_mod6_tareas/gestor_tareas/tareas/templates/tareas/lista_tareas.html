@@ -1,0 +1,51 @@
+{% extends 'tareas/base.html' %}
+
+{% block title %}Mis Tareas - Gestor de Tareas{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h1>Mis Tareas</h1>
+    <a href="{% url 'tareas:agregar_tarea' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Nueva Tarea
+    </a>
+</div>
+
+{% if tareas %}
+    <div class="row">
+        {% for tarea in tareas %}
+            <div class="col-md-6 col-lg-4 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tarea.titulo }}</h5>
+                        <p class="card-text">
+                            {% if tarea.descripcion %}
+                                {{ tarea.descripcion|truncatewords:10 }}
+                            {% else %}
+                                <em>Sin descripción</em>
+                            {% endif %}
+                        </p>
+                        <div class="d-flex gap-2">
+                            <a href="{% url 'tareas:detalle_tarea' tarea.id %}" class="btn btn-outline-primary btn-sm">
+                                Ver Detalle
+                            </a>
+                            <a href="{% url 'tareas:eliminar_tarea' tarea.id %}" 
+                               class="btn btn-outline-danger btn-sm"
+                               onclick="return confirm('¿Estás seguro de que quieres eliminar esta tarea?')">
+                                Eliminar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="text-center mt-5">
+        <div class="alert alert-info">
+            <h4>No tienes tareas aún</h4>
+            <p>¡Agrega tu primera tarea para comenzar!</p>
+            <a href="{% url 'tareas:agregar_tarea' %}" class="btn btn-primary">Agregar Tarea</a>
+        </div>
+    </div>
+{% endif %}
+{% endblock %}
