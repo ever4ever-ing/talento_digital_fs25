@@ -4,7 +4,7 @@ from .models import Receta
 
 # Create your views here.
 
-def recetas(request):
+def lista_recetas(request):
     recetas = {
         'titulo': 'Bienvenidos a la página de recetas',
         'descripcion': 'Aquí encontrarás las mejores recetas de cocina.',
@@ -14,8 +14,7 @@ def recetas(request):
             {'nombre': 'Spaghetti Carbonara', 'ingredientes': ['spaghetti', 'huevos', 'queso pecorino', 'panceta']}
         ]
     }
-    receta = Receta(nombre="Paella", descripcion="Deliciosa paella valenciana", ingredientes="Arroz, mariscos, pollo, verduras")
-    recetas['recetas'].append(receta)
+
     return render(request, 'recetas/inicio.html', recetas)
 
 
