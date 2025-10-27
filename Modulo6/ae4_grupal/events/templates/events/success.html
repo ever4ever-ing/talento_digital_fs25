@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <p>Evento '{{ event.name }}' registrado para la fecha {{ event.date }}.</p>
+  <p><a href="/">Ver lista de eventos</a> | <a href="/register/">Registrar otro</a></p>
+{% endblock %}

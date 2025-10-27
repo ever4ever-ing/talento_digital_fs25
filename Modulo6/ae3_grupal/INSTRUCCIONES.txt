@@ -1,0 +1,25 @@
+# PASOS PARA EJECUTAR EL PROYECTO
+
+## 1. Instalar dependencias
+pip install django pillow
+
+## 2. Hacer migraciones
+python manage.py makemigrations
+python manage.py migrate
+
+## 3. Crear superusuario
+python manage.py createsuperuser
+
+## 4. Ejecutar servidor
+python manage.py runserver
+
+## 5. Acceder al sitio
+- Sitio web: http://127.0.0.1:8000/
+- Admin panel: http://127.0.0.1:8000/admin/
+
+## 6. Agregar recetas
+- Inicia sesión en el panel de administración
+- Ve a "Recetas" → "Agregar Receta"
+- Completa los campos y guarda
+
+¡Listo! Tu sitio de recetas está funcionando.

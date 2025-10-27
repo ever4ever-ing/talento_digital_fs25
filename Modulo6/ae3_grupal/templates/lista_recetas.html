@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Todas las Recetas - Recetas Deliciosas{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">Todas Nuestras Recetas</h1>
+    
+    {% if recetas %}
+    <div class="row g-4">
+        {% for receta in recetas %}
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm hover-card">
+                {% if receta.imagen %}
+                <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre }}" style="height: 200px; object-fit: cover;">
+                {% else %}
+                <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                    <span class="text-white display-1">🍽️</span>
+                </div>
+                {% endif %}
+                
+                <div class="card-body">
+                    <h5 class="card-title">{{ receta.nombre }}</h5>
+                    <p class="card-text text-muted">{{ receta.get_descripcion_corta }}</p>
+                    <a href="{% url 'recetas:detalle_receta' receta.pk %}" class="btn btn-outline-primary btn-sm">
+                        Ver receta completa
+                    </a>
+                </div>
+                <div class="card-footer bg-transparent border-top-0">
+                    <small class="text-muted">Agregada el {{ receta.fecha_creacion|date:"d/m/Y" }}</small>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <div class="mb-4">
+            <span class="display-1">📚</span>
+        </div>
+        <h3>No hay recetas disponibles</h3>
+        <p class="text-muted">¡Pronto agregaremos deliciosas recetas para ti!</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

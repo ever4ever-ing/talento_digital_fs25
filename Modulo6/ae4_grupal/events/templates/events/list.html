@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>Eventos</h2>
+  <ul>
+    {% for ev in events %}
+      <li>
+        <a href="/{{ ev.pk }}/">{{ ev.name }}</a> — {{ ev.date }} — {{ ev.location }}
+        ({{ ev.participants.count }} participantes)
+      </li>
+    {% empty %}
+      <li>No hay eventos registrados.</li>
+    {% endfor %}
+  </ul>
+  <p><a href="/register/">Registrar evento</a></p>
+{% endblock %}

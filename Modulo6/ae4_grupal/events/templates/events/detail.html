@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h2>{{ event.name }}</h2>
+  <p>Fecha: {{ event.date }}</p>
+  <p>Ubicación: {{ event.location }}</p>
+
+  <h3>Participantes</h3>
+  <ul>
+    {% for p in event.participants.all %}
+      <li>{{ p.name }} — {{ p.email }}</li>
+    {% empty %}
+      <li>No hay participantes.</li>
+    {% endfor %}
+  </ul>
+
+  <p><a href="/">Volver a la lista</a></p>
+{% endblock %}

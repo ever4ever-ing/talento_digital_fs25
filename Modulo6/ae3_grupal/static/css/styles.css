@@ -1,0 +1,209 @@
+/* Estilos personalizados minimalistas para Recetas Deliciosas */
+
+/* Variables de colores */
+:root {
+    --primary-color: #0d6efd;
+    --dark-color: #212529;
+    --light-bg: #f8f9fa;
+    --shadow: rgba(0, 0, 0, 0.1);
+}
+
+/* Estilos generales */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+}
+
+/* Navbar personalizado */
+.navbar-brand {
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+}
+
+.navbar-brand:hover {
+    transform: scale(1.05);
+}
+
+.nav-link {
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 50%;
+    background-color: var(--primary-color);
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 80%;
+}
+
+/* Jumbotron personalizado */
+.jumbotron-custom {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 0;
+}
+
+.jumbotron-custom h1 {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.jumbotron-custom .btn {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.jumbotron-custom .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Cards de recetas */
+.card {
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.hover-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px var(--shadow) !important;
+}
+
+.card-img-top {
+    transition: transform 0.3s ease;
+}
+
+.hover-card:hover .card-img-top {
+    transform: scale(1.05);
+    overflow: hidden;
+}
+
+/* Botones personalizados */
+.btn {
+    border-radius: 25px;
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn:hover {
+    transform: translateY(-2px);
+}
+
+/* Footer */
+footer {
+    margin-top: auto;
+}
+
+footer h5 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+/* Estilos para el contenido de las recetas */
+.ingredientes-content,
+.instrucciones-content {
+    line-height: 1.8;
+    font-size: 1.05rem;
+}
+
+/* Mensajes de alerta */
+.alert {
+    border-radius: 10px;
+    border: none;
+}
+
+/* Formulario de contacto */
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #dee2e6;
+    padding: 0.75rem 1rem;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+}
+
+/* Animaciones sutiles */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .jumbotron-custom h1 {
+        font-size: 2rem;
+    }
+    
+    .jumbotron-custom .lead {
+        font-size: 1rem;
+    }
+}
+
+/* Estilos para imágenes */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Sombras suaves */
+.shadow-sm {
+    box-shadow: 0 0.125rem 0.5rem var(--shadow) !important;
+}
+
+/* Espaciado consistente */
+section {
+    padding: 3rem 0;
+}
+
+/* Títulos */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+/* Enlaces */
+a {
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+/* Scrollbar personalizado (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}

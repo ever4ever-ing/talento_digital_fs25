@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Recetas Deliciosas{% endblock %}
+
+{% block content %}
+<!-- Jumbotron -->
+<div class="jumbotron-custom py-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h1 class="display-4 fw-bold mb-4">¡Bienvenido a Recetas Deliciosas!</h1>
+                <p class="lead mb-4">
+                    Descubre un mundo de sabores con nuestra colección de recetas caseras. 
+                    Desde platos tradicionales hasta creaciones innovadoras, encuentra la inspiración 
+                    perfecta para tu próxima comida.
+                </p>
+                <a href="{% url 'recetas:lista_recetas' %}" class="btn btn-primary btn-lg">
+                    Ver todas las recetas
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Últimas Recetas -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Últimas Recetas</h2>
+        
+        {% if recetas %}
+        <div class="row g-4">
+            {% for receta in recetas %}
+            <div class="col-md-6 col-lg-4">
+                <div class="card h-100 shadow-sm hover-card">
+                    {% if receta.imagen %}
+                    <img src="{{ receta.imagen.url }}" class="card-img-top" alt="{{ receta.nombre }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <span class="text-white display-1">🍽️</span>
+                    </div>
+                    {% endif %}
+                    
+                    <div class="card-body">
+                        <h5 class="card-title">{{ receta.nombre }}</h5>
+                        <p class="card-text text-muted">{{ receta.get_descripcion_corta }}</p>
+                        <a href="{% url 'recetas:detalle_receta' receta.pk %}" class="btn btn-outline-primary btn-sm">
+                            Ver receta completa
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <p class="text-muted">Aún no hay recetas disponibles. ¡Pronto agregaremos deliciosas opciones!</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
