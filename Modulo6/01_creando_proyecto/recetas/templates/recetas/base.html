@@ -22,22 +22,7 @@
     <!-- Main Content -->
     <div class="container mt-4">
       {% block content %}
-      <h1>Recetas</h1>
-      <h2>{{ titulo }}</h2>
-      <p>{{ descripcion }}</p>
-
-      <ul>
-        {% for receta in recetas %}
-        <li>
-          <strong>{{ receta.nombre }}</strong>
-          <ul>
-            {% for ingrediente in receta.ingredientes %}
-            <li>{{ ingrediente }}</li>
-            {% endfor %}
-          </ul>
-        </li>
-        {% endfor %}
-      </ul>
+      <!-- El contenido va aquí -->
       {% endblock %}
     </div>
 
