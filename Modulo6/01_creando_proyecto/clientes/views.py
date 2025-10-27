@@ -27,3 +27,5 @@ def lista_productos(request):
 def ir_a_productos(request):
     # Redirige automáticamente a la página de productos
     return redirect('productos')
+
+

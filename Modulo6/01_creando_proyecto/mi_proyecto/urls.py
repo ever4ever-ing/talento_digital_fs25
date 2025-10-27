@@ -16,10 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+import importlib.util
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('web/', include('web.urls')),# enruta la raíz a la app 'web'
     path('clientes/', include('clientes.urls')),
     path('recetas/', include('recetas.urls')), # enruta la raíz a la app 'recetas'
+    path('automoviles/', include('automoviles.urls')), # enruta la raíz a la app 'automoviles'
 ]
