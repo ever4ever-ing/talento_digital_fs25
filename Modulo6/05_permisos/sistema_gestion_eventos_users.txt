@@ -1,0 +1,8 @@
+Plataforma de Gestión de Eventos en Django.
+La plataforma permite a los usuarios registrarse y gestionar eventos 
+como conferencias, conciertos y seminarios.
+Sin embargo, algunos eventos son privados y solo deben ser accesibles
+por ciertos usuarios.
+
+user1
+password_1

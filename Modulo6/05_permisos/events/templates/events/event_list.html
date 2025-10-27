@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Eventos{% endblock %}
+
+{% block content %}
+<h1>Eventos Disponibles</h1>
+{% if events %}
+    <div class="row">
+        {% for event in events %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ event.title }}</h5>
+                        <p class="card-text">{{ event.description|truncatechars:100 }}</p>
+                        <p class="card-text"><small class="text-muted">Fecha: {{ event.date }}</small></p>
+                        {% if event.is_private %}
+                            <span class="badge bg-warning">Privado</span>
+                        {% endif %}
+                        <a href="{% url 'event_detail' event.pk %}" class="btn btn-primary">Ver Detalles</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <p>No hay eventos disponibles.</p>
+{% endif %}
+{% endblock %}
