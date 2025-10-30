@@ -1,67 +1,64 @@
-
-    {% extends 'recetas/base.html' %}
+{% extends 'recetas/base.html' %}
 {% load static %}
-
-{% block title %}Recetas{% endblock %}
-
-    {% block content %}
-    <!-- Jumbotron -->
-    <div class="p-5 mb-4 bg-light rounded-3">
-        <div class="container-fluid py-5">
-            <div class="row align-items-center">
-                <div class="col-md-8">
-                    <h1 class="display-5 fw-bold">Bienvenido a Nuestras Recetas</h1>
-                    <p class="fs-4">
-                        Descubre una colección de deliciosas recetas para preparar en casa. 
-                        Desde platos sencillos hasta elaboradas creaciones culinarias.
-                    </p>
-                    <a href="#recetas" class="btn btn-primary btn-lg">Ver Recetas</a>
-                </div>
-                <div class="col-md-4">
-                    <img src="{% static 'recetas/images/comida.jpg' %}" 
-                         alt="Recetas deliciosas" 
-                         class="img-fluid rounded shadow">
-                </div>
-            </div>
-        </div>
+{% block title %}Recetas{%
+endblock %} {% block content %}
+<!-- Jumbotron -->
+<div class="p-5 mb-4 bg-light rounded-3">
+  <div class="container-fluid py-5">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h1 class="display-5 fw-bold">Bienvenido a Nuestras Recetas</h1>
+        <p class="fs-4">
+          Descubre una colección de deliciosas recetas para preparar en casa.
+          Desde platos sencillos hasta elaboradas creaciones culinarias.
+        </p>
+        <a href="#recetas" class="btn btn-primary btn-lg">Ver Recetas</a>
+      </div>
+      <div class="col-md-4">
+        <img
+          src="{% static 'recetas/images/comida.jpg' %}"
+          alt="Recetas deliciosas"
+          class="img-fluid rounded shadow"
+        />
+      </div>
     </div>
+  </div>
+</div>
 
-    <!-- Lista de Recetas -->
-    <h2 class="mb-4" id="recetas">Nuestras Recetas</h2>
-    
-    <div class="row">
-        {% for receta in recetas %}
-        <div class="col-md-6 mb-4">
-            <div class="card">
-                <div class="card-header bg-primary text-white">
-                    <h3 class="card-title mb-0">{{ receta.nombre }}</h3>
-                </div>
-                <div class="card-body">
-                    <h5 class="card-subtitle mb-2 text-muted">Ingredientes:</h5>
-                    <p class="card-text">{{ receta.ingredientes|linebreaks }}</p>
-                    
-                    <h5 class="card-subtitle mb-2 text-muted">Instrucciones:</h5>
-                    <p class="card-text">{{ receta.instrucciones|linebreaks }}</p>
-                    
-                    <div class="row mt-3">
-                        <div class="col-6">
-                            <strong>Tiempo de preparación:</strong>
-                            <p>{{ receta.tiempo_preparacion }} minutos</p>
-                        </div>
-                        <div class="col-6">
-                            <strong>Porciones:</strong>
-                            <p>{{ receta.porciones }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<!-- Lista de Recetas -->
+<h2 class="mb-4" id="recetas">Nuestras Recetas</h2>
+
+<div class="row">
+  {% for receta in recetas %}
+  <div class="col-md-6 mb-4">
+    <div class="card">
+      <div class="card-header bg-primary text-white">
+        <h3 class="card-title mb-0">{{ receta.nombre }}</h3>
+      </div>
+      <div class="card-body">
+        <h5 class="card-subtitle mb-2 text-muted">Ingredientes:</h5>
+        <p class="card-text">{{ receta.ingredientes|linebreaks }}</p>
+
+        <h5 class="card-subtitle mb-2 text-muted">Instrucciones:</h5>
+        <p class="card-text">{{ receta.instrucciones|linebreaks }}</p>
+
+        <div class="row mt-3">
+          <div class="col-6">
+            <strong>Tiempo de preparación:</strong>
+            <p>{{ receta.tiempo_preparacion }} minutos</p>
+          </div>
+          <div class="col-6">
+            <strong>Porciones:</strong>
+            <p>{{ receta.porciones }}</p>
+          </div>
         </div>
-        {% empty %}
-        <div class="col-12">
-            <div class="alert alert-info">
-                No hay recetas disponibles.
-            </div>
-        </div>
-        {% endfor %}
+      </div>
     </div>
-    {% endblock %}
+  </div>
+  {% empty %}
+  <div class="col-12">
+    <div class="alert alert-info">No hay recetas disponibles.</div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

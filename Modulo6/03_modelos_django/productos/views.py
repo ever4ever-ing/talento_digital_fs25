@@ -8,9 +8,12 @@ def lista_productos(request):
         {"nombre": "Producto A", "precio": 100.50, "disponible": True},
         {"nombre": "Producto B", "precio": 200.75, "disponible": False},
         {"nombre": "Producto C", "precio": 50.99, "disponible": True},
+        {"nombre": "Producto D", "precio": 50.99, "disponible": True},
+        {"nombre": "Producto E", "precio": 50.99, "disponible": True},
     ]
     # Para obtener productos desde la base de datos, descomenta la línea siguiente:
-    productos_bd = Producto.objects.all()
+    productos_bd = Producto.objects.all() # ORM de Django para obtener todos los productos
+    #es equivalente a SELECT * FROM productos_producto;
     
     # extender la lista con productos de la base de datos
     productos.extend(productos_bd)

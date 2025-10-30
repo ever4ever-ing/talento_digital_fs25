@@ -3,63 +3,39 @@ como un navbar, un jumbotron, un footer,
 y trabajando con vistas dinámicas, templates, y contenido estático. 
 
     Estructura del Proyecto:
-
         Navbar: Una barra de navegación que permita acceder a las diferentes secciones del sitio web: "Inicio", "Recetas", "Contacto".
-
         Jumbotron: Un jumbotron en la página de inicio que resalte el propósito del sitio y de qué trata.
-
         Footer: Un pie de página con información adicional sobre el sitio web y los derechos de autor.
-
     Páginas Estáticas y Dinámicas:
-
         Página de Inicio: Debe mostrar un mensaje de bienvenida y una lista de las últimas recetas (cada receta debe mostrar el nombre y una breve descripción).
-
         Página de Recetas: Cada receta debe tener una página individual que muestre los detalles de la receta (nombre, ingredientes, instrucciones de preparación). Estas páginas deben ser dinámicas, mostrando la información desde la base de datos.
-
         Página de Contacto: Un formulario de contacto que permita a los usuarios enviar un mensaje.
 
     Navegación:
-
         Cada página debe estar vinculada a través de una barra de navegación (Navbar). Asegúrate de que los enlaces de la navegación funcionen correctamente y dirijan al usuario a las páginas correspondientes.
-
         El sitio debe ser responsivo, por lo que debe ajustarse bien a dispositivos móviles y de escritorio.
 
     Contenido Estático:
-
         Imágenes de las recetas: Cada receta debe incluir una imagen estática. Los archivos de imagen deben estar almacenados en la carpeta de archivos estáticos de Django.
-
         Archivos CSS personalizados: Además de los estilos de Bootstrap, puedes crear un archivo CSS personalizado para darle un toque único al sitio.
 
     Modelos y Vistas:
-
         Crea un modelo de Receta con los siguientes campos:
-
             nombre (CharField)
-
             ingredientes (TextField)
-
             instrucciones (TextField)
-
             imagen (ImageField)
-
         Utiliza vistas genéricas para mostrar las recetas. La página de inicio debe mostrar una lista de las recetas y, al hacer clic en una receta, el usuario debe ser redirigido a la página de detalles de la receta.
-
     Plantillas (Templates):
 
         Utiliza herencia de templates para evitar la repetición de código. Por ejemplo, el navbar y el footer deben estar incluidos en un template base, y las demás páginas deben extender este template base.
-
         En la página de Recetas, utiliza iteradores (como un ciclo for) para recorrer las recetas y mostrarlas en la página.
-
         En la página de Detalles de Receta, usa condiciones (if/else) para mostrar la receta solo si existe en la base de datos.
 
     Redirección y Manejo de Errores:
 
         Implementa un manejo de errores adecuado. Si una receta no existe, el usuario debe ser redirigido a una página de error personalizada.
-
         Si el usuario intenta acceder a una página de contacto sin completar el formulario, debe recibir un mensaje de advertencia.
-
     Enlaces de URL y Redirección:
-
         Utiliza etiquetas URL en los templates para hacer las URLs dinámicas.
-
         Al enviar un formulario de contacto, redirige al usuario a una página de confirmación de mensaje enviado.
