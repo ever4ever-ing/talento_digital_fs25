@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>Autos - Crear / Listar</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, sans-serif;
+        padding: 20px;
+        max-width: 800px;
+      }
+      label {
+        display: block;
+        margin-top: 12px;
+        font-weight: 600;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 8px;
+        box-sizing: border-box;
+        margin-top: 6px;
+      }
+      .error {
+        color: #a00;
+        font-size: 0.9em;
+        margin-top: 4px;
+      }
+      .field-row {
+        margin-bottom: 6px;
+      }
+      .autos-list {
+        margin-top: 24px;
+        border-top: 1px solid #eee;
+        padding-top: 16px;
+      }
+      .auto {
+        padding: 8px 0;
+        border-bottom: 1px dashed #eee;
+      }
+      .meta {
+        color: #666;
+        font-size: 0.9em;
+      }
+
+      .el_button{
+        display: inline-block;padding:8px 12px;background:#007bff;color:#fff;text-decoration:none;border-radius:4px;
+      }
+      </style>
+  </head>
+  <body>
+    <h1>Registrar automóvil</h1>
+    <span>
+      <a class="el_button" href="{% url 'crear_automovil' %}" >
+        Registrar
+      </a>
+    </span>
+
+      <section class="autos-list">
+        <h2>Autos registrados</h2>
+        {% for a in autos %}
+        <div class="auto">
+        <div style="display: flex; gap: 16px; align-items: flex-start;">
+          <img src="https://via.placeholder.com/200x150?text={{ a.marca }}+{{ a.modelo }}" alt="{{ a.marca }} {{ a.modelo }}" style="width: 200px; height: 150px; object-fit: cover; border-radius: 8px;">
+          <div style="flex: 1;">
+          <h3 style="margin: 0 0 8px 0;">{{ a.marca }} {{ a.modelo }}</h3>
+          <p style="margin: 4px 0; color: #1c1e21; font-size: 1.2em; font-weight: bold; color: #31a24c;">${{ a.precio }}</p>
+          <p style="margin: 4px 0; color: #65676b;">Año: {{ a.año }}</p>
+          <div style="margin-top: 12px;">
+            <a class="el_button" href="#" style="margin-right: 8px;">Ver detalles</a>
+            <a class="el_button" href="#" style="background: #e0e0e0; color: #050505;">Contactar</a>
+          </div>
+          </div>
+        </div>
+        </div>
+        {% empty %}
+        <div style="padding: 20px; background: #f0f2f5; border-radius: 8px; text-align: center; color: #65676b;">
+        No hay automóviles disponibles.
+        </div>
+        {% endfor %}
+      </section>
+  </body>
+</html>
