@@ -1,54 +1,29 @@
+
 {% extends 'base.html' %}
 
 {% block content %}
-  <form method="post">
-    {% csrf_token %}
-    <fieldset>
-      <legend>Evento</legend>
-      {{ event_form.non_field_errors }}
-      <div>
-        {{ event_form.name.label_tag }}<br>
-        {{ event_form.name }}
-        {% for error in event_form.name.errors %}
-          <div style="color:red">{{ error }}</div>
-        {% endfor %}
-      </div>
-
-      <div>
-        {{ event_form.date.label_tag }}<br>
-        {{ event_form.date }}
-        {% for error in event_form.date.errors %}
-          <div style="color:red">{{ error }}</div>
-        {% endfor %}
-      </div>
-
-      <div>
-        {{ event_form.location.label_tag }}<br>
-        {{ event_form.location }}
-        {% for error in event_form.location.errors %}
-          <div style="color:red">{{ error }}</div>
-        {% endfor %}
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Participantes</legend>
-      {{ formset.management_form }}
-      {% for form in formset %}
-        <div style="margin-bottom:8px;">
-          <div>
-            {{ form.name.label_tag }}<br>
-            {{ form.name }}
-          </div>
-
-          <div>
-            {{ form.email.label_tag }}<br>
-            {{ form.email }}
-          </div>
-        </div>
-      {% endfor %}
-    </fieldset>
-
-    <button type="submit">Registrar</button>
-  </form>
+<form method="post">
+  {% csrf_token %}
+  <fieldset>
+    <legend>Datos del Evento</legend>
+    {{ event_form.name.label_tag }}<br>
+    {{ event_form.name }}<br>
+    {{ event_form.date.label_tag }}<br>
+    {{ event_form.date }}<br>
+    {{ event_form.location.label_tag }}<br>
+    {{ event_form.location }}<br>
+  </fieldset>
+  <fieldset>
+    <legend>Participantes</legend>
+    {{ formset.management_form }}
+    {% for form in formset %}
+      Participante {{ forloop.counter }}<br>
+      {{ form.name.label_tag }}<br>
+      {{ form.name }}<br>
+      {{ form.email.label_tag }}<br>
+      {{ form.email }}<br><br>
+    {% endfor %}
+  </fieldset>
+  <button type="submit">Registrar Evento</button>
+</form>
 {% endblock %}

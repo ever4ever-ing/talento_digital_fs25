@@ -1,6 +1,22 @@
 {% extends 'base.html' %}
 
 {% block content %}
-  <p>Evento '{{ event.name }}' registrado para la fecha {{ event.date }}.</p>
-  <p><a href="/">Ver lista de eventos</a> | <a href="/register/">Registrar otro</a></p>
+  <div style="background-color:#d4edda; padding:15px; border-radius:5px; margin-bottom:20px;">
+    <p style="margin:0; color:#155724;">
+      <strong>✓ Evento registrado exitosamente</strong>
+    </p>
+    <p style="margin:10px 0 0 0; color:#155724;">
+      Evento: <strong>{{ event.name }}</strong><br>
+      Fecha: <strong>{{ event.date }}</strong>
+      {% if event.location %}
+        <br>Ubicación: <strong>{{ event.location }}</strong>
+      {% endif %}
+      <br>Participantes registrados: <strong>{{ participant_count }}</strong>
+    </p>
+  </div>
+  
+  <p>
+    <a href="/">Ver lista de eventos</a> | 
+    <a href="/register/">Registrar otro evento</a>
+  </p>
 {% endblock %}
