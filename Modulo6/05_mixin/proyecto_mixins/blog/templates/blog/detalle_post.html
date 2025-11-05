@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ post.titulo }}{% endblock %}
+
+{% block content %}
+<h2>{{ post.titulo }}</h2>
+
+<div class="post-meta" style="margin-bottom: 20px;">
+    Autor: {{ post.autor.username }} | 
+    Publicado: {{ post.fecha_creacion|date:"d/m/Y H:i" }} | 
+    Actualizado: {{ post.fecha_actualizacion|date:"d/m/Y H:i" }}
+</div>
+
+<div class="card">
+    {{ post.contenido|linebreaks }}
+</div>
+
+<div style="margin-top: 20px;">
+    <a href="{% url 'blog:lista_posts' %}" class="btn">Volver a la lista</a>
+    {% if user == post.autor or user.is_staff %}
+        <a href="/admin/blog/post/{{ post.pk }}/change/" class="btn">Editar post</a>
+    {% endif %}
+</div>
+{% endblock %}

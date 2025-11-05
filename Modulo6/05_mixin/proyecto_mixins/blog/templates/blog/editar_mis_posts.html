@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ titulo_pagina }}{% endblock %}
+
+{% block content %}
+<h2>{{ titulo_pagina }}</h2>
+
+
+<h3>Mis Posts - Edición Avanzada</h3>
+
+{% if posts %}
+    {% for post in posts %}
+    <div class="card">
+        <h3>{{ post.titulo }}</h3>
+        <p>{{ post.contenido }}</p>
+        <a href="/admin/blog/post/{{ post.pk }}/change/" class="btn">Editar</a>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No tienes posts aún.</p>
+{% endif %}
+
+<div class="info-box" style="margin-top: 20px;">
+    <strong>Conceptos clave:</strong>
+    <ul>
+        <li>Orden de mixins: LoginRequiredMixin → PermissionRequiredMixin → Clase base</li>
+        <li>Python evalúa herencia de izquierda a derecha</li>
+        <li>Primero verifica autenticación, luego permisos</li>
+        <li>Puedes combinar múltiples mixins según necesites</li>
+    </ul>
+</div>
+
+<div class="info-box" style="margin-top: 20px;">
+    <strong>Permiso personalizado en models.py:</strong>
+    <div class="code-block">
+class Meta:
+    permissions = [
+        ('can_edit_all_posts', 'Puede editar todos los posts'),
+    ]
+    </div>
+</div>
+
+<div style="margin-top: 20px;">
+    <a href="{% url 'blog:lista_posts' %}" class="btn">Volver al inicio</a>
+</div>
+{% endblock %}

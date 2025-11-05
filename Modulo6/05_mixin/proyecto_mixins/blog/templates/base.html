@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Blog con Mixins{% endblock %}</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        
+        h1 {
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+        
+        nav {
+            margin: 20px 0;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        nav a {
+            margin-right: 15px;
+            text-decoration: none;
+            color: #333;
+        }
+        
+        nav a:hover {
+            text-decoration: underline;
+        }
+        
+        .info {
+            background: #f9f9f9;
+            padding: 10px;
+            margin: 15px 0;
+            border-left: 3px solid #333;
+        }
+        
+        .post {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .post h3 {
+            margin: 0 0 10px 0;
+        }
+        
+        .meta {
+            color: #666;
+            font-size: 0.9em;
+            margin-top: 10px;
+        }
+        
+        code {
+            background: #f4f4f4;
+            padding: 2px 5px;
+        }
+        
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Blog con Mixins</h1>
+    
+    <nav>
+        <a href="{% url 'lista_posts' %}">Todos los Posts</a>
+        <a href="{% url 'mis_posts' %}">Mis Posts</a>
+        <a href="{% url 'editar_post' %}">Editar Posts</a>
+        {% if user.is_authenticated %}
+            <span style="float: right;">Usuario: {{ user.username }} | <a href="/admin/logout/">Salir</a></span>
+        {% else %}
+            <a href="/admin/login/" style="float: right;">Login</a>
+        {% endif %}
+    </nav>
+    
+    {% block content %}
+    {% endblock %}
+</body>
+</html>

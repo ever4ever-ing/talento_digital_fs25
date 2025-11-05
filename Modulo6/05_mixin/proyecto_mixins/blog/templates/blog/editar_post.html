@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Posts{% endblock %}
+
+{% block content %}
+<h2>Editar Posts (Vista con Permiso)</h2>
+
+<h3>Todos los Posts</h3>
+
+{% if posts %}
+    {% for post in posts %}
+    <div class="post">
+        <h3>{{ post.titulo }}</h3>
+        <p>{{ post.contenido|truncatewords:20 }}</p>
+        <div class="meta">
+            Autor: {{ post.autor.username }} | Fecha: {{ post.fecha_creacion|date:"d/m/Y" }}
+        </div>
+        <a href="/admin/blog/post/{{ post.pk }}/change/">Editar</a>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No hay posts para editar.</p>
+{% endif %}
+
+<div class="info" style="margin-top: 20px;">
+    <strong>Cómo otorgar permisos:</strong>
+    <ol>
+        <li>Ir a <a href="/admin/">/admin/</a></li>
+        <li>Usuarios → Seleccionar usuario</li>
+        <li>En "Permisos de usuario" → Buscar "blog | post | Can change post"</li>
+        <li>Agregar y guardar</li>
+    </ol>
+</div>
+{% endblock %}

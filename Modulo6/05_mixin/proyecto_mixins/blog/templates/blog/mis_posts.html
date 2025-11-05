@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Mis Posts{% endblock %}
+
+{% block content %}
+<h2>Mis Posts (Vista Privada)</h2>
+
+{% if posts %}
+    <p><strong>Tienes {{ total_posts }} post(s)</strong></p>
+    
+    {% for post in posts %}
+    <div class="post">
+        <h3>{{ post.titulo }}</h3>
+        <p>{{ post.contenido }}</p>
+
+                <div class="meta">
+            Autor: {{ post.autor.username }} | 
+
+        </div>
+    </div>
+    {% endfor %}
+{% else %}
+    <p>No tienes posts aún. <a href="/admin/blog/post/add/">Crear post</a></p>
+{% endif %}
+{% endblock %}
