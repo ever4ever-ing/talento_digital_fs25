@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Lista de Eventos{% endblock %} 
+{% block content %}
+    <h1 class="mb-4">Lista de Eventos</h1>
+    {% if eventos %}
+    <div class="row">
+    {% for evento in eventos %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">{{ evento.titulo }}</h5>
+                <p class="card-text">{{ evento.descripcion }}</p>
+                <p class="card-text"><small class="text-muted">Fecha de inicio: {{ evento.fecha_inicio }}</small></p>
+                <p class="card-text"><small class="text-muted">Fecha de fin: {{ evento.fecha_fin }}</small></p>
+                <p class="card-text"><small class="text-muted">Ubicación: {{ evento.ubicacion }}</small></p>
+                <p class="card-text"><small class="text-muted">Autor: {{ evento.autor.username }}</small></p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+    </div>
+    {% else %}
+    <p class="alert alert-info">No hay eventos disponibles.</p>
+    {% endif %} 
+{% endblock %}
