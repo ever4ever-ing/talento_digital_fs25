@@ -13,9 +13,14 @@
     <div class="row">
     {% for evento in eventos %}
     <div class="col-md-6 mb-4">
-        <div class="card">
+        <div class="card h-100">
             <div class="card-body">
-                <h5 class="card-title">{{ evento.titulo }}</h5>
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                    <h5 class="card-title mb-0">{{ evento.titulo }}</h5>
+                    <span class="badge bg-primary">
+                        <i class="bi bi-people-fill me-1"></i>{{ evento.total_participantes }}
+                    </span>
+                </div>
                 <p class="card-text">{{ evento.descripcion }}</p>
                 <p class="card-text">
                     <small class="text-muted">
@@ -35,15 +40,38 @@
                         <strong>Ubicación:</strong> {{ evento.ubicacion }}
                     </small>
                 </p>
+                
+                {% if evento.total_participantes > 0 %}
+                <div class="mt-3">
+                    <p class="mb-2"><strong><i class="bi bi-people me-1"></i>Participantes:</strong></p>
+                    <div class="d-flex flex-wrap gap-1">
+                        {% for participante in evento.participantes.all|slice:":5" %}
+                            <span class="badge bg-secondary">
+                                <i class="bi bi-person-fill me-1"></i>{{ participante.username }}
+                            </span>
+                        {% endfor %}
+                        {% if evento.total_participantes > 5 %}
+                            <a href="{% url 'participantes_evento' evento.id %}" class="badge bg-info text-decoration-none">
+                                +{{ evento.total_participantes|add:"-5" }} más
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+                {% endif %}
             </div>
-            <div class="card-footer">
-                <div class="d-flex gap-2">
-                    <a href="{% url 'editar_evento' evento.id %}" class="btn btn-primary">
+            <div class="card-footer bg-transparent">
+                <div class="d-flex gap-2 flex-wrap">
+                    <a href="{% url 'editar_evento' evento.id %}" class="btn btn-primary btn-sm flex-fill">
                         <i class="bi bi-pencil-fill me-1"></i>Editar
                     </a>
-                    <a href="{% url 'eliminar_evento' evento.id %}" class="btn btn-danger">
+                    <a href="{% url 'eliminar_evento' evento.id %}" class="btn btn-danger btn-sm flex-fill">
                         <i class="bi bi-trash-fill me-1"></i>Eliminar
                     </a>
+                    {% if evento.total_participantes > 0 %}
+                    <a href="{% url 'participantes_evento' evento.id %}" class="btn btn-info btn-sm flex-fill">
+                        <i class="bi bi-people-fill me-1"></i>Ver Todos
+                    </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

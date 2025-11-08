@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block title %}Evento No Encontrado{% endblock %}
+
+{% block content %}
+    <div class="row justify-content-center">
+        <div class="col-lg-8 col-md-10">
+            <div class="card border-warning shadow-lg">
+                <div class="card-header bg-warning text-dark">
+                    <h3 class="mb-0">
+                        <i class="bi bi-search me-2"></i>Evento No Encontrado
+                    </h3>
+                </div>
+                <div class="card-body text-center py-5">
+                    <i class="bi bi-emoji-frown text-warning mb-4" style="font-size: 5rem;"></i>
+                    
+                    <h2 class="mb-3">¡Ups! No pudimos encontrar lo que buscas</h2>
+                    
+                    <p class="lead text-muted mb-4">
+                        El evento que intentas acceder no existe o no está disponible.
+                    </p>
+                    
+                    <div class="alert alert-info" role="alert">
+                        <i class="bi bi-lightbulb-fill me-2"></i>
+                        <strong>¿Qué puedes hacer?</strong>
+                        <ul class="text-start mt-3 mb-0">
+                            <li>Verifica que la URL sea correcta</li>
+                            <li>El evento puede haber sido eliminado</li>
+                            <li>Es posible que no tengas acceso a este evento</li>
+                            <li>Intenta buscar el evento en la lista principal</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-flex gap-3 justify-content-center mt-4">
+                        <a href="{% url 'lista_eventos' %}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-calendar-event me-2"></i>Ver Todos los Eventos
+                        </a>
+                        {% if user.is_authenticated %}
+                        <a href="{% url 'mis_eventos' %}" class="btn btn-success btn-lg">
+                            <i class="bi bi-person-circle me-2"></i>Mis Eventos
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="card-footer text-muted text-center">
+                    Error 404 - Recurso no encontrado
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

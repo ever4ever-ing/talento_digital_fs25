@@ -6,7 +6,7 @@
     <div class="row">
     {% for evento in eventos %}
         <div class="col-md-6 mb-4">
-            <div class="card">
+            <div class="card h-100">
                 <div class="card-body">
                     <h5 class="card-title">{{ evento.titulo }}</h5>
                     <p class="card-text">{{ evento.descripcion }}</p>
@@ -34,6 +34,45 @@
                             <strong>Autor:</strong> {{ evento.autor.username }}
                         </small>
                     </p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="bi bi-people-fill me-1"></i>
+                            <strong>Participantes:</strong> {{ evento.total_participantes }}
+                            <a href="{% url 'participantes_evento' evento.id %}" class="ms-2 text-decoration-none">
+                                <i class="bi bi-eye"></i> Ver lista
+                            </a>
+                        </small>
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent">
+                    {% if user.is_authenticated %}
+                        {% if evento.autor == user %}
+                            <span class="badge bg-primary">
+                                <i class="bi bi-star-fill me-1"></i>Organizador
+                            </span>
+                        {% elif user in evento.participantes.all %}
+                            <form method="post" action="{% url 'salirse_evento' evento.id %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-warning btn-sm">
+                                    <i class="bi bi-door-open me-1"></i>Salirse del Evento
+                                </button>
+                            </form>
+                            <span class="badge bg-success ms-2">
+                                <i class="bi bi-check-circle-fill me-1"></i>Participando
+                            </span>
+                        {% else %}
+                            <form method="post" action="{% url 'unirse_evento' evento.id %}" class="d-inline">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success btn-sm">
+                                    <i class="bi bi-plus-circle-fill me-1"></i>Unirse al Evento
+                                </button>
+                            </form>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-outline-primary btn-sm">
+                            <i class="bi bi-box-arrow-in-right me-1"></i>Inicia sesión para unirte
+                        </a>
+                    {% endif %}
                 </div>
             </div>
         </div>

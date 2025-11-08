@@ -21,3 +21,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('app_eventos.urls')),
 ]
+
+# Manejadores de errores personalizados
+handler403 = 'app_eventos.views.custom_permission_denied_view'
+handler404 = 'app_eventos.views.custom_page_not_found_view'
