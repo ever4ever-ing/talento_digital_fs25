@@ -5,18 +5,38 @@
     {% if eventos %}
     <div class="row">
     {% for evento in eventos %}
-    <div class="col-md-6 mb-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">{{ evento.titulo }}</h5>
-                <p class="card-text">{{ evento.descripcion }}</p>
-                <p class="card-text"><small class="text-muted">Fecha de inicio: {{ evento.fecha_inicio }}</small></p>
-                <p class="card-text"><small class="text-muted">Fecha de fin: {{ evento.fecha_fin }}</small></p>
-                <p class="card-text"><small class="text-muted">Ubicación: {{ evento.ubicacion }}</small></p>
-                <p class="card-text"><small class="text-muted">Autor: {{ evento.autor.username }}</small></p>
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ evento.titulo }}</h5>
+                    <p class="card-text">{{ evento.descripcion }}</p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="bi bi-calendar-event me-1"></i>
+                            <strong>Inicio:</strong> {{ evento.fecha_inicio|date:"d/m/Y H:i" }}
+                        </small>
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="bi bi-calendar-event-fill me-1"></i>
+                            <strong>Término:</strong> {{ evento.fecha_fin|date:"d/m/Y H:i" }}
+                        </small>
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="bi bi-geo-alt-fill me-1"></i>
+                            <strong>Ubicación:</strong> {{ evento.ubicacion }}
+                        </small>
+                    </p>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="bi bi-person-circle me-1"></i>
+                            <strong>Autor:</strong> {{ evento.autor.username }}
+                        </small>
+                    </p>
+                </div>
             </div>
         </div>
-    </div>
     {% endfor %}
     </div>
     {% else %}
