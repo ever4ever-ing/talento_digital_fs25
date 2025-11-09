@@ -19,7 +19,8 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('app_eventos.urls')),
+    path('usuarios/', include('app_usuarios.urls')),  # URLs de gestión de usuarios
+    path('', include('app_eventos.urls')),  # URLs de eventos
 ]
 
 # Manejadores de errores personalizados

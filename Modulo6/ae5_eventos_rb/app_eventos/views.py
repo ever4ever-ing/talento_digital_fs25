@@ -222,13 +222,13 @@ class UnirseEventoView(LoginRequiredMixin, View):
     Vista para unirse o salirse de un evento
     """
     login_url = '/login/'
-    
+    """En el método POST, verifica si el usuario ya está en la lista de participantes."""
     def post(self, request, pk):
-        evento = get_object_or_404(Evento, pk=pk)
+        evento = get_object_or_404(Evento, pk=pk) # Obtener el evento o devolver 404
         
-        if request.user in evento.participantes.all():
+        if request.user in evento.participantes.all():#si el usuario ya está en la lista de participantes
             # El usuario ya está inscrito, lo removemos
-            evento.participantes.remove(request.user)
+            evento.participantes.remove(request.user)# eliminar al usuario de los participantes 
             messages.success(request, f'✓ Te has retirado del evento "{evento.titulo}".')
         else:
             # El usuario no está inscrito, lo agregamos

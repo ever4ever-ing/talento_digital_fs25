@@ -1,0 +1,224 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Información del Usuario - Sistema de Eventos{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+    <div class="row">
+        <!-- Encabezado del perfil -->
+        <div class="col-12 mb-4">
+            <div class="card shadow-lg bg-gradient text-white" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <div class="card-body p-4">
+                    <div class="d-flex align-items-center">
+                        <div class="me-4">
+                            <i class="bi bi-person-circle display-1"></i>
+                        </div>
+                        <div>
+                            <h2 class="mb-1">{{ user.get_full_name|default:user.username }}</h2>
+                            <p class="mb-0 opacity-75">
+                                <i class="bi bi-at me-1"></i>{{ user.username }} | 
+                                <i class="bi bi-envelope me-1"></i>{{ user.email }}
+                            </p>
+                        </div>
+                        <div class="ms-auto">
+                            <a href="{% url 'perfil' %}" class="btn btn-light">
+                                <i class="bi bi-pencil-square me-2"></i>Editar Perfil
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas -->
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-calendar-event display-4 text-primary mb-3"></i>
+                    <h3 class="display-4 fw-bold text-primary">{{ total_eventos_creados }}</h3>
+                    <p class="text-muted mb-0">Eventos Creados</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-people display-4 text-success mb-3"></i>
+                    <h3 class="display-4 fw-bold text-success">{{ total_eventos_participando }}</h3>
+                    <p class="text-muted mb-0">Eventos Participando</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-4">
+            <div class="card shadow h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-calendar-check display-4 text-info mb-3"></i>
+                    <h3 class="display-4 fw-bold text-info">{{ user.date_joined|timesince }}</h3>
+                    <p class="text-muted mb-0">Tiempo en la Plataforma</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Eventos Creados -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-calendar-plus me-2"></i>Mis Eventos Creados
+                    </h5>
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    {% if eventos_creados %}
+                        <div class="list-group list-group-flush">
+                            {% for evento in eventos_creados %}
+                                <a href="{% url 'editar_evento' evento.id %}" 
+                                   class="list-group-item list-group-item-action">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">
+                                            <i class="bi bi-calendar-event me-1"></i>{{ evento.titulo }}
+                                        </h6>
+                                        <small class="text-muted">
+                                            {{ evento.fecha_inicio|date:"d/m/Y" }}
+                                        </small>
+                                    </div>
+                                    <p class="mb-1 small text-muted">
+                                        <i class="bi bi-geo-alt me-1"></i>{{ evento.ubicacion }}
+                                    </p>
+                                    <small class="text-success">
+                                        <i class="bi bi-people me-1"></i>{{ evento.total_participantes }} participante{{ evento.total_participantes|pluralize }}
+                                    </small>
+                                </a>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-calendar-x display-4 text-muted"></i>
+                            <p class="text-muted mt-3">No has creado ningún evento aún.</p>
+                            <a href="{% url 'crear_evento' %}" class="btn btn-primary">
+                                <i class="bi bi-plus-circle me-2"></i>Crear Mi Primer Evento
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if eventos_creados %}
+                    <div class="card-footer bg-light text-center">
+                        <a href="{% url 'mis_eventos' %}" class="text-decoration-none">
+                            Ver todos mis eventos <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Eventos Participando -->
+        <div class="col-lg-6 mb-4">
+            <div class="card shadow">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-calendar-check me-2"></i>Eventos en los que Participo
+                    </h5>
+                </div>
+                <div class="card-body" style="max-height: 400px; overflow-y: auto;">
+                    {% if eventos_participando %}
+                        <div class="list-group list-group-flush">
+                            {% for evento in eventos_participando %}
+                                <div class="list-group-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">
+                                            <i class="bi bi-calendar-event me-1"></i>{{ evento.titulo }}
+                                        </h6>
+                                        <small class="text-muted">
+                                            {{ evento.fecha_inicio|date:"d/m/Y" }}
+                                        </small>
+                                    </div>
+                                    <p class="mb-1 small text-muted">
+                                        <i class="bi bi-geo-alt me-1"></i>{{ evento.ubicacion }}
+                                    </p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-primary">
+                                            <i class="bi bi-person me-1"></i>Organizador: {{ evento.autor.username }}
+                                        </small>
+                                        <form method="post" action="{% url 'salirse_evento' evento.id %}" class="d-inline">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                <i class="bi bi-door-open me-1"></i>Salirse
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="text-center py-4">
+                            <i class="bi bi-calendar-x display-4 text-muted"></i>
+                            <p class="text-muted mt-3">No estás participando en ningún evento.</p>
+                            <a href="{% url 'lista_eventos' %}" class="btn btn-success">
+                                <i class="bi bi-search me-2"></i>Explorar Eventos
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if eventos_participando %}
+                    <div class="card-footer bg-light text-center">
+                        <a href="{% url 'lista_eventos' %}" class="text-decoration-none">
+                            Explorar más eventos <i class="bi bi-arrow-right"></i>
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">
+                        <i class="bi bi-info-circle me-2"></i>Información de la Cuenta
+                    </h5>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p class="mb-2">
+                                <strong><i class="bi bi-calendar-plus me-2 text-primary"></i>Fecha de Registro:</strong><br>
+                                <span class="ms-4">{{ user.date_joined|date:"d/m/Y H:i" }}</span>
+                            </p>
+                            <p class="mb-2">
+                                <strong><i class="bi bi-clock-history me-2 text-success"></i>Último Acceso:</strong><br>
+                                <span class="ms-4">{{ user.last_login|date:"d/m/Y H:i" }}</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="mb-2">
+                                <strong><i class="bi bi-shield-check me-2 text-warning"></i>Estado de la Cuenta:</strong><br>
+                                <span class="ms-4">
+                                    {% if user.is_active %}
+                                        <span class="badge bg-success">Activa</span>
+                                    {% else %}
+                                        <span class="badge bg-danger">Inactiva</span>
+                                    {% endif %}
+                                </span>
+                            </p>
+                            <p class="mb-2">
+                                <strong><i class="bi bi-award me-2 text-info"></i>Rol:</strong><br>
+                                <span class="ms-4">
+                                    {% if user.is_superuser %}
+                                        <span class="badge bg-danger">Administrador</span>
+                                    {% elif user.is_staff %}
+                                        <span class="badge bg-warning">Staff</span>
+                                    {% else %}
+                                        <span class="badge bg-primary">Usuario</span>
+                                    {% endif %}
+                                </span>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

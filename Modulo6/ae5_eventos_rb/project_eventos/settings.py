@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app_eventos',
+    'app_usuarios',  # App de gestión de usuarios
 ]
 
 MIDDLEWARE = [
@@ -124,9 +125,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configuración de autenticación
-LOGIN_URL = '/login/'
+LOGIN_URL = '/usuarios/login/'
 LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/usuarios/login/'
 
 # Mapeo de tags de mensajes de Django a clases de Bootstrap
 from django.contrib.messages import constants as messages_constants

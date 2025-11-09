@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (
-    ListaEventos, MisEventos, LoginView, LogoutView, 
+    ListaEventos, MisEventos,
     CrearEvento, EditarEvento, EliminarEvento, AccesoDenegadoView,
     UnirseEventoView, SalirseEventoView, ParticipantesEventoView
 )
@@ -15,6 +15,4 @@ urlpatterns = [
     path('evento/<int:pk>/salirse/', SalirseEventoView.as_view(), name='salirse_evento'),
     path('evento/<int:pk>/participantes/', ParticipantesEventoView.as_view(), name='participantes_evento'),
     path('acceso-denegado/', AccesoDenegadoView.as_view(), name='acceso_denegado'),
-    path('login/', LoginView.as_view(), name='login'),
-    path('logout/', LogoutView.as_view(), name='logout'),
 ]
