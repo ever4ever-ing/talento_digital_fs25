@@ -125,7 +125,7 @@ class MisEventos(LoginRequiredMixin, ListView):
     model = Evento
     template_name = 'mis_eventos.html'
     context_object_name = 'eventos'
-    login_url = '/login/'  # URL personalizada de login
+    login_url = '/usuarios/login/'  # URL personalizada de login
     redirect_field_name = 'next'  # Parámetro para redirigir después del login
     
     def dispatch(self, request, *args, **kwargs):
@@ -144,7 +144,7 @@ class CrearEvento(LoginRequiredMixin, CreateView):
     form_class = EventoForm
     template_name = 'crear_evento.html'
     success_url = reverse_lazy('mis_eventos')
-    login_url = '/login/'
+    login_url = '/usuarios/login/'
     
     def form_valid(self, form):
         # Asignar automáticamente el usuario actual como autor del evento
@@ -168,7 +168,7 @@ class EditarEvento(AutorRequeridoMixin, LoginRequiredMixin, PermissionRequiredMi
     template_name = 'editar_evento.html'
     permission_required = 'app_eventos.change_evento'
     success_url = reverse_lazy('mis_eventos')
-    login_url = '/login/'
+    login_url = '/usuarios/login/'
     context_object_name = 'evento'
     raise_exception = False  # Para que redirija en lugar de lanzar excepción 403
     
@@ -194,7 +194,7 @@ class EliminarEvento(AutorRequeridoMixin, LoginRequiredMixin, PermissionRequired
     template_name = 'eliminar_evento.html'
     permission_required = 'app_eventos.delete_evento'
     success_url = reverse_lazy('mis_eventos')
-    login_url = '/login/'
+    login_url = '/usuarios/login/'
     context_object_name = 'evento'
     raise_exception = False  # Para que redirija en lugar de lanzar excepción 403
     
@@ -221,7 +221,7 @@ class UnirseEventoView(LoginRequiredMixin, View):
     """
     Vista para unirse o salirse de un evento
     """
-    login_url = '/login/'
+    login_url = '/usuarios/login/'
     """En el método POST, verifica si el usuario ya está en la lista de participantes."""
     def post(self, request, pk):
         evento = get_object_or_404(Evento, pk=pk) # Obtener el evento o devolver 404
@@ -244,7 +244,7 @@ class ParticipantesEventoView(LoginRequiredMixin, TemplateView):
     Vista para mostrar todos los participantes de un evento
     """
     template_name = 'participantes_evento.html'
-    login_url = '/login/'
+    login_url = '/usuarios/login/'
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -266,7 +266,7 @@ class UnirseEvento(LoginRequiredMixin, View):
     Vista para que un usuario se una o salga de un evento.
     Toggle: si está participando lo remueve, si no está lo agrega.
     """
-    login_url = '/login/'
+    login_url = '/usuarios/login/'
     
     def post(self, request, pk):
         evento = get_object_or_404(Evento, pk=pk)
@@ -289,7 +289,7 @@ class UnirseEventoView(LoginRequiredMixin, View):
     """
     Vista para que un usuario se una a un evento
     """
-    login_url = '/login/'
+    login_url = '/usuarios/login/'
     
     def post(self, request, pk):
         evento = get_object_or_404(Evento, pk=pk)
@@ -313,7 +313,7 @@ class SalirseEventoView(LoginRequiredMixin, View):
     """
     Vista para que un usuario se salga de un evento
     """
-    login_url = '/login/'
+    login_url = '/usuarios/login/'
     
     def post(self, request, pk):
         evento = get_object_or_404(Evento, pk=pk)

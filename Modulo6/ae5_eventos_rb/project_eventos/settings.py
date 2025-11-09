@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+from django.contrib.messages import constants as messages_constants
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -125,12 +126,11 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Configuración de autenticación
-LOGIN_URL = '/usuarios/login/'
-LOGIN_REDIRECT_URL = '/'
-LOGOUT_REDIRECT_URL = '/usuarios/login/'
+LOGIN_URL = '/usuarios/login/'  # Ruta completa al login
+LOGIN_REDIRECT_URL = '/'  # Redirige a la página principal después del login
+LOGOUT_REDIRECT_URL = '/usuarios/login/'  # Redirige al login después del logout
 
 # Mapeo de tags de mensajes de Django a clases de Bootstrap
-from django.contrib.messages import constants as messages_constants
 MESSAGE_TAGS = {
     messages_constants.DEBUG: 'secondary',
     messages_constants.INFO: 'info',
