@@ -1,37 +1,60 @@
-INSERT INTO direcciones (id, calle, colonia, ciudad, pais) VALUES
-(4, 'Calle 114', 'San José', 'Rancho de Luna','Costa Rica'),
-(5, '5 Av. Monsefior Miguel 545', 'Atacama', 'Tierra Amarilla', 'Chile'),
-(6, 'Dover 2903', 'Narvarte', 'Monterrey', 'México'),
-(7, 'Avenida 77', 'Araucania', 'Temuco', 'Chile');
+-- Limpiar datos existentes (en orden inverso a las dependencias)
+SET FOREIGN_KEY_CHECKS = 0;
 
-INSERT INTO usuarios (id, nombre, apellido, direccion_id) VALUES
-(1, 'Valeria', 'Romero', 4),
-(2, 'Kevin', 'Duque', 5),
-(3, 'Alfredo', 'Salazar', 6),
-(4, 'Everardo', 'Alvarado', 7);
+DELETE FROM pedidos_has_productos;
+DELETE FROM pedidos;
+DELETE FROM productos;
+DELETE FROM usuarios;
+DELETE FROM direcciones;
 
-INSERT INTO productos (id, nombre, descripcion) VALUES
-(222, 'lapiz', 'lapiz que te ayudará a escribir ERDs'),
-(223, 'libreta', 'para escribir todas tus notas de MySQL'),
-(224, 'clip', 'sostiene tus hojas'),
-(225, 'boligrafo', 'tus notas no se borraran con nada'),
-(226, 'marcatextos', 'para subrayar lo más importante'),
-(227, 'tijeras', 'recorta todo lo que necesites');
+-- Reiniciar los contadores AUTO_INCREMENT
+ALTER TABLE direcciones AUTO_INCREMENT = 1;
+ALTER TABLE usuarios AUTO_INCREMENT = 1;
+ALTER TABLE productos AUTO_INCREMENT = 1;
+ALTER TABLE pedidos AUTO_INCREMENT = 1;
 
-INSERT INTO pedidos (id, fecha, total, usuario_id) VALUES
-(551, '2022-07-15', 500.10, 3),
-(552, '2023-08-10', 250.50, 2),
-(553, '2023-12-18', 303.13, 1),
-(554, '2023-12-23', 407.00, 3);
+SET FOREIGN_KEY_CHECKS = 1;
 
+-- Insertar direcciones primero
+INSERT INTO direcciones (calle, colonia, ciudad, pais) VALUES
+('Calle 114', 'San José', 'Rancho de Luna','Costa Rica'),
+('5 Av. Monsefior Miguel 545', 'Atacama', 'Tierra Amarilla', 'Chile'),
+('Dover 2903', 'Narvarte', 'Monterrey', 'México'),
+('Avenida 77', 'Araucania', 'Temuco', 'Chile');
+
+-- Insertar usuarios usando los IDs de direcciones generados automáticamente
+INSERT INTO usuarios (nombre, apellido, direccion_id) VALUES
+('Valeria', 'Romero', 1),
+('Kevin', 'Duque', 2),
+('Alfredo', 'Salazar', 3),
+('Everardo', 'Alvarado', 4);
+
+-- Insertar productos
+INSERT INTO productos (nombre, descripcion) VALUES
+('lapiz', 'lapiz que te ayudará a escribir ERDs'),
+('libreta', 'para escribir todas tus notas de MySQL'),
+('clip', 'sostiene tus hojas'),
+('boligrafo', 'tus notas no se borraran con nada'),
+('marcatextos', 'para subrayar lo más importante'),
+('tijeras', 'recorta todo lo que necesites');
+
+-- Insertar pedidos usando los IDs de usuarios generados automáticamente
+INSERT INTO pedidos (fecha, total, usuario_id) VALUES
+('2022-07-15', 500.10, 3),
+('2023-08-10', 250.50, 2),
+('2023-12-18', 303.13, 1),
+('2023-12-23', 407.00, 3);
+
+-- Insertar relaciones pedidos-productos
+-- Nota: Los IDs se generarán automáticamente, por lo que necesitamos ajustar estas referencias
 INSERT INTO pedidos_has_productos (pedido_id, producto_id) VALUES
-(551, 222),
-(551, 224),
-(551, 227),
-(552, 223),
-(552, 225),
-(553, 224),
-(554, 224),
-(554, 225),
-(554, 226),
-(554, 227);
+(1, 1),  -- pedido 1, producto lapiz
+(1, 3),  -- pedido 1, producto clip
+(1, 6),  -- pedido 1, producto tijeras
+(2, 2),  -- pedido 2, producto libreta
+(2, 4),  -- pedido 2, producto boligrafo
+(3, 3),  -- pedido 3, producto clip
+(4, 3),  -- pedido 4, producto clip
+(4, 4),  -- pedido 4, producto boligrafo
+(4, 5),  -- pedido 4, producto marcatextos
+(4, 6);  -- pedido 4, producto tijeras

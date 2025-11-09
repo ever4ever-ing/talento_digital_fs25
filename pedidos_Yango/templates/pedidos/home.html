@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pedidos Yango - Inicio</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+        .button { display: inline-block; margin: 10px; padding: 15px 30px; background-color: #4CAF50; color: white; text-decoration: none; border-radius: 5px; }
+        .button:hover { background-color: #45a049; }
+    </style>
+</head>
+<body>
+    <h1>Bienvenido a Pedidos Yango</h1>
+    <p>Selecciona una opción:</p>
+    <a href="{% url 'register' %}" class="button">Registrar Cliente</a>
+    <a href="{% url 'direccion_list' %}" class="button">Gestionar Direcciones</a>
+    <a href="{% url 'pedido_list' %}" class="button">Ver Mis Pedidos</a>
+    <a href="{% url 'producto_list' %}" class="button">Ver Productos</a>
+    <br><br>
+    {% if user.is_authenticated %}
+        <p>Hola, {{ user.username }}!</p>
+        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="button">Cerrar Sesión</button>
+        </form>
+    {% else %}
+        <a href="{% url 'login' %}" class="button">Iniciar Sesión</a>
+    {% endif %}
+</body>
+</html>

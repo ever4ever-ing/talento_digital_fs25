@@ -6,11 +6,9 @@ from .models import Receta
 # Create your views here.
 
 def lista_recetas(request):
-    recetas = Receta.objects.all()
+    recetas = Receta.objects.all()# consulta a la base de datos para obtener todas las recetas
     context = {'recetas': recetas}
     return render(request, 'recetas/inicio.html', context)
-
-
 
 
 

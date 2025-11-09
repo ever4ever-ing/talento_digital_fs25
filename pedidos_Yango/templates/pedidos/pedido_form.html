@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Crear Pedido</title>
+</head>
+<body>
+    <h1>Crear Pedido</h1>
+    <form method="post">
+        {% csrf_token %}
+        <h2>Seleccionar Dirección de Entrega</h2>
+        <select name="direccion" required>
+            <option value="">-- Seleccionar Dirección --</option>
+            {% for dir in direcciones %}
+                <option value="{{ dir.id }}">{{ dir.calle }} {{ dir.numero }}, {{ dir.ciudad }}</option>
+            {% endfor %}
+        </select>
+        <h2>Seleccionar Productos</h2>
+        {% for producto in productos %}
+            <div>
+                <input type="checkbox" name="productos" value="{{ producto.id }}" id="prod_{{ producto.id }}">
+                <label for="prod_{{ producto.id }}">{{ producto.nombre }} - ${{ producto.precio }} (Stock: {{ producto.stock }})</label>
+                <input type="number" name="cantidades" min="1" max="{{ producto.stock }}" placeholder="Cantidad" style="display:none;">
+            </div>
+        {% endfor %}
+        <button type="submit">Crear Pedido</button>
+    </form>
+    <script>
+        // Simple script to show quantity input when checkbox is checked
+        document.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+            cb.addEventListener('change', function() {
+                const qtyInput = this.nextElementSibling.nextElementSibling;
+                qtyInput.style.display = this.checked ? 'inline' : 'none';
+                if (!this.checked) qtyInput.value = '';
+            });
+        });
+    </script>
+</body>
+</html>

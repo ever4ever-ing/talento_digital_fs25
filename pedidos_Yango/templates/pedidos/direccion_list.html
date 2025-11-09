@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de Direcciones</title>
+</head>
+<body>
+    <h1>Direcciones</h1>
+    <a href="{% url 'direccion_create' %}">Crear Dirección</a>
+    <ul>
+        {% for direccion in direcciones %}
+            <li>{{ direccion.usuario.username }} - {{ direccion.calle }} {{ direccion.numero }}, {{ direccion.ciudad }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

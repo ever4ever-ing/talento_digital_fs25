@@ -12,7 +12,6 @@ class Event(models.Model):
         """Texto que se muestra cuando imprimimos el objeto"""
         return f"{self.name} ({self.date})"
 
-
 class Participant(models.Model):
     # Relación con Event: un participante pertenece a un evento
     # on_delete=CASCADE: si se elimina el evento, se eliminan sus participantes
