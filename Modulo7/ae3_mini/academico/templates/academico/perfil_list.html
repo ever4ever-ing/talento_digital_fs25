@@ -1,0 +1,15 @@
+<h2>Lista de Perfiles</h2>
+<ul>
+    {% for perfil in perfiles %}
+        <li>
+            {% if perfil.foto_perfil %}
+                <img src="{{ perfil.foto_perfil.url }}" alt="Foto de perfil" style="width:50px; height:50px; border-radius:50%; object-fit:cover; vertical-align:middle;">
+            {% else %}
+                <span style="display:inline-block; width:50px; height:50px; border-radius:50%; background:#ccc; vertical-align:middle;"></span>
+            {% endif %}
+            {{ perfil.estudiante.nombre }} - {{ perfil.biografia }} - {{ perfil.redes_sociales }}
+        </li>
+    {% empty %}
+        <li>No hay perfiles registrados.</li>
+    {% endfor %}
+</ul>

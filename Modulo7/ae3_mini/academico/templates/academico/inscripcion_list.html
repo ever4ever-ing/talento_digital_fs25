@@ -1,0 +1,8 @@
+<h2>Lista de Inscripciones</h2>
+<ul>
+    {% for inscripcion in inscripciones %}
+        <li>{{ inscripcion.estudiante.nombre }} - Curso: {{ inscripcion.curso.nombre }} - Estado: {{ inscripcion.get_estado_display }} - Nota: {{ inscripcion.nota_final }}</li>
+    {% empty %}
+        <li>No hay inscripciones registradas.</li>
+    {% endfor %}
+</ul>

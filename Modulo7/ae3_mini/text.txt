@@ -1,0 +1,46 @@
+ 
+- Crear un proyecto Django y una aplicación minimalista llamada academico.
+
+Se debe diseñar e implementar los modelos de datos con relaciones uno a muchos,
+ muchos a muchos y uno a uno, además de definir reglas de borrado en cascada y entidades intermedias con información adicional.
+
+Requisitos:
+
+- Implementar los modelos en models.py.
+
+- Generar y aplicar las migraciones (makemigrations y migrate).
+
+ Relación Muchos a Uno (ForeignKey):
+
+    Un Profesor puede impartir varios Cursos.
+
+    Un Curso pertenece a un solo Profesor.
+
+    La relación debe incluir borrado en cascada.
+
+ Relación Muchos a Muchos (ManyToManyField) con Entidad Intermedia:
+
+    Los Estudiantes pueden inscribirse en varios Cursos.
+
+    Un Curso tiene múltiples Estudiantes.
+
+    La relación debe manejarse con una entidad intermedia (Inscripcion) que incluya:
+
+        Fecha de inscripción.
+
+        Estado de la inscripción (Activo o Finalizado).
+
+        Nota final (opcional).
+
+
+Relación Uno a Uno (OneToOneField):
+
+    Cada Estudiante tiene un Perfil con información adicional como:
+
+        Biografía.
+
+        Foto de perfil.
+
+        Redes sociales.
+
+    Esta relación debe implementarse con OneToOneField.

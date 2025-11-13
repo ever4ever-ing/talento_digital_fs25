@@ -1,0 +1,8 @@
+<h2>Lista de Estudiantes</h2>
+<ul>
+    {% for estudiante in estudiantes %}
+        <li>{{ estudiante.nombre }} - {{ estudiante.email }}</li>
+    {% empty %}
+        <li>No hay estudiantes registrados.</li>
+    {% endfor %}
+</ul>
