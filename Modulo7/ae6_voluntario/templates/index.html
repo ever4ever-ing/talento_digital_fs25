@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - Gestión de Voluntarios{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>📊 Dashboard</h2>
+    
+    <div class="stats-grid">
+        <div class="stat-card">
+            <h3>{{ total_voluntarios }}</h3>
+            <p>Voluntarios Registrados</p>
+        </div>
+        <div class="stat-card">
+            <h3>{{ total_eventos }}</h3>
+            <p>Eventos Programados</p>
+        </div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+    <div class="card">
+        <h2>👥 Voluntarios Recientes</h2>
+        {% if voluntarios_recientes %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Fecha Registro</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for voluntario in voluntarios_recientes %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'detalle_voluntario' voluntario.pk %}" style="color: #667eea; text-decoration: none;">
+                                {{ voluntario.nombre }}
+                            </a>
+                        </td>
+                        <td>{{ voluntario.email }}</td>
+                        <td>{{ voluntario.fecha_registro|date:"d/m/Y" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div style="margin-top: 15px;">
+                <a href="{% url 'lista_voluntarios' %}" class="btn btn-primary">Ver todos</a>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No hay voluntarios registrados</p>
+                <a href="{% url 'crear_voluntario' %}" class="btn btn-success">Registrar Voluntario</a>
+            </div>
+        {% endif %}
+    </div>
+    
+    <div class="card">
+        <h2>📅 Próximos Eventos</h2>
+        {% if proximos_eventos %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Fecha</th>
+                        <th>Voluntarios</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evento in proximos_eventos %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'detalle_evento' evento.pk %}" style="color: #667eea; text-decoration: none;">
+                                {{ evento.titulo }}
+                            </a>
+                        </td>
+                        <td>{{ evento.fecha|date:"d/m/Y" }}</td>
+                        <td>{{ evento.cantidad_voluntarios }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div style="margin-top: 15px;">
+                <a href="{% url 'lista_eventos' %}" class="btn btn-primary">Ver todos</a>
+            </div>
+        {% else %}
+            <div class="empty-state">
+                <p>No hay eventos programados</p>
+                <a href="{% url 'crear_evento' %}" class="btn btn-success">Crear Evento</a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

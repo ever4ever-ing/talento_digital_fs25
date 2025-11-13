@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}Asignar Voluntarios - {{ evento.titulo }}{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>👥 Asignar Voluntarios al Evento</h2>
+    <h3 style="color: #667eea; margin-bottom: 20px;">{{ evento.titulo }}</h3>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin-bottom: 20px;">
+            <p><strong>Evento:</strong> {{ evento.titulo }}</p>
+            <p><strong>Fecha:</strong> {{ evento.fecha|date:"d/m/Y" }}</p>
+            <p><strong>Voluntarios actualmente asignados:</strong> {{ evento.cantidad_voluntarios }}</p>
+        </div>
+        
+        <div class="form-group">
+            <label>Selecciona los voluntarios para este evento:</label>
+            <div style="background-color: white; border: 1px solid #ddd; border-radius: 5px; padding: 15px; max-height: 400px; overflow-y: auto;">
+                {% if voluntarios %}
+                    {% for voluntario in voluntarios %}
+                    <div style="padding: 10px; border-bottom: 1px solid #eee;">
+                        <label style="display: flex; align-items: center; cursor: pointer;">
+                            <input type="checkbox" 
+                                   name="voluntarios" 
+                                   value="{{ voluntario.pk }}"
+                                   {% if voluntario in voluntarios_asignados %}checked{% endif %}
+                                   style="margin-right: 10px; width: 18px; height: 18px;">
+                            <div>
+                                <strong>{{ voluntario.nombre }}</strong><br>
+                                <small style="color: #666;">{{ voluntario.email }} | Tel: {{ voluntario.telefono|default:"N/A" }}</small>
+                            </div>
+                        </label>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p style="color: #999; text-align: center; padding: 20px;">
+                        No hay voluntarios registrados. 
+                        <a href="{% url 'crear_voluntario' %}">Registrar voluntario</a>
+                    </p>
+                {% endif %}
+            </div>
+        </div>
+        
+        <div style="display: flex; gap: 10px; margin-top: 20px;">
+            <button type="submit" class="btn btn-success">💾 Guardar Asignaciones</button>
+            <a href="{% url 'detalle_evento' evento.pk %}" class="btn btn-secondary">❌ Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Editar Voluntario{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>✏️ Editar Voluntario</h2>
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        <div class="form-group">
+            <label for="nombre">Nombre completo: *</label>
+            <input type="text" id="nombre" name="nombre" value="{{ voluntario.nombre }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email">Email: *</label>
+            <input type="email" id="email" name="email" value="{{ voluntario.email }}" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="telefono">Teléfono:</label>
+            <input type="tel" id="telefono" name="telefono" value="{{ voluntario.telefono|default:'' }}" placeholder="Ej: +56912345678">
+        </div>
+        
+        <div style="display: flex; gap: 10px;">
+            <button type="submit" class="btn btn-success">💾 Guardar Cambios</button>
+            <a href="{% url 'detalle_voluntario' voluntario.pk %}" class="btn btn-secondary">❌ Cancelar</a>
+        </div>
+    </form>
+</div>
+{% endblock %}

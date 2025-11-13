@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ voluntario.nombre }} - Detalle{% endblock %}
+
+{% block content %}
+<div class="card">
+    <h2>👤 Detalle del Voluntario</h2>
+    
+    <div style="margin: 20px 0;">
+        <p><strong>Nombre:</strong> {{ voluntario.nombre }}</p>
+        <p><strong>Email:</strong> {{ voluntario.email }}</p>
+        <p><strong>Teléfono:</strong> {{ voluntario.telefono|default:"No registrado" }}</p>
+        <p><strong>Fecha de Registro:</strong> {{ voluntario.fecha_registro|date:"d/m/Y H:i" }}</p>
+        <p><strong>Eventos Asignados:</strong> {{ voluntario.eventos_asignados }}</p>
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <h3 style="color: #667eea; margin-bottom: 15px;">📅 Eventos en los que participa:</h3>
+        {% if voluntario.eventos.all %}
+            <table>
+                <thead>
+                    <tr>
+                        <th>Título</th>
+                        <th>Descripción</th>
+                        <th>Fecha</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for evento in voluntario.eventos.all %}
+                    <tr>
+                        <td>{{ evento.titulo }}</td>
+                        <td>{{ evento.descripcion|truncatewords:10 }}</td>
+                        <td>{{ evento.fecha|date:"d/m/Y" }}</td>
+                        <td>
+                            <a href="{% url 'detalle_evento' evento.pk %}" class="btn btn-primary" style="font-size: 12px; padding: 5px 10px;">Ver Evento</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p style="color: #999; font-style: italic;">Este voluntario no está asignado a ningún evento aún.</p>
+        {% endif %}
+    </div>
+    
+    <div style="margin-top: 30px; display: flex; gap: 10px;">
+        <a href="{% url 'editar_voluntario' voluntario.pk %}" class="btn btn-secondary">✏️ Editar</a>
+        <a href="{% url 'eliminar_voluntario' voluntario.pk %}" class="btn btn-danger">🗑️ Eliminar</a>
+        <a href="{% url 'lista_voluntarios' %}" class="btn btn-primary">← Volver a la lista</a>
+    </div>
+</div>
+{% endblock %}

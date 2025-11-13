@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Eventos{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h2>📅 Lista de Eventos</h2>
+        <a href="{% url 'crear_evento' %}" class="btn btn-success">➕ Nuevo Evento</a>
+    </div>
+    
+    {% if eventos %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Título</th>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Voluntarios</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for evento in eventos %}
+                <tr>
+                    <td>{{ evento.titulo }}</td>
+                    <td>{{ evento.descripcion|truncatewords:15 }}</td>
+                    <td>{{ evento.fecha|date:"d/m/Y" }}</td>
+                    <td>{{ evento.cantidad_voluntarios }}</td>
+                    <td>
+                        <div class="actions">
+                            <a href="{% url 'detalle_evento' evento.pk %}" class="btn btn-primary" style="font-size: 12px; padding: 5px 10px;">Ver</a>
+                            <a href="{% url 'editar_evento' evento.pk %}" class="btn btn-secondary" style="font-size: 12px; padding: 5px 10px;">Editar</a>
+                            <a href="{% url 'asignar_voluntario' evento.pk %}" class="btn btn-success" style="font-size: 12px; padding: 5px 10px;">Asignar</a>
+                            <a href="{% url 'eliminar_evento' evento.pk %}" class="btn btn-danger" style="font-size: 12px; padding: 5px 10px;">Eliminar</a>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <div class="empty-state">
+            <p>📭 No hay eventos programados</p>
+            <a href="{% url 'crear_evento' %}" class="btn btn-success">Crear primer evento</a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}
