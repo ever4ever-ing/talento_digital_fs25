@@ -86,14 +86,15 @@ Esto crea automáticamente un índice en la base de datos para el campo nombre.
 
 ## 8. Excluir campo disponible usando values()
 ```python
-productos_sin_disponible = Producto.objects.values('id', 'nombre', 'descripcion', 'precio', 'categoria', 'fecha_creacion')
+
+productos_sin_disponible = Producto.objects.defer("precio")
 ```
 
-## 9. Anotación de campo adicional precio_con_impuesto (16%)
+## 9. Anotación de campo adicional precio_con_impuesto (19%)
 ```python
 from django.db.models import F, ExpressionWrapper, DecimalField
 productos_con_impuesto = Producto.objects.annotate(
-    precio_con_impuesto=ExpressionWrapper(F('precio') * 1.16, output_field=DecimalField())
+    precio_con_impuesto=ExpressionWrapper(F('precio') * 1.19, output_field=DecimalField())
 )
 for producto in productos_con_impuesto:
     print(producto.nombre, producto.precio_con_impuesto)
