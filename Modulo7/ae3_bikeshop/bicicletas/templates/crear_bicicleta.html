@@ -12,7 +12,8 @@
   <body class="container mt-5">
     <h2 class="mb-4">Registrar Bicicleta</h2>
     <form method="post" enctype="multipart/form-data" class="card p-4 shadow">
-      {% csrf_token %} {{ form.as_p }}
+      {% csrf_token %} 
+      {{ form.as_p }}
       <button type="submit" class="btn btn-primary">Guardar</button>
     </form>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
