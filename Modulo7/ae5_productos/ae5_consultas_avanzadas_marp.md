@@ -1,7 +1,12 @@
-# Ejemplos avanzados de consultas y filtros en Django ORM
-## Introducción sobre el modelo Producto
+---
+marp: true
+theme: default
+class: lead
+---
+# Consultas y Filtros Avanzados en Django ORM
 
-A partir del siguiente modelo:
+---
+## Modelo Producto
 
 ```python
 from django.db import models
@@ -12,42 +17,52 @@ class Producto(models.Model):
     disponible = models.BooleanField(default=True)
 ```
 
-## Recuperar todos los registros de Producto
+---
+## Recuperar todos los registros
+
 ```python
 from productos.models import Producto
 productos = Producto.objects.all()
 print(productos)
 ```
 
-## 1. Productos con precio mayor a 50
+---
+## Filtros básicos
+
+**Precio mayor a 50:**
 ```python
 productos_precio_mayor_50 = Producto.objects.filter(precio__gt=50)
 for producto in productos_precio_mayor_50:
     print(producto.nombre, producto.precio)
 ```
 
-## 2. Productos cuyo nombre empieza con "A"
+**Nombre empieza con "A":**
 ```python
 productos_nombre_a = Producto.objects.filter(nombre__startswith="A")
 for producto in productos_nombre_a:
     print(producto.nombre)
 ```
 
-## 3. Productos disponibles (requiere campo disponible en el modelo)
+**Productos disponibles:**
 ```python
 productos_disponibles = Producto.objects.filter(disponible=True)
 for producto in productos_disponibles:
     print(producto.nombre, producto.disponible)
 ```
 
-## 4. Consulta SQL con raw() para productos con precio menor a 100
+---
+## Consulta SQL con raw()
+
+**Productos con precio menor a 100:**
 ```python
-productos_menor_100 = Producto.objects.raw('SELECT * FROM productos WHERE precio < 100')
+productos_menor_100 = Producto.objects.raw('SELECT * FROM productos WHERE precio < 1000')
 for producto in productos_menor_100:
     print(producto.nombre, producto.precio)
 ```
 
-## 5. Consulta SQL con parámetros en raw()
+---
+## Consulta SQL con parámetros
+
 ```python
 precio_limite = 100
 productos_param = Producto.objects.raw('SELECT * FROM productos WHERE precio < %s', [precio_limite])
@@ -55,41 +70,36 @@ for producto in productos_param:
     print(producto.nombre, producto.precio)
 ```
 
-## 6. Consulta SQL personalizada y mapeo al modelo
+---
+## Consulta SQL personalizada y mapeo
+
 ```python
 productos_custom = Producto.objects.raw('SELECT * FROM productos WHERE categoria = %s', ['General'])
 for producto in productos_custom:
     print(producto.nombre, producto.categoria)
 ```
 
+---
+## Índices en Django
 
-## Índices en bases de datos y su utilidad en Django
-
-**¿Qué son los índices?**
-Un índice es una estructura especial en la base de datos que acelera la búsqueda y filtrado de registros en una tabla. Funciona como el índice de un libro, permitiendo encontrar datos rápidamente sin revisar toda la tabla.
-
-**Utilidad en Django:**
-En Django, los índices mejoran el rendimiento de consultas que usan filtros, búsquedas o ordenamientos sobre campos indexados.
-
-**Cómo crear un índice en el campo nombre del modelo Producto:**
 ```python
 class Producto(models.Model):
     nombre = models.CharField(max_length=100, db_index=True)
     # ...otros campos...
 ```
-Esto crea automáticamente un índice en la base de datos para el campo nombre.
 
-**Verificar el impacto en la eficiencia de búsqueda:**
-- Sin índice, las búsquedas por nombre requieren revisar todos los registros (búsqueda secuencial).
-- Con índice, la base de datos usa el índice para encontrar coincidencias mucho más rápido (búsqueda tipo diccionario).
-- Puedes comparar tiempos de consulta usando herramientas como el panel de Django Debug Toolbar o EXPLAIN en SQL.
+---
+## Excluir campo disponible
 
-## 8. Excluir campo disponible usando values()
 ```python
 productos_sin_disponible = Producto.objects.values('id', 'nombre', 'descripcion', 'precio', 'categoria', 'fecha_creacion')
+for producto in productos_sin_disponible:
+    print(producto)
 ```
 
-## 9. Anotación de campo adicional precio_con_impuesto (16%)
+---
+## Anotación: precio con impuesto
+
 ```python
 from django.db.models import F, ExpressionWrapper, DecimalField
 productos_con_impuesto = Producto.objects.annotate(
@@ -99,14 +109,19 @@ for producto in productos_con_impuesto:
     print(producto.nombre, producto.precio_con_impuesto)
 ```
 
-## 10. Ejecutar SQL personalizado directamente (UPDATE)
+---
+## SQL personalizado (UPDATE)
+
 ```python
 from django.db import connection
 with connection.cursor() as cursor:
-    cursor.execute("UPDATE productos SET precio = precio * 1.10 WHERE precio < %s", [100])
+    cursor.execute("UPDATE productos_producto SET precio = precio * 1.10 WHERE precio < %s", [100])
+    print("Precios actualizados")
 ```
 
-## 11. Conexión manual y recuperación de datos
+---
+## Conexión manual y recuperación
+
 ```python
 from django.db import connection
 with connection.cursor() as cursor:
@@ -116,21 +131,21 @@ with connection.cursor() as cursor:
         print(row)
 ```
 
-## Cómo crear un procedimiento almacenado en SQLite
-En SQLite, puedes crear un procedimiento almacenado usando una función definida por el usuario o, en bases como MySQL o PostgreSQL, con la instrucción `CREATE PROCEDURE`. Ejemplo en MySQL:
+---
+## Crear procedimiento almacenado (MySQL)
 
 ```sql
 DELIMITER //
 CREATE PROCEDURE productos_baratos(IN precio_max DECIMAL(5,0))
 BEGIN
-    SELECT * FROM productos WHERE precio < precio_max;
+    SELECT * FROM productos_producto WHERE precio < precio_max;
 END //
 DELIMITER ;
 ```
 
-En SQLite, deberás simularlo con una consulta parametrizada, ya que no soporta procedimientos almacenados nativos.
+---
+## Invocación a procedimiento almacenado
 
-## 12. Invocación a procedimiento almacenado (ejemplo)
 ```python
 from django.db import connection
 with connection.cursor() as cursor:
@@ -141,7 +156,7 @@ with connection.cursor() as cursor:
 ```
 
 ---
-**Notas:**
+## Notas
 - Para el filtro de productos disponibles, agrega `disponible = models.BooleanField(default=True)` al modelo.
 - Para crear el índice, agrega `db_index=True` en el campo nombre del modelo.
 - Los procedimientos almacenados deben existir en la base de datos.
