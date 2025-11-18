@@ -9,6 +9,12 @@
 <body class="container mt-5">
     <h1 class="mb-4 text-center">🚴 BikeShop - Catálogo de Bicicletas</h1>
 
+    <div class="text-end mb-4">
+        <a href="{% url 'crear_bicicleta' %}" class="btn btn-success btn-lg">
+            <i class="bi bi-plus-circle"></i> Registrar Bicicleta
+        </a>
+    </div>
+
     {% if bicicletas %}
         <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
             {% for bici in bicicletas %}
@@ -33,7 +39,10 @@
                                 <span class="badge bg-danger">✗ No disponible</span>
                             {% endif %}
                         </p>
-                        <a href="{% url 'actualizar_bicicleta' bici.pk %}" class="btn btn-outline-primary btn-sm mt-2">Editar</a>
+                        <div class="mt-3 d-flex gap-2">
+                            <a href="{% url 'actualizar_bicicleta' bici.pk %}" class="btn btn-outline-primary btn-sm flex-grow-1">Editar</a>
+                            <a href="{% url 'eliminar_bicicleta' bici.pk %}" class="btn btn-outline-danger btn-sm flex-grow-1" onclick="return confirm('¿Estás seguro de que deseas eliminar esta bicicleta?');">Eliminar</a>
+                        </div>
                     </div>
                 </div>
             </div>

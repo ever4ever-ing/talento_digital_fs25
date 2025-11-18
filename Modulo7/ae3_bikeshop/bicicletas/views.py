@@ -30,3 +30,9 @@ def actualizar_bicicleta(request, pk):
 def lista_bicicletas(request):
     bicicletas = Bicicleta.objects.all()
     return render(request, 'lista_bicicletas.html', {'bicicletas': bicicletas})
+
+
+def eliminar_bicicleta(request, pk):
+    bicicleta = get_object_or_404(Bicicleta, pk=pk)
+    bicicleta.delete()
+    return redirect('lista_bicicletas')
