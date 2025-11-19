@@ -1,0 +1,94 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Mis Reseñas - Bike Shop{% endblock %}
+
+{% block extra_css %}
+<style>
+        .star-rating {
+            color: #ffc107;
+            font-size: 1.2rem;
+        }
+        .star-empty {
+            color: #ddd;
+        }
+    .review-card {
+        border-left: 4px solid #667eea;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+        <h1 class="mb-4">📝 Mis Reseñas</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if resenas %}
+            <p class="text-muted">Has dejado {{ resenas.count }} reseña{{ resenas.count|pluralize }}</p>
+            
+            {% for resena in resenas %}
+            <div class="card review-card mb-3">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <h5 class="card-title">
+                                <a href="{% url 'detalle_bicicleta' resena.bicicleta.id %}" class="text-decoration-none">
+                                    {{ resena.bicicleta.marca }} {{ resena.bicicleta.modelo }}
+                                </a>
+                            </h5>
+                            <div class="star-rating mb-2">
+                                {% for i in resena.estrellas_llenas %}
+                                    <span>⭐</span>
+                                {% endfor %}
+                                {% for i in resena.estrellas_vacias %}
+                                    <span class="star-empty">⭐</span>
+                                {% endfor %}
+                                <span class="text-muted">({{ resena.puntuacion }}/5)</span>
+                            </div>
+                            <p class="card-text">{{ resena.comentario }}</p>
+                            <small class="text-muted">
+                                Publicado: {{ resena.fecha_creacion|date:"d/m/Y H:i" }}
+                                {% if resena.fecha_actualizacion != resena.fecha_creacion %}
+                                    | Editado: {{ resena.fecha_actualizacion|date:"d/m/Y H:i" }}
+                                {% endif %}
+                            </small>
+                        </div>
+                        <div class="col-md-4 text-end">
+                            {% if resena.bicicleta.imagen %}
+                                <img src="{{ resena.bicicleta.imagen.url }}" alt="{{ resena.bicicleta.marca }}" class="img-fluid rounded" style="max-height: 150px;">
+                            {% else %}
+                                <div class="bg-primary text-white rounded d-flex align-items-center justify-content-center" style="height:150px;font-size:50px;">
+                                    🚲
+                                </div>
+                            {% endif %}
+                            <div class="mt-3">
+                                <a href="{% url 'detalle_bicicleta' resena.bicicleta.id %}" class="btn btn-sm btn-outline-primary">Ver Bicicleta</a>
+                                <a href="{% url 'editar_resena' resena.id %}" class="btn btn-sm btn-outline-secondary">Editar</a>
+                                <a href="{% url 'eliminar_resena' resena.id %}" class="btn btn-sm btn-outline-danger" onclick="return confirm('¿Estás seguro?');">Eliminar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info text-center">
+                <p class="mb-3">Aún no has dejado ninguna reseña.</p>
+                <a href="{% url 'lista_bicicletas' %}" class="btn btn-primary">
+                    Ver Catálogo y Dejar Reseñas
+                </a>
+            </div>
+        {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'lista_bicicletas' %}" class="btn btn-secondary">
+            ← Volver al Catálogo
+        </a>
+    </div>
+{% endblock %}

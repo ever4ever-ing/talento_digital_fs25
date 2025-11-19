@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <title>{% block title %}BikeShop{% endblock %}</title>
+    <style>
+      body {
+          font-family: "Sora", system-ui, -apple-system, sans-serif;
+      }
+      .navbar-custom {
+          background: linear-gradient(135deg, #00392d 0%, #006e8c 100%);
+      }
+      .navbar-custom a, .navbar-custom button {
+          color: white !important;
+          margin: 0 10px;
+      }
+      .navbar-custom a:hover {
+          text-decoration: underline;
+      }
+      .badge-carrito {
+          position: relative;
+          top: -10px;
+          left: -5px;
+      }
+      .btn-primary {
+          background-color: #006e8c;
+          border-color: #006e8c;
+      }
+      .btn-primary:hover {
+          background-color: #00392d;
+          border-color: #00392d;
+      }
+      .text-success {
+          color: #eb7f25 !important;
+      }
+      .btn-success {
+          color: white !important;
+          background-color: #eb7f25;
+          border-color: #eb7f25;
+      }
+      .btn-success:hover {
+          background-color: #d16c1f;
+          border-color: #d16d1f;
+      }
+      .btn-warning {
+          background-color: #ffcc52;
+          border-color: #ffcc52;
+          color: #00392d !important;
+      }
+      .btn-warning:hover {
+          background-color: #ffff8f;
+          border-color: #ffff8f;
+      }
+      /* Estilos personalizados para navbar - diseño sobrio */
+      .navbar-custom .btn-outline-light {
+          border-color: rgba(255, 255, 255, 0.5);
+          color: white !important;
+          font-weight: 500;
+      }
+      .navbar-custom .btn-outline-light:hover {
+          background-color: rgba(255, 255, 255, 0.1);
+          border-color: white;
+          color: white !important;
+      }
+      .navbar-custom .nav-link {
+          color: rgba(255, 255, 255, 0.9) !important;
+          font-weight: 500;
+          transition: all 0.3s ease;
+      }
+      .navbar-custom .nav-link:hover {
+          color: white !important;
+          text-decoration: none;
+          transform: translateY(-1px);
+      }
+      .navbar-custom .dropdown-menu {
+          border: none;
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .navbar-custom .dropdown-menu .dropdown-item {
+          color: #333 !important;
+      }
+      .navbar-custom .dropdown-menu .dropdown-item:hover {
+          background-color: #f8f9fa;
+          color: #006e8c !important;
+      }
+      .navbar-custom .dropdown-menu .dropdown-item.text-danger {
+          color: #dc3545 !important;
+      }
+      {% block extra_css %}{% endblock %}
+    </style>
+  </head>
+  <body>
+    <!-- Barra de Navegación -->
+    {% load carrito_tags %}
+    <nav class="navbar navbar-expand-lg navbar-custom mb-5">
+      <div class="container-fluid">
+        <a
+          class="navbar-brand"
+          href="{% url 'lista_bicicletas' %}"
+          style="color: white; font-weight: bold"
+          > BikeShop</a
+        >
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-center">
+            <!-- Enlaces principales -->
+            <li class="nav-item">
+              <a
+                href="{% url 'lista_eventos' %}"
+                class="nav-link"
+                style="color: white"
+              >
+                📅 Eventos
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="{% url 'carrito_detalle' %}"
+                class="nav-link position-relative"
+                style="color: white"
+              >
+                🛒 Carrito {% cantidad_total_carrito request as total_items %}
+                {% if total_items > 0 %}
+                <span
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >
+                  {{ total_items }}
+                </span>
+                {% endif %}
+              </a>
+            </li>
+
+            {% if user.is_authenticated %}
+            <!-- Dropdown de usuario -->
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                style="color: white"
+              >
+                👤 {{ user.first_name|default:user.username }}
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                {% if user.is_staff %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'panel_clientes' %}">
+                    📊 Panel de Clientes
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                {% endif %}
+                <li>
+                  <a class="dropdown-item" href="{% url 'perfil' %}"
+                    >Mi Perfil</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'mis_ordenes' %}"
+                    >Mis Órdenes</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'mis_inscripciones' %}"
+                    >Mis Eventos</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'mis_resenas' %}"
+                    >Mis Reseñas</a
+                  >
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a class="dropdown-item text-danger" href="{% url 'logout' %}"
+                    >Cerrar Sesión</a
+                  >
+                </li>
+              </ul>
+            </li>
+            {% else %}
+            <li class="nav-item">
+              <a
+                href="{% url 'login' %}"
+                class="btn btn-outline-light btn-sm mx-2"
+              >
+                Iniciar Sesión
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                href="{% url 'registro' %}"
+                class="btn btn-outline-light btn-sm"
+              >
+                Registrarse
+              </a>
+            </li>
+            {% endif %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Contenido -->
+    <div class="container">
+      {% if messages %} {% for message in messages %}
+      <div
+        class="alert alert-{{ message.tags }} alert-dismissible fade show"
+        role="alert"
+      >
+        {{ message }}
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="alert"
+        ></button>
+      </div>
+      {% endfor %} {% endif %} {% block content %} {% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+  </body>
+</html>

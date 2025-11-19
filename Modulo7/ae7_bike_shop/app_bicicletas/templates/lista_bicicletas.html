@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@100..800&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <title>BikeShop - Catálogo</title>
+    <style>
+        body {
+            font-family: "Sora", system-ui, -apple-system, sans-serif;
+        }
+        .navbar-custom {
+            background: linear-gradient(135deg, #00392d 0%, #006e8c 100%);
+        }
+        .navbar-custom a, .navbar-custom button {
+            color: white !important;
+            margin: 0 10px;
+        }
+        .navbar-custom a:hover {
+            text-decoration: underline;
+        }
+        .badge-carrito {
+            position: relative;
+            top: -10px;
+            left: -5px;
+        }
+        .btn-primary {
+            background-color: #006e8c;
+            border-color: #006e8c;
+        }
+        .btn-primary:hover {
+            background-color: #00392d;
+            border-color: #00392d;
+        }
+        .text-success {
+            color: #eb7f25 !important;
+        }
+        .btn-success {
+            color: white !important;
+            background-color: #eb7f25;
+            border-color: #eb7f25;
+        }
+        .btn-success:hover {
+            background-color: #d16d1f;
+            border-color: #d16d1f;
+        }
+        .btn-warning {
+            background-color: #ffcc52;
+            border-color: #ffcc52;
+            color: #00392d !important;
+        }
+        .btn-warning:hover {
+            background-color: #ffff8f;
+            border-color: #ffff8f;
+        }
+        /* Estilos personalizados para navbar */
+        .navbar-custom .btn-warning {
+            background-color: #ffcc52;
+            border-color: #ffcc52;
+            color: #00392d !important;
+            font-weight: 600;
+        }
+        .navbar-custom .btn-warning:hover {
+            background-color: #ffff8f;
+            border-color: #ffff8f;
+            color: #00392d !important;
+        }
+        .navbar-custom .btn-success {
+            background-color: #eb7f25;
+            border-color: #eb7f25;
+            color: white !important;
+            font-weight: 600;
+        }
+        .navbar-custom .btn-success:hover {
+            background-color: #d16d1f;
+            border-color: #d16d1f;
+        }
+        .navbar-custom .btn-light {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-color: rgba(255, 255, 255, 0.9);
+            color: #00392d !important;
+            font-weight: 600;
+        }
+        .navbar-custom .btn-light:hover {
+            background-color: white;
+            border-color: white;
+        }
+        .navbar-custom .btn-info {
+            background-color: #006e8c;
+            border-color: #006e8c;
+            color: white !important;
+            font-weight: 600;
+        }
+        .navbar-custom .btn-info:hover {
+            background-color: #00392d;
+            border-color: #00392d;
+        }
+        .navbar-custom .btn-danger {
+            background-color: #dc3545;
+            border-color: #dc3545;
+            color: white !important;
+            font-weight: 600;
+        }
+        .navbar-custom .btn-danger:hover {
+            background-color: #bb2d3b;
+            border-color: #bb2d3b;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegación -->
+    {% load carrito_tags %}
+    <nav class="navbar navbar-expand-lg navbar-custom mb-5">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'lista_bicicletas' %}" style="color: white; font-weight: bold;"> BikeShop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <a href="{% url 'carrito_detalle' %}" class="btn btn-warning btn-sm" style="margin: 0 5px;">
+                        🛒 Carrito
+                        {% cantidad_total_carrito request as total_items %}
+                        {% if total_items > 0 %}
+                            <span class="badge bg-danger badge-carrito">{{ total_items }}</span>
+                        {% endif %}
+                    </a>
+                    
+                    {% if user.is_authenticated %}
+                        <span style="color: white; margin-right: 15px;">👤 {{ user.first_name|default:user.username }}</span>
+                        
+                        {% if user.groups.all|length > 0 %}
+                            {% for group in user.groups.all %}
+                                <span class="badge bg-light text-dark">{{ group.name }}</span>
+                            {% endfor %}
+                        {% endif %}
+                        
+                        <a href="{% url 'mis_ordenes' %}" class="btn btn-success btn-sm" style="margin: 0 5px;">Mis Órdenes</a>
+                        <a href="{% url 'perfil' %}" class="btn btn-light btn-sm" style="margin: 0 5px;">Mi Perfil</a>
+                        <a href="{% url 'mis_resenas' %}" class="btn btn-info btn-sm" style="margin: 0 5px;">Mis Reseñas</a>
+                        <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">Cerrar Sesión</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-light btn-sm" style="margin: 0 5px;">Iniciar Sesión</a>
+                        <a href="{% url 'registro' %}" class="btn btn-warning btn-sm">Registrarse</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="mb-4 text-center"> Catálogo de Bicicletas</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Botones de Acción -->
+        {% if user.is_authenticated and user.groups.filter|length %}
+            {% if 'Personal' in user.groups.values_list|join:"," %}
+            <div class="text-end mb-4">
+                <a href="{% url 'crear_bicicleta' %}" class="btn btn-success btn-lg">
+                    <i class="bi bi-plus-circle"></i> ➕ Registrar Bicicleta
+                </a>
+            </div>
+            {% endif %}
+        {% endif %}
+       
+
+        <!-- Catálogo de Bicicletas -->
+        {% if bicicletas %}
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for bici in bicicletas %}
+                <div class="col">
+                    <div class="card h-100 shadow-sm">
+                        {% if bici.imagen %}
+                            <img src="{{ bici.imagen.url }}" alt="{{ bici.marca }} {{ bici.modelo }}" class="card-img-top" style="height:200px;object-fit:cover;">
+                        {% else %}
+                            <div class="d-flex align-items-center justify-content-center bg-primary text-white" style="height:200px;font-size:48px;">
+                                🚲
+                            </div>
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{ bici.marca }} {{ bici.modelo }}</h5>
+                            <p><span class="badge bg-info text-uppercase">{{ bici.tipo }}</span></p>
+                            <p class="mb-1"><strong>Año:</strong> {{ bici.anio }}</p>
+                            <p class="mb-1 fs-5 fw-bold text-success">${{ bici.precio }}</p>
+                            <p>
+                                {% if bici.disponible %}
+                                    <span class="badge bg-success">✓ Disponible</span>
+                                {% else %}
+                                    <span class="badge bg-danger">✗ No disponible</span>
+                                {% endif %}
+                            </p>
+                            
+                            <!-- Botón Ver Detalles y Reseñas -->
+                            <div class="mt-3 mb-2">
+                                <a href="{% url 'detalle_bicicleta' bici.pk %}" class="btn btn-primary w-100">
+                                    ⭐ Ver Detalles y Reseñas
+                                </a>
+                            </div>
+                            
+                            <!-- Botón Agregar al Carrito -->
+                            {% if bici.disponible %}
+                            <div class="mb-2">
+                                <form action="{% url 'carrito_agregar' bici.pk %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="cantidad" value="1">
+                                    <input type="hidden" name="actualizar" value="False">
+                                    <button type="submit" class="btn btn-success w-100">
+                                        🛒 Agregar al Carrito
+                                    </button>
+                                </form>
+                            </div>
+                            {% endif %}
+                            
+                            <!-- Botones solo para Personal -->
+                            {% if user.is_authenticated and user.groups.filter|length %}
+                                {% if 'Personal' in user.groups.values_list|join:"," %}
+                                <div class="mt-3 d-flex gap-2">
+                                    <a href="{% url 'actualizar_bicicleta' bici.pk %}" class="btn btn-outline-primary btn-sm flex-grow-1">✏️ Editar</a>
+                                    <a href="{% url 'eliminar_bicicleta' bici.pk %}" class="btn btn-outline-danger btn-sm flex-grow-1" onclick="return confirm('¿Estás seguro?');">🗑️ Eliminar</a>
+                                </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center mt-5">
+                <p>No hay bicicletas en el catálogo.</p>
+            </div>
+        {% endif %}
+
+        <!-- Pie de página -->
+        <div class="text-center mt-5 mb-4">
+            {% if user.is_staff %}
+                <a href="/admin/" class="btn btn-dark">🔧 Panel de Administración</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

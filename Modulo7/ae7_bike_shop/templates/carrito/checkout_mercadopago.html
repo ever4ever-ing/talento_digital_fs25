@@ -1,0 +1,386 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Checkout - Mercado Pago{% endblock %}
+
+{% block extra_css %}
+<style>
+    .checkout-container {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+    .payment-methods {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin: 20px 0;
+    }
+    .payment-method {
+        border: 2px solid #e0e0e0;
+        border-radius: 10px;
+        padding: 20px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+    }
+    .payment-method:hover {
+        border-color: #006e8c;
+        background-color: #f0f8ff;
+    }
+    .payment-method.selected {
+        border-color: #006e8c;
+        background-color: #e6f7ff;
+        box-shadow: 0 0 10px rgba(0, 110, 140, 0.3);
+    }
+    .payment-method img {
+        height: 40px;
+        margin-bottom: 10px;
+    }
+    .mercadopago-logo {
+        background: linear-gradient(135deg, #009ee3 0%, #00b0ed 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+    .order-summary {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+    }
+    .card-input {
+        background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="40" height="25" viewBox="0 0 40 25"><rect fill="%23ccc" width="40" height="25" rx="3"/></svg>');
+        background-repeat: no-repeat;
+        background-position: right 10px center;
+        background-size: 40px;
+    }
+    .installments-info {
+        background-color: #fff3cd;
+        border-left: 4px solid #ffcc52;
+        padding: 10px;
+        margin: 10px 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="checkout-container">
+    <!-- Header Mercado Pago -->
+    <div class="mercadopago-logo">
+        <h2 class="mb-0">💳 Mercado Pago</h2>
+        <p class="mb-0 mt-2"><small>Simulación de Pasarela de Pagos</small></p>
+    </div>
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <div class="row">
+        <!-- Columna de Pago -->
+        <div class="col-md-7">
+            <div class="card">
+                <div class="card-header" style="background-color: #006e8c; color: white;">
+                    <h5 class="mb-0">🔒 Información de Pago</h5>
+                </div>
+                <div class="card-body">
+                    <form id="paymentForm" method="post">
+                        {% csrf_token %}
+                        
+                        <!-- Métodos de Pago -->
+                        <h6 class="mb-3">Selecciona tu método de pago:</h6>
+                        <div class="payment-methods">
+                            <div class="payment-method" data-method="credit_card" onclick="selectPaymentMethod('credit_card')">
+                                <div style="font-size: 2em;">💳</div>
+                                <div><strong>Tarjeta de Crédito</strong></div>
+                                <small class="text-muted">Hasta 12 cuotas</small>
+                            </div>
+                            <div class="payment-method" data-method="debit_card" onclick="selectPaymentMethod('debit_card')">
+                                <div style="font-size: 2em;">💳</div>
+                                <div><strong>Tarjeta de Débito</strong></div>
+                                <small class="text-muted">Pago único</small>
+                            </div>
+                            <div class="payment-method" data-method="bank_transfer" onclick="selectPaymentMethod('bank_transfer')">
+                                <div style="font-size: 2em;">🏦</div>
+                                <div><strong>Transferencia</strong></div>
+                                <small class="text-muted">PSE</small>
+                            </div>
+                            <div class="payment-method" data-method="cash" onclick="selectPaymentMethod('cash')">
+                                <div style="font-size: 2em;">💵</div>
+                                <div><strong>Efectivo</strong></div>
+                                <small class="text-muted">Pago en efectivo</small>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="payment_method" id="payment_method" required>
+
+                        <!-- Formulario de Tarjeta (aparece al seleccionar tarjeta) -->
+                        <div id="cardForm" style="display: none;">
+                            <hr>
+                            <h6 class="mb-3">Datos de la Tarjeta:</h6>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Número de Tarjeta</label>
+                                <input type="text" class="form-control card-input" name="card_number" 
+                                       placeholder="1234 5678 9012 3456" maxlength="19" 
+                                       pattern="[0-9\s]{13,19}" id="cardNumber">
+                                <small class="text-muted">Para prueba usa: 4507 9907 6623 8769</small>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <label class="form-label">Nombre en la Tarjeta</label>
+                                    <input type="text" class="form-control" name="card_holder" 
+                                           placeholder="JUAN PEREZ" id="cardHolder">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label">CVV</label>
+                                    <input type="text" class="form-control" name="cvv" 
+                                           placeholder="123" maxlength="4" pattern="[0-9]{3,4}" id="cvv">
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-md-6">
+                                    <label class="form-label">Mes de Vencimiento</label>
+                                    <select class="form-select" name="exp_month" id="expMonth">
+                                        <option value="">Mes</option>
+                                        {% for i in "123456789" %}
+                                        <option value="0{{ i }}">0{{ i }}</option>
+                                        {% endfor %}
+                                        <option value="10">10</option>
+                                        <option value="11">11</option>
+                                        <option value="12">12</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label">Año de Vencimiento</label>
+                                    <select class="form-select" name="exp_year" id="expYear">
+                                        <option value="">Año</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                        <option value="2027">2027</option>
+                                        <option value="2028">2028</option>
+                                        <option value="2029">2029</option>
+                                        <option value="2030">2030</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Cuotas (solo para crédito) -->
+                            <div id="installmentsDiv" style="display: none;">
+                                <div class="installments-info mt-3">
+                                    <strong>💰 Cuotas sin interés disponibles</strong>
+                                </div>
+                                <div class="mb-3 mt-3">
+                                    <label class="form-label">Número de Cuotas</label>
+                                    <select class="form-select" name="installments" id="installments">
+                                        <option value="1">1 cuota de ${{ total }}</option>
+                                        <option value="3">3 cuotas sin interés de ${{ total_3_cuotas }}</option>
+                                        <option value="6">6 cuotas sin interés de ${{ total_6_cuotas }}</option>
+                                        <option value="12">12 cuotas sin interés de ${{ total_12_cuotas }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Email de Confirmación</label>
+                                <input type="email" class="form-control" name="email" 
+                                       value="{{ user.email }}" id="email">
+                            </div>
+                        </div>
+
+                        <!-- Formulario de Transferencia -->
+                        <div id="transferForm" style="display: none;">
+                            <hr>
+                            <h6 class="mb-3">Transferencia Bancaria (PSE):</h6>
+                            <div class="alert alert-info">
+                                <strong>ℹ️ Simulación:</strong> Selecciona tu banco y serás redirigido a la página de confirmación.
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Selecciona tu Banco</label>
+                                <select class="form-select" name="bank" id="bank">
+                                    <option value="">Seleccionar...</option>
+                                    <option value="bancolombia">Bancolombia</option>
+                                    <option value="davivienda">Davivienda</option>
+                                    <option value="bbva">BBVA</option>
+                                    <option value="banco_bogota">Banco de Bogotá</option>
+                                    <option value="banco_popular">Banco Popular</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Formulario de Efectivo -->
+                        <div id="cashForm" style="display: none;">
+                            <hr>
+                            <h6 class="mb-3">Pago en Efectivo:</h6>
+                            <div class="alert alert-warning">
+                                <strong>📍 Puntos de Pago:</strong> Baloto, Efecty, Su Red, etc.
+                            </div>
+                            <p>Se generará un código de pago que podrás pagar en cualquier punto autorizado en las próximas 48 horas.</p>
+                        </div>
+
+                        <hr>
+                        <button type="submit" class="btn btn-success btn-lg w-100" id="submitBtn" disabled>
+                            <span id="btnText">Selecciona un método de pago</span> 
+                            <span id="btnAmount"></span>
+                        </button>
+
+                        <p class="text-center mt-3 text-muted small">
+                            🔒 Pago seguro con Mercado Pago (Simulación)
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Columna Resumen -->
+        <div class="col-md-5">
+            <div class="order-summary">
+                <h5 class="mb-3">📋 Resumen de la Orden</h5>
+                
+                {% for item in carrito %}
+                <div class="d-flex justify-content-between mb-2">
+                    <div>
+                        <small>{{ item.bicicleta.marca }} {{ item.bicicleta.modelo }}</small>
+                        <br>
+                        <small class="text-muted">Cantidad: {{ item.cantidad }}</small>
+                    </div>
+                    <div>
+                        <strong>${{ item.total_precio }}</strong>
+                    </div>
+                </div>
+                <hr>
+                {% endfor %}
+
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Subtotal:</span>
+                    <span>${{ total }}</span>
+                </div>
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Envío:</span>
+                    <span class="text-success">Gratis</span>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <strong>Total:</strong>
+                    <strong class="fs-4" style="color: #eb7f25;">${{ total }}</strong>
+                </div>
+
+                <div class="alert alert-info mt-3" style="font-size: 0.85em;">
+                    <strong>🎉 Beneficios Mercado Pago:</strong>
+                    <ul class="mb-0 mt-2">
+                        <li>Hasta 12 cuotas sin interés</li>
+                        <li>Protección al comprador</li>
+                        <li>Devolución fácil</li>
+                        <li>Pago seguro encriptado</li>
+                    </ul>
+                </div>
+
+                <div class="mt-3">
+                    <a href="{% url 'carrito_detalle' %}" class="btn btn-outline-secondary btn-sm w-100">
+                        ← Volver al Carrito
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    let selectedMethod = null;
+
+    function selectPaymentMethod(method) {
+        selectedMethod = method;
+        
+        // Actualizar visualización
+        document.querySelectorAll('.payment-method').forEach(el => {
+            el.classList.remove('selected');
+        });
+        document.querySelector(`[data-method="${method}"]`).classList.add('selected');
+        
+        // Actualizar campo hidden
+        document.getElementById('payment_method').value = method;
+        
+        // Ocultar todos los formularios
+        document.getElementById('cardForm').style.display = 'none';
+        document.getElementById('transferForm').style.display = 'none';
+        document.getElementById('cashForm').style.display = 'none';
+        document.getElementById('installmentsDiv').style.display = 'none';
+        
+        // Mostrar formulario correspondiente
+        if (method === 'credit_card' || method === 'debit_card') {
+            document.getElementById('cardForm').style.display = 'block';
+            if (method === 'credit_card') {
+                document.getElementById('installmentsDiv').style.display = 'block';
+            }
+        } else if (method === 'bank_transfer') {
+            document.getElementById('transferForm').style.display = 'block';
+        } else if (method === 'cash') {
+            document.getElementById('cashForm').style.display = 'block';
+        }
+        
+        // Habilitar botón
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = false;
+        document.getElementById('btnText').textContent = '💳 Pagar';
+        document.getElementById('btnAmount').textContent = ' ${{ total }}';
+    }
+
+    // Formatear número de tarjeta
+    document.getElementById('cardNumber')?.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\s/g, '');
+        let formattedValue = value.match(/.{1,4}/g)?.join(' ') || value;
+        e.target.value = formattedValue;
+    });
+
+    // Validación del formulario
+    document.getElementById('paymentForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        if (!selectedMethod) {
+            alert('Por favor selecciona un método de pago');
+            return;
+        }
+
+        // Validaciones específicas
+        if (selectedMethod === 'credit_card' || selectedMethod === 'debit_card') {
+            const cardNumber = document.getElementById('cardNumber').value;
+            const cardHolder = document.getElementById('cardHolder').value;
+            const cvv = document.getElementById('cvv').value;
+            const expMonth = document.getElementById('expMonth').value;
+            const expYear = document.getElementById('expYear').value;
+            
+            if (!cardNumber || !cardHolder || !cvv || !expMonth || !expYear) {
+                alert('Por favor completa todos los datos de la tarjeta');
+                return;
+            }
+        }
+
+        if (selectedMethod === 'bank_transfer') {
+            const bank = document.getElementById('bank').value;
+            if (!bank) {
+                alert('Por favor selecciona tu banco');
+                return;
+            }
+        }
+
+        // Mostrar loading
+        const submitBtn = document.getElementById('submitBtn');
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Procesando pago...';
+
+        // Simular delay de procesamiento
+        setTimeout(() => {
+            this.submit();
+        }, 1500);
+    });
+</script>
+{% endblock %}

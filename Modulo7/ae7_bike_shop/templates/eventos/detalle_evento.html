@@ -1,0 +1,257 @@
+{% extends 'base/base.html' %}
+
+{% block title %}{{ evento.nombre }} - BikeShop{% endblock %}
+
+{% block extra_css %}
+<style>
+    .evento-hero {
+        height: 400px;
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        border-radius: 15px;
+        overflow: hidden;
+    }
+    .evento-hero-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        color: white;
+        padding: 30px;
+    }
+    .info-box {
+        background-color: #f8f9fa;
+        border-left: 4px solid #006e8c;
+        padding: 15px;
+        margin: 10px 0;
+    }
+    .inclusion-item {
+        padding: 10px;
+        border-bottom: 1px solid #eee;
+    }
+    .inclusion-item:last-child {
+        border-bottom: none;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Hero Image -->
+    <div class="evento-hero mb-4" {% if evento.imagen %}style="background-image: url('{{ evento.imagen.url }}');"{% else %}style="background: linear-gradient(135deg, #00392d 0%, #006e8c 100%);"{% endif %}>
+        <div class="evento-hero-overlay">
+            <h1 class="display-4">{{ evento.nombre }}</h1>
+            <p class="lead">{{ evento.get_tipo_evento_display }} - {{ evento.get_dificultad_display }}</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Información Principal -->
+        <div class="col-md-8">
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: #006e8c; color: white;">
+                    <h4 class="mb-0">📝 Descripción del Evento</h4>
+                </div>
+                <div class="card-body">
+                    <p style="white-space: pre-line;">{{ evento.descripcion }}</p>
+                </div>
+            </div>
+
+            <!-- Detalles del Recorrido -->
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: #eb7f25; color: white;">
+                    <h4 class="mb-0">🗺️ Detalles del Recorrido</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <strong>📍 Destino:</strong><br>
+                                {{ evento.destino }}
+                            </div>
+                            <div class="info-box">
+                                <strong>🚩 Punto de Encuentro:</strong><br>
+                                {{ evento.punto_encuentro }}
+                            </div>
+                            <div class="info-box">
+                                <strong>📅 Fecha y Hora:</strong><br>
+                                {{ evento.fecha_hora|date:"l, d de F de Y" }}<br>
+                                {{ evento.fecha_hora|date:"H:i" }} hrs
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-box">
+                                <strong>⏱️ Duración:</strong><br>
+                                {{ evento.duracion_horas }} horas
+                            </div>
+                            <div class="info-box">
+                                <strong>📏 Distancia:</strong><br>
+                                {{ evento.distancia_km }} kilómetros
+                            </div>
+                            <div class="info-box">
+                                <strong>🎯 Dificultad:</strong><br>
+                                <span class="badge" style="background-color: #eb7f25;">{{ evento.get_dificultad_display }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inclusiones -->
+            <div class="card mb-4">
+                <div class="card-header" style="background-color: #00392d; color: white;">
+                    <h4 class="mb-0">✅ ¿Qué Incluye?</h4>
+                </div>
+                <div class="card-body">
+                    <div class="inclusion-item">
+                        {% if evento.incluye_guia %}
+                            <span style="color: #28a745; font-size: 1.2em;">✓</span>
+                        {% else %}
+                            <span style="color: #dc3545; font-size: 1.2em;">✗</span>
+                        {% endif %}
+                        <strong>Guía Especializado</strong>
+                    </div>
+                    <div class="inclusion-item">
+                        {% if evento.incluye_seguro %}
+                            <span style="color: #28a745; font-size: 1.2em;">✓</span>
+                        {% else %}
+                            <span style="color: #dc3545; font-size: 1.2em;">✗</span>
+                        {% endif %}
+                        <strong>Seguro de Accidentes</strong>
+                    </div>
+                    <div class="inclusion-item">
+                        {% if evento.incluye_hidratacion %}
+                            <span style="color: #28a745; font-size: 1.2em;">✓</span>
+                        {% else %}
+                            <span style="color: #dc3545; font-size: 1.2em;">✗</span>
+                        {% endif %}
+                        <strong>Hidratación</strong>
+                    </div>
+                    <div class="inclusion-item">
+                        {% if evento.incluye_snacks %}
+                            <span style="color: #28a745; font-size: 1.2em;">✓</span>
+                        {% else %}
+                            <span style="color: #dc3545; font-size: 1.2em;">✗</span>
+                        {% endif %}
+                        <strong>Snacks</strong>
+                    </div>
+                </div>
+            </div>
+
+            {% if evento.nivel_minimo %}
+            <div class="alert alert-warning">
+                <strong>⚠️ Requisitos:</strong><br>
+                {{ evento.nivel_minimo }}
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Sidebar de Inscripción -->
+        <div class="col-md-4">
+            <div class="card sticky-top" style="top: 20px;">
+                <div class="card-header text-center" style="background-color: #eb7f25; color: white;">
+                    <h3 class="mb-0">${{ evento.precio }}</h3>
+                    <small>por persona</small>
+                </div>
+                <div class="card-body">
+                    <!-- Cupos Disponibles -->
+                    <div class="text-center mb-3">
+                        {% if evento.cupo_disponible > 10 %}
+                            <div class="alert alert-success">
+                                <strong>✅ {{ evento.cupo_disponible }} cupos disponibles</strong>
+                            </div>
+                        {% elif evento.cupo_disponible > 3 %}
+                            <div class="alert alert-warning">
+                                <strong>⚠️ Solo {{ evento.cupo_disponible }} cupos disponibles</strong>
+                            </div>
+                        {% elif evento.cupo_disponible > 0 %}
+                            <div class="alert alert-danger">
+                                <strong>🔥 ¡Últimos {{ evento.cupo_disponible }} cupos!</strong>
+                            </div>
+                        {% else %}
+                            <div class="alert alert-secondary">
+                                <strong>❌ Evento lleno</strong>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Barra de Ocupación -->
+                    <div class="mb-3">
+                        <small class="text-muted">Ocupación: {{ evento.porcentaje_ocupacion }}%</small>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" 
+                                 style="width: {{ evento.porcentaje_ocupacion }}%; background-color: #006e8c;" 
+                                 aria-valuenow="{{ evento.porcentaje_ocupacion }}" 
+                                 aria-valuemin="0" 
+                                 aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if user.is_authenticated %}
+                        {% if ya_inscrito %}
+                            <button class="btn btn-secondary w-100 mb-2" disabled>
+                                ✓ Ya estás inscrito
+                            </button>
+                            <a href="{% url 'mis_inscripciones' %}" class="btn btn-outline-primary w-100">
+                                Ver Mi Inscripción
+                            </a>
+                        {% elif evento.puede_inscribirse %}
+                            <a href="{% url 'inscribirse_evento' evento.id %}" class="btn btn-success w-100 btn-lg">
+                                📝 Inscribirse Ahora
+                            </a>
+                        {% else %}
+                            <button class="btn btn-secondary w-100" disabled>
+                                No Disponible
+                            </button>
+                        {% endif %}
+                    {% else %}
+                        <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary w-100 btn-lg">
+                            🔐 Inicia Sesión para Inscribirte
+                        </a>
+                    {% endif %}
+
+                    <hr>
+
+                    <div class="text-center">
+                        <small class="text-muted">
+                            <strong>🛡️ Pago seguro</strong><br>
+                            Confirma tu inscripción de forma segura
+                        </small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Información Adicional -->
+            <div class="card mt-3">
+                <div class="card-body">
+                    <h6><strong>💡 Consejos:</strong></h6>
+                    <ul style="font-size: 0.9em;">
+                        <li>Llega 15 min antes</li>
+                        <li>Bicicleta en buen estado</li>
+                        <li>Ropa cómoda y protector solar</li>
+                        <li>Casco obligatorio</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'lista_eventos' %}" class="btn btn-outline-secondary">
+            ← Volver a Eventos
+        </a>
+    </div>
+</div>
+{% endblock %}

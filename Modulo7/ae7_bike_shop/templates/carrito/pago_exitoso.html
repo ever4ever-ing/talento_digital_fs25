@@ -1,0 +1,115 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Pago Exitoso - BikeShop{% endblock %}
+
+{% block extra_css %}
+<style>
+    .success-container {
+        max-width: 700px;
+        margin: 50px auto;
+        text-align: center;
+    }
+    .success-icon {
+        font-size: 80px;
+        color: #28a745;
+        animation: scaleIn 0.5s ease-in-out;
+    }
+    @keyframes scaleIn {
+        0% { transform: scale(0); }
+        50% { transform: scale(1.2); }
+        100% { transform: scale(1); }
+    }
+    .order-card {
+        background: linear-gradient(135deg, #00392d 0%, #006e8c 100%);
+        color: white;
+        border-radius: 15px;
+        padding: 30px;
+        margin: 30px 0;
+    }
+    .payment-details {
+        background-color: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 20px 0;
+        text-align: left;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="success-container">
+    <div class="success-icon">✅</div>
+    <h1 class="mb-3">¡Pago Exitoso!</h1>
+    <p class="lead">Tu orden ha sido procesada correctamente</p>
+
+    <div class="order-card">
+        <h3>Orden #{{ orden.id }}</h3>
+        <p class="mb-2">Estado: <span class="badge bg-success">{{ orden.get_estado_display }}</span></p>
+        <h2 class="mt-3">${{ orden.total }}</h2>
+        <p class="mb-0"><small>Fecha: {{ orden.fecha_creacion|date:"d/m/Y H:i" }}</small></p>
+    </div>
+
+    <div class="payment-details">
+        <h5 class="mb-3">💳 Detalles del Pago</h5>
+        <div class="row">
+            <div class="col-md-6 text-start">
+                <p><strong>Método de Pago:</strong></p>
+                <p>{{ payment_info.method_display }}</p>
+            </div>
+            <div class="col-md-6 text-start">
+                <p><strong>Transacción:</strong></p>
+                <p>{{ payment_info.transaction_id }}</p>
+            </div>
+        </div>
+
+        {% if payment_info.installments and payment_info.installments > 1 %}
+        <div class="alert alert-info mt-3">
+            <strong>📅 Cuotas:</strong> {{ payment_info.installments }} cuotas de ${{ payment_info.installment_amount }}
+        </div>
+        {% endif %}
+
+        {% if payment_info.method == 'cash' %}
+        <div class="alert alert-warning mt-3">
+            <strong>📍 Código de Pago:</strong> {{ payment_info.payment_code }}<br>
+            <small>Válido por 48 horas. Puedes pagarlo en Baloto, Efecty, Su Red, etc.</small>
+        </div>
+        {% endif %}
+    </div>
+
+    <div class="payment-details">
+        <h5 class="mb-3">📦 Items de la Orden</h5>
+        {% for detalle in orden.detalles.all %}
+        <div class="d-flex justify-content-between align-items-center mb-2">
+            <div class="text-start">
+                <strong>{{ detalle.bicicleta.marca }} {{ detalle.bicicleta.modelo }}</strong>
+                <br>
+                <small class="text-muted">Cantidad: {{ detalle.cantidad }} x ${{ detalle.precio_unitario }}</small>
+            </div>
+            <div>
+                <strong>${{ detalle.subtotal }}</strong>
+            </div>
+        </div>
+        {% if not forloop.last %}<hr>{% endif %}
+        {% endfor %}
+    </div>
+
+    <div class="alert alert-info">
+        <strong>📧 Confirmación Enviada</strong>
+        <p class="mb-0">Hemos enviado un email con los detalles de tu orden a: <strong>{{ user.email }}</strong></p>
+    </div>
+
+    <div class="mt-4">
+        <a href="{% url 'mis_ordenes' %}" class="btn btn-primary btn-lg me-2">
+            📋 Ver Mis Órdenes
+        </a>
+        <a href="{% url 'lista_bicicletas' %}" class="btn btn-outline-secondary btn-lg">
+            🚴 Seguir Comprando
+        </a>
+    </div>
+
+    <div class="mt-5">
+        <h5>🎉 ¡Gracias por tu compra!</h5>
+        <p class="text-muted">Tu orden será procesada y enviada pronto</p>
+    </div>
+</div>
+{% endblock %}

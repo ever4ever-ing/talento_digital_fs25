@@ -1,0 +1,273 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Panel de Clientes - Administración{% endblock %}
+
+{% block extra_css %}
+<style>
+    .stat-card {
+        background: linear-gradient(135deg, #00392d 0%, #006e8c 100%);
+        color: white;
+        padding: 25px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    .stat-card h3 {
+        font-size: 2.5rem;
+        margin: 0;
+        font-weight: bold;
+    }
+    .stat-card p {
+        margin: 5px 0 0 0;
+        opacity: 0.9;
+    }
+    .table-hover tbody tr:hover {
+        background-color: #f8f9fa;
+    }
+    .badge-activity {
+        font-size: 0.85em;
+    }
+    .top-client {
+        background: linear-gradient(135deg, #eb7f25 0%, #ffcc52 100%);
+        color: white;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="d-flex justify-content-between align-items-center">
+            <div>
+                <h1>📊 Panel de Administración de Clientes</h1>
+                <p class="text-muted">Gestión y estadísticas de clientes</p>
+            </div>
+            <div>
+                <a href="/admin/" class="btn btn-dark">
+                    🔧 Panel Django Admin
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Estadísticas Generales -->
+<div class="row mb-4">
+    <div class="col-md-3">
+        <div class="stat-card">
+            <h3>{{ total_clientes }}</h3>
+            <p>👥 Total Clientes</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <h3>${{ total_ingresos|floatformat:0 }}</h3>
+            <p>💰 Ingresos Totales</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <h3>${{ promedio_gasto|floatformat:0 }}</h3>
+            <p>📈 Promedio por Cliente</p>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="stat-card">
+            <h3>{{ clientes_con_ordenes }}</h3>
+            <p>🛒 Clientes Activos</p>
+        </div>
+    </div>
+</div>
+
+<!-- Top 5 Clientes -->
+<div class="row mb-4">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header" style="background-color: #eb7f25; color: white;">
+                <h5 class="mb-0">🏆 Top 5 Clientes por Gasto</h5>
+            </div>
+            <div class="card-body">
+                {% if top_clientes %}
+                    {% for cliente in top_clientes %}
+                        <div class="top-client">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <h5 class="mb-0">{{ forloop.counter }}. {{ cliente.nombre }}</h5>
+                                    <small>{{ cliente.email }}</small>
+                                </div>
+                                <div class="text-end">
+                                    <h4 class="mb-0">${{ cliente.total_gastado|floatformat:0 }}</h4>
+                                    <small>{{ cliente.total_ordenes }} orden{{ cliente.total_ordenes|pluralize:"es" }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-muted text-center">No hay clientes con compras aún</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Actividad de Clientes -->
+<div class="row mb-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h2 class="text-primary">{{ clientes_con_ordenes }}</h2>
+                <p class="mb-0">Clientes con Compras</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h2 class="text-warning">{{ clientes_con_resenas }}</h2>
+                <p class="mb-0">Clientes con Reseñas</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <h2 class="text-success">{{ clientes_con_inscripciones }}</h2>
+                <p class="mb-0">Clientes en Eventos</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Listado de Clientes -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header" style="background-color: #006e8c; color: white;">
+                <h5 class="mb-0">📋 Listado Completo de Clientes</h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre</th>
+                                <th>Email</th>
+                                <th>Teléfono</th>
+                                <th>Fecha Registro</th>
+                                <th>Órdenes</th>
+                                <th>Total Gastado</th>
+                                <th>Reseñas</th>
+                                <th>Eventos</th>
+                                <th>Actividad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for cliente in clientes %}
+                            <tr>
+                                <td>{{ cliente.id }}</td>
+                                <td><strong>{{ cliente.nombre }}</strong></td>
+                                <td>{{ cliente.email }}</td>
+                                <td>
+                                    {% if cliente.perfil.telefono %}
+                                        {{ cliente.perfil.telefono }}
+                                    {% else %}
+                                        <span class="text-muted">-</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ cliente.created_at|date:"d/m/Y" }}</td>
+                                <td class="text-center">
+                                    {% if cliente.total_ordenes > 0 %}
+                                        <span class="badge bg-primary">{{ cliente.total_ordenes }}</span>
+                                    {% else %}
+                                        <span class="text-muted">0</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if cliente.total_gastado %}
+                                        <strong style="color: #eb7f25;">${{ cliente.total_gastado|floatformat:0 }}</strong>
+                                    {% else %}
+                                        <span class="text-muted">$0</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if cliente.total_resenas > 0 %}
+                                        <span class="badge bg-warning text-dark">{{ cliente.total_resenas }}</span>
+                                    {% else %}
+                                        <span class="text-muted">0</span>
+                                    {% endif %}
+                                </td>
+                                <td class="text-center">
+                                    {% if cliente.total_inscripciones > 0 %}
+                                        <span class="badge bg-success">{{ cliente.total_inscripciones }}</span>
+                                    {% else %}
+                                        <span class="text-muted">0</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if cliente.total_ordenes > 0 or cliente.total_resenas > 0 or cliente.total_inscripciones > 0 %}
+                                        <span class="badge bg-success badge-activity">Activo</span>
+                                    {% else %}
+                                        <span class="badge bg-secondary badge-activity">Nuevo</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="10" class="text-center text-muted">
+                                    No hay clientes registrados
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Clientes Recientes -->
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-light">
+                <h5 class="mb-0">🆕 Clientes Recientes (Últimos 10)</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    {% for cliente in clientes_recientes %}
+                    <div class="col-md-6 mb-3">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6 class="card-title">{{ cliente.nombre }}</h6>
+                                <p class="card-text mb-1">
+                                    <small class="text-muted">
+                                        📧 {{ cliente.email }}<br>
+                                        📅 Registrado: {{ cliente.created_at|date:"d/m/Y H:i" }}
+                                    </small>
+                                </p>
+                                <div class="mt-2">
+                                    <span class="badge bg-primary">{{ cliente.total_ordenes }} órdenes</span>
+                                    <span class="badge bg-warning text-dark">{{ cliente.total_resenas }} reseñas</span>
+                                    <span class="badge bg-success">{{ cliente.total_inscripciones }} eventos</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="text-center mt-4 mb-4">
+    <a href="{% url 'lista_bicicletas' %}" class="btn btn-secondary">
+        ← Volver al Catálogo
+    </a>
+</div>
+{% endblock %}

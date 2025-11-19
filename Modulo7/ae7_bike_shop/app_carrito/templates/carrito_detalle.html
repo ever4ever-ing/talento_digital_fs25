@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <title>Carrito de Compras - BikeShop</title>
+    <style>
+        .navbar-custom {
+            background: linear-gradient(135deg, #00392d 0%, #006e8c 100%);
+        }
+        .navbar-custom a, .navbar-custom button {
+            color: white !important;
+            margin: 0 10px;
+        }
+        .navbar-custom a:hover {
+            text-decoration: underline;
+        }
+        .badge-carrito {
+            position: relative;
+            top: -10px;
+            left: -5px;
+        }
+        .btn-primary, .card-header.bg-primary {
+            background-color: #006e8c !important;
+            border-color: #006e8c;
+        }
+        .btn-success, .card-header.bg-success {
+            background-color: #eb7f25 !important;
+            border-color: #eb7f25;
+        }
+        .btn-warning {
+            background-color: #ffcc52;
+            border-color: #ffcc52;
+            color: #00392d !important;
+        }
+        .text-success {
+            color: #eb7f25 !important;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegación -->
+    {% load carrito_tags %}
+    <nav class="navbar navbar-expand-lg navbar-custom mb-5">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="{% url 'lista_bicicletas' %}" style="color: white; font-weight: bold;">🚴 BikeShop</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="ms-auto">
+                    <a href="{% url 'carrito_detalle' %}" class="btn btn-warning btn-sm" style="margin: 0 5px;">
+                        🛒 Carrito
+                        {% cantidad_total_carrito request as total_items %}
+                        {% if total_items > 0 %}
+                            <span class="badge bg-danger badge-carrito">{{ total_items }}</span>
+                        {% endif %}
+                    </a>
+                    
+                    {% if user.is_authenticated %}
+                        <span style="color: white; margin-right: 15px;">👤 {{ user.first_name|default:user.username }}</span>
+                        <a href="{% url 'mis_ordenes' %}" class="btn btn-success btn-sm" style="margin: 0 5px;">Mis Órdenes</a>
+                        <a href="{% url 'perfil' %}" class="btn btn-light btn-sm" style="margin: 0 5px;">Mi Perfil</a>
+                        <a href="{% url 'logout' %}" class="btn btn-danger btn-sm">Cerrar Sesión</a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="btn btn-light btn-sm" style="margin: 0 5px;">Iniciar Sesión</a>
+                        <a href="{% url 'registro' %}" class="btn btn-info btn-sm">Registrarse</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1 class="mb-4">🛒 Tu Carrito de Compras</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if carrito %}
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0">Items en tu carrito</h5>
+                        </div>
+                        <div class="card-body">
+                            {% for item in carrito %}
+                                <div class="row mb-3 pb-3 border-bottom align-items-center">
+                                    <div class="col-md-2">
+                                        {% if item.bicicleta.imagen %}
+                                            <img src="{{ item.bicicleta.imagen.url }}" alt="{{ item.bicicleta.marca }}" class="img-fluid rounded">
+                                        {% else %}
+                                            <div class="bg-secondary text-white text-center rounded" style="padding: 20px;">
+                                                🚲
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="col-md-4">
+                                        <h6>{{ item.bicicleta.marca }} {{ item.bicicleta.modelo }}</h6>
+                                        <small class="text-muted">{{ item.bicicleta.tipo }}</small>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <form action="{% url 'carrito_agregar' item.bicicleta.id %}" method="post" class="d-inline">
+                                            {% csrf_token %}
+                                            {{ item.actualizar_cantidad_form.cantidad }}
+                                            {{ item.actualizar_cantidad_form.actualizar }}
+                                            <button type="submit" class="btn btn-sm btn-outline-primary mt-1">
+                                                🔄 Actualizar
+                                            </button>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-2 text-center">
+                                        <p class="mb-0"><strong>${{ item.precio }}</strong></p>
+                                        <small class="text-muted">c/u</small>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <p class="mb-0 text-success"><strong>${{ item.total_precio }}</strong></p>
+                                        <form action="{% url 'carrito_eliminar' item.bicicleta.id %}" method="post" class="mt-2">
+                                            {% csrf_token %}
+                                            <button type="submit" class="btn btn-sm btn-outline-danger">
+                                                🗑️ Eliminar
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card">
+                        <div class="card-header bg-success text-white">
+                            <h5 class="mb-0">Resumen del Pedido</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between mb-2">
+                                <span>Items:</span>
+                                <span>{{ carrito|length }}</span>
+                            </div>
+                            <div class="d-flex justify-content-between mb-3">
+                                <span><strong>Total:</strong></span>
+                                <span class="fs-4 text-success"><strong>${{ carrito.obtener_precio_total }}</strong></span>
+                            </div>
+                            <hr>
+                            
+                            {% if user.is_authenticated %}
+                                <form action="{% url 'crear_orden_desde_carrito' %}" method="post">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success w-100 btn-lg">
+                                        ✅ Crear Orden
+                                    </button>
+                                </form>
+                                <p class="text-muted mt-3 small text-center">
+                                    Se creará una orden pendiente de pago
+                                </p>
+                            {% else %}
+                                <a href="{% url 'login' %}?next={{ request.path }}" class="btn btn-primary w-100 btn-lg">
+                                    🔐 Inicia Sesión para Ordenar
+                                </a>
+                                <p class="text-muted mt-3 small text-center">
+                                    Necesitas una cuenta para crear órdenes
+                                </p>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <a href="{% url 'lista_bicicletas' %}" class="btn btn-outline-primary">
+                    ← Seguir Comprando
+                </a>
+            </div>
+        {% else %}
+            <div class="alert alert-info text-center">
+                <h4>🛒 Tu carrito está vacío</h4>
+                <p>¡Agrega algunas bicicletas para empezar!</p>
+                <a href="{% url 'lista_bicicletas' %}" class="btn btn-primary mt-3">
+                    Ver Catálogo
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

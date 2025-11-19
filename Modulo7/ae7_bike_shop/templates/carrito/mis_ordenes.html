@@ -1,0 +1,89 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Mis Órdenes - BikeShop{% endblock %}
+
+{% block content %}
+        <h1 class="mb-4">📦 Mis Órdenes</h1>
+
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if ordenes %}
+            {% for orden in ordenes %}
+                <div class="card mb-4">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <div>
+                            <h5 class="mb-0">Orden #{{ orden.id }}</h5>
+                            <small class="text-muted">{{ orden.fecha|date:"d/m/Y H:i" }}</small>
+                        </div>
+                        <div>
+                            {% if orden.estado == 'pendiente' %}
+                                <span class="badge bg-warning text-dark">⏳ Pendiente</span>
+                            {% elif orden.estado == 'pagada' %}
+                                <span class="badge bg-success">✅ Pagada</span>
+                            {% elif orden.estado == 'cancelada' %}
+                                <span class="badge bg-danger">❌ Cancelada</span>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h6 class="mb-3">Detalles de la Orden:</h6>
+                        
+                        {% for detalle in orden.detalles.all %}
+                            <div class="row mb-3 pb-3 border-bottom align-items-center">
+                                <div class="col-md-2">
+                                    {% if detalle.bicicleta.imagen %}
+                                        <img src="{{ detalle.bicicleta.imagen.url }}" alt="{{ detalle.bicicleta.marca }}" class="img-fluid rounded">
+                                    {% else %}
+                                        <div class="bg-secondary text-white text-center rounded" style="padding: 20px;">
+                                            🚲
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-5">
+                                    <h6>{{ detalle.bicicleta.marca }} {{ detalle.bicicleta.modelo }}</h6>
+                                    <small class="text-muted">{{ detalle.bicicleta.tipo }}</small>
+                                </div>
+                                <div class="col-md-2 text-center">
+                                    <p class="mb-0">Cantidad: <strong>{{ detalle.cantidad }}</strong></p>
+                                </div>
+                                <div class="col-md-1 text-center">
+                                    <p class="mb-0"><strong>${{ detalle.precio_unitario }}</strong></p>
+                                    <small class="text-muted">c/u</small>
+                                </div>
+                                <div class="col-md-2 text-end">
+                                    <p class="mb-0 text-success"><strong>${{ detalle.subtotal }}</strong></p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                        
+                        <div class="row mt-3">
+                            <div class="col-md-12 text-end">
+                                <h4>Total: <span class="text-success">${{ orden.total }}</span></h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="alert alert-info text-center">
+                <h4>📦 No tienes órdenes aún</h4>
+                <p>Cuando realices una compra, tus órdenes aparecerán aquí.</p>
+                <a href="{% url 'lista_bicicletas' %}" class="btn btn-primary mt-3">
+                    Ver Catálogo
+                </a>
+            </div>
+        {% endif %}
+
+    <div class="mt-4">
+        <a href="{% url 'lista_bicicletas' %}" class="btn btn-outline-primary">
+            ← Volver al Catálogo
+        </a>
+    </div>
+{% endblock %}
