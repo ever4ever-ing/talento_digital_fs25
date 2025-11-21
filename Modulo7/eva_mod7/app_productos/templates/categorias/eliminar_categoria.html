@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block title %}Eliminar Categoría - Mi Tienda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .confirm-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,.1);
+        padding: 2rem;
+        max-width: 600px;
+        margin: 2rem auto;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="confirm-container">
+        <div class="text-center mb-4">
+            <i class="bi bi-exclamation-triangle text-danger" style="font-size: 4rem;"></i>
+            <h2 class="mt-3">Confirmación para eliminar categoría</h2>
+        </div>
+        
+        <div class="alert alert-warning">
+            <p class="mb-0">
+                <strong>¿Estás seguro de que deseas eliminar la categoría:</strong>
+            </p>
+            <p class="fs-5 mb-0 mt-2"><strong>"{{ categoria.nombre }}"</strong>?</p>
+        </div>
+
+        {% if categoria.productos.count > 0 %}
+        <div class="alert alert-danger">
+            <i class="bi bi-exclamation-octagon"></i> 
+            <strong>¡Atención!</strong> Esta categoría tiene <strong>{{ categoria.productos.count }}</strong> producto(s) asociado(s). 
+            Al eliminar la categoría, también se eliminarán todos los productos asociados.
+        </div>
+        {% endif %}
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <p><strong>Nombre:</strong> {{ categoria.nombre }}</p>
+                <p class="mb-0"><strong>Descripción:</strong> {{ categoria.descripcion|default:"Sin descripción" }}</p>
+            </div>
+        </div>
+
+        <p class="text-danger">
+            <i class="bi bi-info-circle"></i> Esta acción no se puede deshacer.
+        </p>
+
+        <form method="post" class="d-flex gap-2">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">
+                <i class="bi bi-trash"></i> Sí, Eliminar
+            </button>
+            <a href="{% url 'lista_categorias' %}" class="btn btn-secondary">
+                <i class="bi bi-x-circle"></i> Cancelar
+            </a>
+        </form>
+    </div>
+</div>
+{% endblock %}

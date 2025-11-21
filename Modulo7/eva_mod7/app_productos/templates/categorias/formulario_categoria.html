@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block title %}{% if categoria %}Editar{% else %}Crear{% endif %} Categoría - Mi Tienda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .form-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,.1);
+        padding: 2rem;
+        max-width: 700px;
+        margin: 2rem auto;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="form-container">
+        <h2 class="mb-4">
+            {% if categoria %}
+                <i class="bi bi-pencil"></i> Editar Categoría
+            {% else %}
+                <i class="bi bi-plus-circle"></i> Crear Nueva Categoría
+            {% endif %}
+        </h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="nombre" class="form-label">Nombre *</label>
+                <input type="text" class="form-control" id="nombre" name="nombre" 
+                       value="{{ categoria.nombre|default:'' }}" required 
+                       placeholder="Nombre de la categoría">
+            </div>
+
+            <div class="mb-3">
+                <label for="descripcion" class="form-label">Descripción</label>
+                <textarea class="form-control" id="descripcion" name="descripcion" 
+                          rows="3" placeholder="Descripción de la categoría">{{ categoria.descripcion|default:'' }}</textarea>
+                <div class="form-text">Opcional: proporciona una descripción detallada de la categoría</div>
+            </div>
+
+            {% if categoria %}
+            <div class="alert alert-info">
+                <i class="bi bi-info-circle"></i> Esta categoría tiene <strong>{{ categoria.productos.count }}</strong> producto(s) asociado(s).
+            </div>
+            {% endif %}
+
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn {% if categoria %}btn-warning{% else %}btn-primary{% endif %}">
+                    <i class="bi bi-save"></i> {% if categoria %}Guardar Cambios{% else %}Crear Categoría{% endif %}
+                </button>
+                <a href="{% url 'lista_categorias' %}" class="btn btn-secondary">
+                    <i class="bi bi-x-circle"></i> Cancelar
+                </a>
+            </div>
+        </form>
+
+        {% if categoria and categoria.productos.exists %}
+        <hr class="my-4">
+        <h5>Productos en esta categoría:</h5>
+        <div class="list-group">
+            {% for producto in categoria.productos.all|slice:":5" %}
+            <div class="list-group-item">
+                <strong>{{ producto.nombre }}</strong> - ${{ producto.precio }}
+            </div>
+            {% endfor %}
+            {% if categoria.productos.count > 5 %}
+            <div class="list-group-item text-muted">
+                Y {{ categoria.productos.count|add:"-5" }} más...
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block title %}Inicio - Mi Tienda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        margin-bottom: 3rem;
+    }
+    .stat-card {
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0,0,0,.1);
+        transition: transform 0.3s;
+    }
+    .stat-card:hover {
+        transform: translateY(-5px);
+    }
+    .icon-large {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-3 fw-bold mb-3">
+            <i class="bi bi-shop-window"></i> Bienvenido a Mi Tienda
+        </h1>
+        <p class="lead fs-4">Sistema de Gestión de Productos</p>
+        <div class="mt-4">
+            <a href="{% url 'lista_productos' %}" class="btn btn-light btn-lg me-2">
+                <i class="bi bi-box-seam"></i> Ver Productos
+            </a>
+            <a href="{% url 'crear_producto' %}" class="btn btn-outline-light btn-lg">
+                <i class="bi bi-plus-circle"></i> Crear Producto
+            </a>
+        </div>
+    </div>
+</div>
+
+
+<!-- Accesos Rápidos -->
+<div class="container mb-5">
+    <h2 class="text-center mb-4">
+        <i class="bi bi-lightning"></i> Accesos Rápidos
+    </h2>
+    <div class="row g-3">
+        <div class="col-md-4">
+            <div class="card stat-card h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-box-seam text-primary" style="font-size: 3rem;"></i>
+                    <h5 class="card-title mt-3">Productos</h5>
+                    <p class="card-text">Gestiona tu catálogo de productos</p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'lista_productos' %}" class="btn btn-outline-primary">
+                            <i class="bi bi-list"></i> Ver Lista
+                        </a>
+                        <a href="{% url 'crear_producto' %}" class="btn btn-primary">
+                            <i class="bi bi-plus-circle"></i> Crear Nuevo
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-grid text-info" style="font-size: 3rem;"></i>
+                    <h5 class="card-title mt-3">Categorías</h5>
+                    <p class="card-text">Organiza productos por categorías</p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'lista_categorias' %}" class="btn btn-outline-info">
+                            <i class="bi bi-list"></i> Ver Lista
+                        </a>
+                        <a href="{% url 'crear_categoria' %}" class="btn btn-info">
+                            <i class="bi bi-plus-circle"></i> Crear Nueva
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card stat-card h-100">
+                <div class="card-body text-center">
+                    <i class="bi bi-tags text-warning" style="font-size: 3rem;"></i>
+                    <h5 class="card-title mt-3">Etiquetas</h5>
+                    <p class="card-text">Clasifica productos con etiquetas</p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'lista_etiquetas' %}" class="btn btn-outline-warning">
+                            <i class="bi bi-list"></i> Ver Lista
+                        </a>
+                        <a href="{% url 'crear_etiqueta' %}" class="btn btn-warning">
+                            <i class="bi bi-plus-circle"></i> Crear Nueva
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

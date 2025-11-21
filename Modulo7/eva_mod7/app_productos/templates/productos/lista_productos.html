@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+
+{% block title %}Lista de Productos - Mi Tienda{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+    }
+    .table-container {
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0,0,0,.1);
+        padding: 2rem;
+    }
+    .badge-disponible {
+        background-color: #28a745;
+    }
+    .badge-no-disponible {
+        background-color: #dc3545;
+    }
+    .precio-col {
+        font-weight: bold;
+        color: #667eea;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <div class="container">
+            <h1 class="display-4 fw-bold">
+                <i class="bi bi-bag-check"></i> Catálogo de Productos
+            </h1>
+            <p class="lead">Explora nuestra selección de productos disponibles</p>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container mb-5">
+        <div class="table-container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="mb-0">
+                    <i class="bi bi-list-ul"></i> Lista de Productos
+                </h2>
+                <div>
+                    <span class="badge bg-primary fs-6 me-2">{{ productos|length }} productos</span>
+                    <a href="{% url 'crear_producto' %}" class="btn btn-success">
+                        <i class="bi bi-plus-circle"></i> Crear Producto
+                    </a>
+                </div>
+            </div>
+            
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">
+                                <i class="bi bi-tag"></i> Nombre
+                            </th>
+                            <th scope="col">
+                                <i class="bi bi-card-text"></i> Descripción
+                            </th>
+                            <th scope="col">
+                                <i class="bi bi-cash"></i> Precio
+                            </th>
+                            <th scope="col">
+                                <i class="bi bi-folder"></i> Categoría
+                            </th>
+                            <th scope="col">
+                                <i class="bi bi-tags"></i> Etiquetas
+                            </th>
+                            <th scope="col" class="text-center">
+                                <i class="bi bi-check-circle"></i> Disponible
+                            </th>
+                            <th scope="col" class="text-center">
+                                <i class="bi bi-calendar"></i> Fecha Creación
+                            </th>
+                            <th scope="col" class="text-center">
+                                <i class="bi bi-tools"></i> Acciones
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for producto in productos %}
+                        <tr>
+                            <td>
+                                <strong>{{ producto.nombre }}</strong>
+                            </td>
+                            <td>{{ producto.descripcion|default:"Sin descripción"|truncatewords:10 }}</td>
+                            <td class="precio-col">
+                                <i class="bi bi-currency-dollar"></i>{{ producto.precio }}
+                            </td>
+                            <td>
+                                <span class="badge bg-info">{{ producto.categoria.nombre }}</span>
+                            </td>
+                            <td>
+                                {% if producto.etiquetas.exists %}
+                                    {% for etiqueta in producto.etiquetas.all %}
+                                        <span class="badge me-1" style="background-color: {{ etiqueta.color }};">
+                                            {{ etiqueta.nombre }}
+                                        </span>
+                                    {% endfor %}
+                                {% else %}
+                                    <span class="text-muted small">Sin etiquetas</span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {% if producto.disponible %}
+                                    <span class="badge badge-disponible">
+                                        <i class="bi bi-check-circle-fill"></i> Sí
+                                    </span>
+                                {% else %}
+                                    <span class="badge badge-no-disponible">
+                                        <i class="bi bi-x-circle-fill"></i> No
+                                    </span>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                {% if producto.fecha_creacion %}
+                                    <small>{{ producto.fecha_creacion|date:"d/m/Y" }}</small>
+                                {% else %}
+                                    <small class="text-muted">-</small>
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group btn-group-sm" role="group">
+                                    <a href="{% url 'detalle_producto' producto.id %}" class="btn btn-info" title="Ver detalle">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+                                    <a href="{% url 'editar_producto' producto.id %}" class="btn btn-warning" title="Editar">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <a href="{% url 'eliminar_producto' producto.id %}" class="btn btn-danger" title="Eliminar">
+                                        <i class="bi bi-trash"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="8" class="text-center text-muted py-4">
+                                <i class="bi bi-inbox fs-1 d-block mb-2"></i>
+                                No hay productos disponibles
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
